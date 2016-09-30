@@ -20,7 +20,7 @@ The package is compatible with HDf5 version 1.8.12 or higher (also Version 1.10.
 
 ### Windows
 
-Binary can be downloaded from CRAN.
+Binary can be downloaded from CRAN. (not yet published on CRAN).
 
 ### OS X
 
