@@ -3,7 +3,7 @@ supports all data-types supported by HDF5 (including references),
 is (almost) feature complete, provides many convenience functions yet also an extensive selection of the native HDF5-C-API functions. It is also 
 tested using several hundred assertions.
 
-Currently, OS X, Linux and Windows are supported.
+Currently, OS X, Linux and Windows (soon to come) are supported.
 
 # Install
 
