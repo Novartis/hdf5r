@@ -1,0 +1,9 @@
+#!/bin/sh
+rm -f src/*.o
+rm -f src/*.a
+rm -f src/Wrapper_auto_*
+rm -f src/const_export*
+rm -f src/datatype_export*
+rm -f src/export_auto*
+rm -f src/HelperStructs*
+rm -f src/Makevars

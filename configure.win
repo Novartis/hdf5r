@@ -1,0 +1,27 @@
+## check if the hdf5rLib package is installed
+HDF5RLIB_INSTALLED=$(echo 'cat(suppressWarnings(require(hdf5rLib, quietly=TRUE, character.only=FALSE, warn.conflicts=FALSE)))' |\
+"${R_HOME}/bin/R" --vanilla --slave)
+
+if test "$HDF5RLIB_INSTALLED" != "TRUE"; then
+   echo "Could not find hdf5rLib is installed; Installation-status is ${HDF5RLIB_INSTALLED}"
+   exit 1
+fi
+
+## get the relevant variables so that headers can be found and static library can be linked
+HDF5RLIB_LIBPATH=$(echo 'cat(hdf5rLib:::.pkgLibPath())' | "${R_HOME}/bin/R" --vanilla --slave)
+HDF5RLIB_INCLUDEPATH=$(echo 'cat(hdf5rLib:::.pkgIncludePath())' | "${R_HOME}/bin/R" --vanilla --slave)
+
+HDF5RLIB_MAJOR_VERSION=$(echo 'cat(hdf5rLib:::.pkgMajorVersion())' | "${R_HOME}/bin/R" --vanilla --slave)
+HDF5RLIB_MINOR_VERSION=$(echo 'cat(hdf5rLib:::.pkgMinorVersion())' | "${R_HOME}/bin/R" --vanilla --slave)
+
+HDF5_LIBS='-L"'${HDF5RLIB_LIBPATH}'" -lhdf5_hl-static -lhdf5-static -lz -lm'
+HDF5_CPPFLAGS='-I'"${HDF5RLIB_INCLUDEPATH}"' -DWINDOWS'
+
+## now use the Makevars.in to create a Makevars.win
+cat src/Makevars.in |\
+sed -e "s|@HDF5_LIBS@|${HDF5_LIBS}|g" |\
+sed -e "s|@HDF5_CPPFLAGS@|${HDF5_CPPFLAGS}|g" |\
+sed -e "s|@HDF5_MAJOR_VERSION@|${HDF5RLIB_MAJOR_VERSION}|g" |\
+sed -e "s|@HDF5_MINOR_VERSION@|${HDF5RLIB_MINOR_VERSION}|g" \
+> src/Makevars.win
+

@@ -1,0 +1,31 @@
+Package: hdf5r
+Type: Package
+Title: HDF5 interface to R
+Version: 0.9.7
+Authors@R: person("Holger", "Hoefling", email = "hhoeflin@gmail.com", role = c("aut", "cre"))
+Description: This package provides an interface to the HDF5 API. HDF5 is a
+    data model, library and file format for storing and managing data. The HDF5
+    API is written in C. This package provides functions in R that allow access to
+    the underlying C functions. Additionally, functionality is added so that HDF5-
+    datasets behave very similar to native R datatypes.
+License: file LICENSE
+Copyright: For the hdf5r package: Novartis Institutes for BioMedical Research
+    Inc. For HDF5: see the HDF5_COPYRIGHTS file.
+LazyLoad: true
+Depends:
+    R (>= 3.2.2),
+    methods,
+    R6,
+    bit64,
+    utils
+Suggests:
+    testthat,
+    knitr,
+    rmarkdown,
+    nycflights13,
+    reshape2
+SystemRequirements: GNU make (on Linux/Mac) or cmake (on windows); HDF5 (>=
+    1.8.12)
+VignetteBuilder: knitr
+NeedsCompilation: yes
+RoxygenNote: 5.0.1.9001

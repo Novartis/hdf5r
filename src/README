@@ -1,0 +1,11 @@
+Many of the files in this directory are auto-generated. Do not edit them by hand:
+In particular these are:
+
+Any file starting with
+Wrapper_auto_*
+
+Furhtermore
+const_export.*
+datatype_export.*
+export_auto.h
+HelperStructs.h
