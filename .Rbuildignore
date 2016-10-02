@@ -26,7 +26,5 @@ inst/manual/docstring_templates.txt
 .Rprofile
 .Rhistory
 Makevars^
-
-
-
-
+appveyor.yml
+.travis.yml

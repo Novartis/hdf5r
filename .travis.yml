@@ -1,0 +1,49 @@
+language: r
+sudo: true
+cache: packages
+dist: trusty
+env:
+  global:
+  - PKG_CFLAGS="-pedantic"
+  - _R_CHECK_CRAN_INCOMING_=FALSE
+  - ASAN="-fsanitize=address -fno-omit-frame-pointer"
+  - HDF5_RELEASE_URL="https://support.hdfgroup.org/ftp/HDF5/releases"
+  matrix:
+  - HDF5_VERSION=1.8.12
+  - HDF5_VERSION=1.8.13
+  - HDF5_VERSION=1.8.14
+  - HDF5_VERSION=1.8.15
+  - HDF5_VERSION=1.8.16
+  - HDF5_VERSION=1.8.17
+  - HDF5_VERSION=1.10.0-patch1
+warnings_are_errors: true
+addons:
+  apt:
+    packages:
+      - subversion
+      - autoconf
+      - build-essential
+      - libtool
+      - libmagick++-dev
+before_install:
+- cd ..
+- if [ "$HDF5_VERSION" == "1.10.0-patch1" ]; 
+  then wget "$HDF5_RELEASE_URL/hdf5-1.10/hdf5-1.10.0-patch1/src/hdf5-1.10.0-patch1.tar.gz"; else 
+  wget "$HDF5_RELEASE_URL/hdf5-$HDF5_VERSION/src/hdf5-$HDF5_VERSION.tar.gz";
+  fi
+- tar -xzf "hdf5-$HDF5_VERSION.tar.gz"
+- cd "hdf5-$HDF5_VERSION"
+- ./configure --prefix=/usr/local
+- sudo make install
+- cd ../hdf5r
+
+r_github_packages:
+- jimhester/covr
+
+after_success:
+- R --slave --vanilla -e 'library(covr); pc <- package_coverage(); pc; codecov(coverage
+  = pc)'
+notifications:
+  email:
+    - mario.annau@gmail.com
+
