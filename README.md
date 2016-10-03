@@ -11,7 +11,7 @@ As hdf5r is currently not yet released on CRAN, it has to be installed from Gith
 
 ```r
 library(devtools)
-install_github("hhoeflin/hdf5r")
+install_github("Novartis/hdf5r")
 ```
 
 The package is compatible with HDf5 version 1.8.12 or higher (also Version 1.10.0). 
