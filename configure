@@ -638,7 +638,7 @@ ac_includes_default="\
 
 ac_subst_vars='LTLIBOBJS
 LIBOBJS
-HDF5_USE_1_8_12
+DEFINE_H5FREE_MEMORY
 HDF5_VERSION_USE
 HDF5_FLIBS
 HDF5_FFLAGS
@@ -4401,7 +4401,43 @@ x$ax_compare_version_B" | sed 's/^ *//' | sort -r | sed "s/x${ax_compare_version
 
 
     if test "$ax_compare_version" = "true" ; then
-    HDF5_VERSION_USE="1_8_12"
+    HDF5_VERSION_USE="1_8_12"; DEFINE_H5FREE_MEMORY="1"
+      fi
+
+
+
+
+
+  # Used to indicate true or false condition
+  ax_compare_version=false
+
+  # Convert the two version strings to be compared into a format that
+  # allows a simple string comparison.  The end result is that a version
+  # string of the form 1.12.5-r617 will be converted to the form
+  # 0001001200050617.  In other words, each number is zero padded to four
+  # digits, and non digits are removed.
+
+  ax_compare_version_A=`echo "$HDF5_VERSION" | sed -e 's/\([0-9]*\)/Z\1Z/g' \
+                     -e 's/Z\([0-9]\)Z/Z0\1Z/g' \
+                     -e 's/Z\([0-9][0-9]\)Z/Z0\1Z/g' \
+                     -e 's/Z\([0-9][0-9][0-9]\)Z/Z0\1Z/g' \
+                     -e 's/[^0-9]//g'`
+
+
+  ax_compare_version_B=`echo "1.8.13" | sed -e 's/\([0-9]*\)/Z\1Z/g' \
+                     -e 's/Z\([0-9]\)Z/Z0\1Z/g' \
+                     -e 's/Z\([0-9][0-9]\)Z/Z0\1Z/g' \
+                     -e 's/Z\([0-9][0-9][0-9]\)Z/Z0\1Z/g' \
+                     -e 's/[^0-9]//g'`
+
+
+    ax_compare_version=`echo "x$ax_compare_version_A
+x$ax_compare_version_B" | sed 's/^ *//' | sort -r | sed "s/x${ax_compare_version_A}/true/;s/x${ax_compare_version_B}/false/;1q"`
+
+
+
+    if test "$ax_compare_version" = "true" ; then
+    HDF5_VERSION_USE="1_8_14"; DEFINE_H5FREE_MEMORY="0"
       fi
 
 
@@ -4437,7 +4473,7 @@ x$ax_compare_version_B" | sed 's/^ *//' | sort -r | sed "s/x${ax_compare_version
 
 
     if test "$ax_compare_version" = "true" ; then
-    HDF5_VERSION_USE="1_8_14"
+    HDF5_VERSION_USE="1_8_14"; DEFINE_H5FREE_MEMORY="0"
       fi
 
 
@@ -4473,7 +4509,7 @@ x$ax_compare_version_B" | sed 's/^ *//' | sort -r | sed "s/x${ax_compare_version
 
 
     if test "$ax_compare_version" = "true" ; then
-    HDF5_VERSION_USE="1_8_16"
+    HDF5_VERSION_USE="1_8_16"; DEFINE_H5FREE_MEMORY="0"
       fi
 
 
@@ -4509,18 +4545,12 @@ x$ax_compare_version_B" | sed 's/^ *//' | sort -r | sed "s/x${ax_compare_version
 
 
     if test "$ax_compare_version" = "true" ; then
-    HDF5_VERSION_USE="1_10_0"
+    HDF5_VERSION_USE="1_10_0"; DEFINE_H5FREE_MEMORY="0"
       fi
 
 fi
 
 
-
-if test "$HDF5_VERSION_USE" = "1_8_12"; then
-HDF5_USE_1_8_12="1"
-else
-HDF5_USE_1_8_12="0"
-fi
 
 { $as_echo "$as_me:$LINENO: result: Using code intended for version: $HDF5_VERSION_USE" >&5
 $as_echo "Using code intended for version: $HDF5_VERSION_USE" >&6; }

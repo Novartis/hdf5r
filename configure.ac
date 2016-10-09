@@ -20,38 +20,39 @@ AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.8.12], 
-	[HDF5_VERSION_USE="1_8_12"])
+	[HDF5_VERSION_USE="1_8_12"; DEFINE_H5FREE_MEMORY="1"])
+
+dnl 1.8.13 uses the 1.8.12 code wrappers, but doesn't define the H5free_memory function as that was introducted in that version
+AX_COMPARE_VERSION(
+	[$HDF5_VERSION], 
+	[ge], 
+	[1.8.13], 
+	[HDF5_VERSION_USE="1_8_14"; DEFINE_H5FREE_MEMORY="0"])
 
 AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.8.14], 
-	[HDF5_VERSION_USE="1_8_14"])
+	[HDF5_VERSION_USE="1_8_14"; DEFINE_H5FREE_MEMORY="0"])
 
 AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.8.16], 
-	[HDF5_VERSION_USE="1_8_16"])
+	[HDF5_VERSION_USE="1_8_16"; DEFINE_H5FREE_MEMORY="0"])
 
 AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.10.0], 
-	[HDF5_VERSION_USE="1_10_0"])
+	[HDF5_VERSION_USE="1_10_0"; DEFINE_H5FREE_MEMORY="0"])
 fi
 
 AC_SUBST(HDF5_VERSION_USE)
 
-if test "$HDF5_VERSION_USE" = "1_8_12"; then
-HDF5_USE_1_8_12="1"
-else 
-HDF5_USE_1_8_12="0"
-fi
-
 AC_MSG_RESULT([Using code intended for version: $HDF5_VERSION_USE])
 
-AC_SUBST(HDF5_USE_1_8_12)
+AC_SUBST(DEFINE_H5FREE_MEMORY)
 AC_CONFIG_FILES([src/Makevars])
 AC_OUTPUT
 

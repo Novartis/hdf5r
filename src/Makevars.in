@@ -1,6 +1,6 @@
 PKG_LIBS = @HDF5_LIBS@ 
 PKG_CPPFLAGS=@HDF5_CPPFLAGS@ # -Wall -pedantic
-PKG_CFLAGS= -D_HDF5_USE_1_8_12_=@HDF5_USE_1_8_12@ # -Wall -pedantic
+PKG_CFLAGS= -D_DEFINE_H5FREE_MEMORY_=@DEFINE_H5FREE_MEMORY@ # -Wall -pedantic
 
 .PHONY: all copy_auto_files
 
