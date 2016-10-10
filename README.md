@@ -1,6 +1,6 @@
-[![Build Status](https://travis-ci.org/mannau/hdf5r.svg?branch=master)](https://travis-ci.org/mannau/hdf5r) 
-[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/mannau/hdf5r?branch=master&svg=true)](https://ci.appveyor.com/project/mannau/hdf5r)
-[![codecov.io](http://codecov.io/github/mannau/hdf5r/coverage.svg?branch=master)](http://codecov.io/github/mannau/hdf5r?branch=master)
+[![Build Status](https://travis-ci.org/hhoeflin/hdf5r.svg?branch=master)](https://travis-ci.org/hhoeflin/hdf5r) 
+[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hhoeflin/hdf5r?branch=master&svg=true)](https://ci.appveyor.com/project/hhoeflin/hdf5r)
+[![codecov.io](http://codecov.io/github/hhoeflin/hdf5r/coverage.svg?branch=master)](http://codecov.io/github/hhoeflin/hdf5r?branch=master)
 
 hdf5r is an R interface to the HDF5 library. It is implemented using R6 classes based on the HDF5-C-API, 
 supports all data-types supported by HDF5 (including references),
