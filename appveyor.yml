@@ -15,6 +15,9 @@ install:
 build_script:
   - Rscript -e "source('https://bioconductor.org/biocLite.R')"
   - travis-tool.sh install_deps
+  - echo %CD%
+  - ls
+  - sh inst/download_libwin.sh
 
 test_script:
   - travis-tool.sh run_tests
@@ -25,6 +28,8 @@ on_failure:
 environment:
   WARNINGS_ARE_ERRORS: 1
   _R_CHECK_FORCE_SUGGESTS_: 0
+  R_ARCH: x64
+  HDF5_VERSION_USE: 1_8_14
 
 artifacts:
   - path: '*.Rcheck\**\*.log'
