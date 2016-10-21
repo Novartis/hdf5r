@@ -4,3 +4,6 @@
 *#
 .Rhistory
 .Rprofile
+.Rproj
+.Rproj.user
+hdf5r.Rproj

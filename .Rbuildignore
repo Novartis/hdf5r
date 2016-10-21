@@ -28,3 +28,5 @@ inst/manual/docstring_templates.txt
 Makevars^
 appveyor.yml
 .travis.yml
+^.*\.Rproj$
+^\.Rproj\.user$
