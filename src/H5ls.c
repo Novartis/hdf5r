@@ -75,7 +75,7 @@ herr_t H5Dget_info(hid_t d_id, H5D_info_t * dataset_info) {
 	int dims_char_written = 0;
 	int maxdims_char_written = 0;
 	for(int i = 0; i < rank; ++i) {
-	  dims_char_written += sprintf(dataset_info->dims + dims_char_written, "%lld", dims[i]);
+	  dims_char_written += sprintf(dataset_info->dims + dims_char_written, "%" PRIu64, dims[i]);
 	  if(i < rank - 1) {
 	    dims_char_written += sprintf(dataset_info->dims + dims_char_written, " x ");
 	  }
@@ -85,7 +85,7 @@ herr_t H5Dget_info(hid_t d_id, H5D_info_t * dataset_info) {
 	    maxdims_char_written += sprintf(dataset_info->maxdims + maxdims_char_written, "Inf");
 	  }
 	  else {
-	    maxdims_char_written += sprintf(dataset_info->maxdims + maxdims_char_written, "%lld", maxdims[i]);
+	    maxdims_char_written += sprintf(dataset_info->maxdims + maxdims_char_written, "%" PRIu64, maxdims[i]);
 	  }
 	  if(i < rank - 1) {
 	    maxdims_char_written += sprintf(dataset_info->maxdims + maxdims_char_written, " x ");
