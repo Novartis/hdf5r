@@ -67,7 +67,7 @@ test_that("File creation", {
     expect_equal(test1_info, root_info_by_idx)
 
     ## retrieve the filesize and info and name
-    expect_equal(file.h5$get_file_name(), test_file)
+    expect_equal(file.h5$get_file_name(), normalizePath(test_file, mustWork=FALSE))
     expect_true(nrow(file.h5$file_info()) == 1)
     expect_true(file.h5$get_filesize() > 0)
         
