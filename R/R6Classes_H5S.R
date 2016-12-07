@@ -32,7 +32,7 @@
 ##'
 ##' @docType class
 ##' @importFrom R6 R6Class
-##' @return Object of class \code{\link{H5Group}}. 
+##' @return Object of class \code{\link{H5S}}. 
 ##' @export
 ##' @author Holger Hoefling
 ##' @seealso H5Class_overview

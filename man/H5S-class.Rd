@@ -6,7 +6,7 @@
 \alias{H5S-class}
 \title{Class for representing HDF5 spaces}
 \value{
-Object of class \code{\link{H5Group}}.
+Object of class \code{\link{H5S}}.
 }
 \description{
 This class represents an HDF5 space-id. It inherits all functions of the
