@@ -627,6 +627,9 @@ dim_hyperslab <- function(x, envir) {
                 }
             }
         }
+        else {
+            x <- eval(x, envir=envir)
+        }
     }   
     else {
         x <- eval(x, envir=envir)
