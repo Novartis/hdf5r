@@ -346,7 +346,7 @@ commonFG <- list(
         "@param robj An R-object to take as a template for creating the dataset. Either \\code{robj} or both \\code{dtype} and {space}"
         "have to be provided"
         "@param dtype The datatype to use for the creation of the object. Can be null if \\code{robj} is given."
-        "@param space The space to use for the object creation. Can be null if \\code{robj} is given."
+        "@param space The space to use for the object creation. Can be null if \\code{robj} is given. Otherwise an object of type \\code{H5S-class} which specifies the dimensions of the dataset."
         "@param chunk_dims Size of the chunk. Has to have the same length as the dataset dimension. If \\code{\"auto\"}"
         "then the size of each chunk is estimated so that each chunk is roughly as large in bytes as the value in"
         "the \\code{hdf5r.chunk_size} option. See also \\code{\\link{guess_chunks}} for a more detailed explanation."
