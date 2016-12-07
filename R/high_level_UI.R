@@ -435,7 +435,7 @@ evaluate_arguments <- function(args, ds_dims, ds_maxdims, allow_expand=FALSE, en
     max_coord <- get_maxcoord_args_eval(args_eval)
     violate_dims <- max_coord > ds_dims
     ds_dims_updated <- FALSE
-    if(allow_expand) {
+    if(allow_expand && any(violate_dims)) {
         ## check
         violate_maxdims <- max_coord > ds_maxdims
         if(any(violate_maxdims)) {
@@ -447,7 +447,7 @@ evaluate_arguments <- function(args, ds_dims, ds_maxdims, allow_expand=FALSE, en
         ## get the dimension to which it will be expanded
         ds_dims <- pmax(ds_dims, max_coord)
         ds_dims_updated  <- TRUE
-        args_eval <- set_maxcoord_args_eval(args_eval, ds_dims)
+        args_eval <- set_index_empty_dim(args_eval, ds_dims)
     }
     else {
         if(any(violate_dims)) {
@@ -455,7 +455,7 @@ evaluate_arguments <- function(args, ds_dims, ds_maxdims, allow_expand=FALSE, en
                        paste(paste0("Dim", which(violate_dims), ": Dataset", ds_dims[violate_dims], " Max-request ", max_coord[violate_dims])),
                        collapse="\n"))
         }
-        args_eval <- set_maxcoord_args_eval(args_eval, ds_dims)
+        args_eval <- set_index_empty_dim(args_eval, ds_dims)
     }
     
     return(list(args_eval=args_eval, ds_dims=ds_dims, ds_dims_updated=ds_dims_updated, all_null=FALSE))    
@@ -468,19 +468,19 @@ get_maxcoord_args_eval <- function(x) {
         res[res==Inf] <- -1  # if it is inf, set it to -1 as it is arbitrary
     }
     else {
-        res <- lapply(x, function(x) { if(is.null(x)) { return(-1) } else {return(max(x))}})
+        res <- unlist(lapply(x, function(x) { if(is.null(x)) { return(-1) } else {return(max(x))}}))
     }
     return(res)                                       
 }
 
-set_maxcoord_args_eval <- function(x, ds_dims) {
+set_index_empty_dim <- function(x, ds_dims) {
     if(inherits(x, "hyperslab")) {
         x$block <- pmin(x$block, ds_dims)
     }
     else {
         for(i in seq_along(x)) {
-            if(is.null(x)) {
-                x <- seq_len(ds_dims[i])
+            if(is.null(x[[i]])) {
+                x[[i]] <- seq_len(ds_dims[i])
             }
         }
     }

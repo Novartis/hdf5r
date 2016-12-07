@@ -118,7 +118,14 @@ test_that("subset_h5.H5D", {
     }
     expect_equal(get_1(11, test), c(1, 6, 11, 16))
 
-    
+
+    ## need to recreate an error where writing into an array failed when there was a missing dimension
+    ## and the other given dimension was a call
+    test2 <- file.h5$create_dataset("test_array", dtype=h5types$H5T_NATIVE_INT, space=H5S$new("simple", dims=c(10,10,100)),
+                           chunk_dims=c(10,10,1))
+    pos_list <- list(1)
+    test2[,,pos_list[[1]]] <- 1:100
+    expect_equal(test2[,,1], matrix(1:100, ncol=10))
     
     file.h5$close_all()
     file.remove(test_file)
