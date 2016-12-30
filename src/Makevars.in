@@ -1,6 +1,7 @@
-PKG_LIBS = @HDF5_LIBS@ 
-PKG_CPPFLAGS=@HDF5_CPPFLAGS@ # -Wall -pedantic
+PKG_LIBS = @HDF5R_LIBS@ 
+PKG_CPPFLAGS=@HDF5R_CPPFLAGS@ # -Wall -pedantic
 PKG_CFLAGS= -D_DEFINE_H5FREE_MEMORY_=@DEFINE_H5FREE_MEMORY@ # -Wall -pedantic
+
 
 .PHONY: all copy_auto_files
 
@@ -26,6 +27,9 @@ $(OBJECTS): copy_auto_files
 $(OBJECTS_TO_COPY): copy_auto_files
 
 copy_auto_files:
+	echo ${PKG_LIBS}
+	echo ${PKG_CPPFLAGS}
+	echo ${PKG_CFLAGS}
 	cp @HDF5_VERSION_USE@/*.c @HDF5_VERSION_USE@/*.h .
 
 
