@@ -63,10 +63,10 @@ if test -z "${R_HOME}"; then
   exit 1
 fi
 
-AC_CHECK_PROG(H5CPP,h5c++,`which h5c++`)
-if test -z "${H5CPP}"; then
-  AC_MSG_ERROR(['h5c++' does not seem to be installed on your platform.
-  Please install the hdf5 library with C++ interface enabled (--enable-cxx=yes).
+dnl AC_CHECK_PROG(H5CC,h5cc,`which h5cc`)
+if test -z "${H5CC}"; then
+  AC_MSG_ERROR(['h5cc' does not seem to be installed on your platform.
+  Please install the hdf5 library.
   The required HDF5 library files can be installed as follows:
       - Debian-based (e.g. Debian >= 8.0, Ubuntu >= 15.04): 'sudo apt-get install libhdf5-dev'
         - Old Debian-based (e.g Debian < 8.0, Ubuntu < 15.04): Install from source (see INSTALL)
@@ -88,7 +88,7 @@ if test -z "${LIBS}"; then
     AC_MSG_ERROR([${GREP} does not support option -o])
   fi
   [
-  LIBS=`${H5CPP} -show | ${GREP} -o "\-L[^[:space:]]\+" | tr "\n" " "` 
+  LIBS=`${H5CC} -show | ${GREP} -o "\-L[^[:space:]]\+" | tr "\n" " "` 
   ]
   
   dnl Fix for newer Debian versions
@@ -110,13 +110,13 @@ if test -z "${CPPFLAGS}"; then
     AC_MSG_ERROR([${GREP} does not support option -o])
   fi
 
-  echo 'int main() { return; }' > myconftest.cpp
+  echo 'int main() { return; }' > myconftest.c
 
 
   [
-  HDF5R_CPPFLAGS=`${H5CPP} -show -c myconftest.cpp | ${GREP} -o "\-I[^[:space:]]\+" | tr "\n" " "`
+  HDF5R_CPPFLAGS=`${H5CC} -show -c myconftest.c | ${GREP} -o "\-I[^[:space:]]\+" | tr "\n" " "`
   ]
-  rm -f myconftest.cpp
+  rm -f myconftest.c
 fi
 
 
