@@ -27,9 +27,6 @@ $(OBJECTS): copy_auto_files
 $(OBJECTS_TO_COPY): copy_auto_files
 
 copy_auto_files:
-	echo ${PKG_LIBS}
-	echo ${PKG_CPPFLAGS}
-	echo ${PKG_CFLAGS}
 	cp @HDF5_VERSION_USE@/*.c @HDF5_VERSION_USE@/*.h .
 
 

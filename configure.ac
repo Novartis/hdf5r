@@ -8,40 +8,46 @@ m4_include([inst/m4/hh_hdf5rlib.m4])
 AX_LIB_HDF5()
 
 if test "$with_hdf5" = "yes"; then 
-AX_COMPARE_VERSION([$HDF5_VERSION], [ge], [1.8.12], [hdf5_version_sufficient="yes"], [hdf5_version_sufficient="no"])
+AC_MSG_RESULT([Found hdf5 with version: $HDF5_VERSION])
+AX_COMPARE_VERSION([$HDF5_VERSION], [ge], [1.8.12], [hdf5_version_sufficient="yes"], AC_MSG_ERROR([The version of hdf5 installed on your system is not sufficient. Please ensure that at least version 1.8.12 is installed]))
 else 
-hdf5_version_sufficient="no"
+  AC_MSG_ERROR([hdf5 does not seem to be installed on your platform.
+  Please install the hdf5 library.
+  The required HDF5 library files can be installed as follows:
+      - Debian-based (e.g. Debian >= 8.0, Ubuntu >= 15.04): 'sudo apt-get install libhdf5-dev'
+        - Old Debian-based (e.g Debian < 8.0, Ubuntu < 15.04): Install from source (see INSTALL)
+        - OS X using Homebrew: 'brew install homebrew/science/hdf5'
+        - RPM-based (e.g Fedora): 'sudo yum install hdf5-devel'])
 fi
 
 
 if test "$hdf5_version_sufficient" = "yes"; then 
-
-AX_COMPARE_VERSION(
+  AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.8.12], 
 	[HDF5_VERSION_USE="1_8_12"; DEFINE_H5FREE_MEMORY="1"])
 
 dnl 1.8.13 uses the 1.8.12 code wrappers, but doesn't define the H5free_memory function as that was introducted in that version
-AX_COMPARE_VERSION(
+  AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.8.13], 
 	[HDF5_VERSION_USE="1_8_14"; DEFINE_H5FREE_MEMORY="0"])
 
-AX_COMPARE_VERSION(
+  AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.8.14], 
 	[HDF5_VERSION_USE="1_8_14"; DEFINE_H5FREE_MEMORY="0"])
 
-AX_COMPARE_VERSION(
+  AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.8.16], 
 	[HDF5_VERSION_USE="1_8_16"; DEFINE_H5FREE_MEMORY="0"])
 
-AX_COMPARE_VERSION(
+  AX_COMPARE_VERSION(
 	[$HDF5_VERSION], 
 	[ge], 
 	[1.10.0], 
@@ -49,8 +55,6 @@ AX_COMPARE_VERSION(
 fi
 
 AC_SUBST(HDF5_VERSION_USE)
-
-AC_MSG_RESULT([Using code intended for version: $HDF5_VERSION_USE])
 
 AC_SUBST(DEFINE_H5FREE_MEMORY)
 
@@ -61,17 +65,6 @@ dnl Now find the compiler and compiler flags to use
 if test -z "${R_HOME}"; then
   echo "could not determine R_HOME"
   exit 1
-fi
-
-dnl AC_CHECK_PROG(H5CC,h5cc,`which h5cc`)
-if test -z "${H5CC}"; then
-  AC_MSG_ERROR(['h5cc' does not seem to be installed on your platform.
-  Please install the hdf5 library.
-  The required HDF5 library files can be installed as follows:
-      - Debian-based (e.g. Debian >= 8.0, Ubuntu >= 15.04): 'sudo apt-get install libhdf5-dev'
-        - Old Debian-based (e.g Debian < 8.0, Ubuntu < 15.04): Install from source (see INSTALL)
-        - OS X using Homebrew: 'brew install homebrew/science/hdf5 --enable-cxx'
-        - RPM-based (e.g Fedora): 'sudo yum install hdf5-devel'])
 fi
 
 if test -z "${LIBS}"; then
