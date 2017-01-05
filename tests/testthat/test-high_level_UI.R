@@ -79,14 +79,65 @@ test_that("dim_hyperslab", {
 
 test_that("subset_h5.H5S", {
     ## create a dataspace
-    h5s_obj <- H5S$new(type="simple", dims=c(10,20,30), maxdims=c(10,20,30))
+    h5s_obj <- H5S$new(type="simple", dims=c(10, 15, 20), maxdims=c(10, 15, 20))
     subset_h5.H5S(h5s_obj, seq_len(3), seq(2,4,by=3), 5:9)
     expect_equal(h5s_obj$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
     expect_equal(h5s_obj$get_select_hyper_blocklist(), matrix(c(1,3,2,2,5,9), nrow=2))
 
     subset_h5.H5S(h5s_obj, seq_len(3), seq(2,4,by=3), c(1,2,4))
     expect_equal(h5s_obj$get_select_type(), h5const$H5S_SEL_POINTS)
+
+
+    ## complicated subsetting in various forms
+    ## using logial
+    ## using non-uniform index
+    ## using decreasing index
+    ## using negative index (all of them)
+    ## using index (some of them)
+    ## using index with several identical values
+    ## GOAL: Ensure that a hyperslab selection is being done in the intended places
+    index_logical <- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE)
+    index_regular <- 3:6
+    index_positive <- c(1, 5, 6, 10, 15)
+    index_ident <- c(1, 3, 3, 6)
+    index_decreasing <- c(5, 4, 2, 1)
+    index_negative_all <- -index_regular
+    index_negative_some <- c(1, 3, -2, 5, 6)
+    index_large <- c(1, 15)
     
+    ## now make the tests with these indices; will use the h5s_obj
+    ## only use single indices
+    h5s_logical <- subset_h5.H5S(h5s_obj, index_logical, , )
+    expect_equal(h5s_logical$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_regular <- subset_h5.H5S(h5s_obj, index_regular, ,)
+    expect_equal(h5s_regular$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_positive <- subset_h5.H5S(h5s_obj, index_positive, ,)
+    expect_equal(h5s_positive$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_ident <- subset_h5.H5S(h5s_obj, index_ident, ,)
+    expect_equal(h5s_ident$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_decreasing <- subset_h5.H5S(h5s_obj, index_decreasing, ,)
+    expect_equal(h5s_decreasing$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_negative_all <- subset_h5.H5S(h5s_obj, index_negative_all, ,)
+    expect_equal(h5s_negative_all$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    expect_error(subset_h5.H5S(h5s_obj, index_negative_some, ,), regexp="Mixed negative and positive indices")
+    expect_error(subset_h5.H5S(h5s_obj, index_large, ,), "The following coordinates are outside the dataset dimensions:.*")
+
+    ## also a few using double or triple indices
+    ## logical should work, as it is recycled
+    h5s_logical_double <- subset_h5.H5S(h5s_obj, index_logical, index_logical, )
+    expect_equal(h5s_logical_double$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+    
+    h5s_logical_triple <- subset_h5.H5S(h5s_obj, index_logical, index_logical, index_logical)
+    expect_equal(h5s_logical_double$get_select_type(), h5const$H5S_SEL_POINTS)
+
+    h5s_logical_regular <- subset_h5.H5S(h5s_obj, index_logical, , index_regular)
+    expect_equal(h5s_logical_regular$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
 })
 
 test_that("subset_h5.H5D", {
@@ -189,6 +240,43 @@ test_that("Subsetting dimensions, drop and repeated write", {
     expect_equal(ex_array[,,], ex_arr_ds[,,])
     
 
+    ## complicated subsetting in various forms
+    ## using logial
+    ## using non-uniform index
+    ## using decreasing index
+    ## using index with several identical values
+    ## GOAL: Ensure the correct values are being returned
+    ex_array2 <- array(seq_len(10 * 15* 20), dim=c(10, 15, 20))
+    file.h5[["ex_array2"]] <- ex_array2
+    ex_array2_ds <- file.h5[["ex_array2"]]
+    index_logical <- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE)
+    index_regular <- 3:6
+    index_positive <- c(1, 5, 6, 8, 10)
+    index_ident <- c(1, 3, 3, 6)
+    index_decreasing <- c(5, 4, 2, 1)
+    index_negative_all <- -index_regular
+    index_negative_some <- c(1, 3, -3, 5, 6)
+    index_large <- c(1, 15)
+    
+    ## now make the tests with these indices; will use the h5s_obj
+    ## only use single indices
+    expect_equal(ex_array2_ds[index_logical, ,], ex_array2[index_logical, ,])
+    expect_equal(ex_array2_ds[index_regular, ,], ex_array2[index_regular, ,])
+    expect_equal(ex_array2_ds[index_positive, ,], ex_array2[index_positive, ,])
+    expect_equal(ex_array2_ds[index_ident, ,], ex_array2[index_ident, ,])
+    expect_equal(ex_array2_ds[index_decreasing, ,], ex_array2[index_decreasing, ,])
+    expect_equal(ex_array2_ds[index_negative_all, ,], ex_array2[index_negative_all, ,])
+
+    expect_error(ex_array2_ds[index_negative_some, ,], "only 0's may be mixed with negative subscripts")
+    expect_error(ex_array2_ds[index_large, ], "The following coordinates are outside the dataset dimensions:.*")
+
+    ## also a few using double or triple indices
+    ## logical should work, as it is recycled
+    expect_equal(ex_array2_ds[index_logical, index_logical,], ex_array2[index_logical, index_logical,])
+    expect_equal(ex_array2_ds[index_logical, index_logical, index_logical], ex_array2[index_logical, index_logical, index_logical])
+    expect_equal(ex_array2_ds[index_logical, , index_regular], ex_array2[index_logical, , index_regular])
+
+    
     file.h5$close_all()
     file.remove(test_file)
     
