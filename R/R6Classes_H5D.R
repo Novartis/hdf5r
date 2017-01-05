@@ -260,7 +260,7 @@ H5D <- R6Class("H5D",
                    write=function(robj, file_space=h5const$H5S_ALL, mem_space=NULL, mem_type=NULL, dataset_xfer_pl=h5const$H5P_DEFAULT,
                        flush=getOption("hdf5r.flush_on_write")) {
                        "Writes that data from the \\code{robj} into the dataset."
-                       "For a more convenient interace, use the \\code{[<-} as for regular arrays."
+                       "For a more convenient interface, use the \\code{[<-} as for regular arrays."
                        "@param robj The object to write into the dataset"
                        "@param mem_space The space as it is represented in memory; advanced feature; may be removed in the future"
                        "@param mem_type Memory type; extracted from the dataset if null (can be passed in for efficiency reasons"

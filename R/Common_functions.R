@@ -351,7 +351,7 @@ commonFG <- list(
         "then the size of each chunk is estimated so that each chunk is roughly as large in bytes as the value in"
         "the \\code{hdf5r.chunk_size} option. See also \\code{\\link{guess_chunks}} for a more detailed explanation."
         "@param gzip_level Only if \\code{chunk_dims} is not null. If given, then the \\code{dataset_create_pl} is set to enable zipping"
-        "at the level given here"
+        "at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in \\code{dataset_create_pl}"
         "@param link_create_pl Link creation property list. See \\code{\\link{H5P_LINK_CREATE-class}}"
         "@param dataset_create_pl Datatset creation property list. See \\code{\\link{H5P_DATASET_CREATE-class}}"
         "@param dataset_access_pl Dataset access property list. See \\code{\\link{H5P_DATASET_ACCESS-class}}"
@@ -416,10 +416,12 @@ commonFG <- list(
                 stop(paste("The length of the chunk_dims is", length(chunk_dims), "and has to be the same as the rank of the space", space_rank))
             }
             dataset_create_pl$set_chunk(chunk_dims)
-            if(0 > gzip_level || gzip_level > 9) {
-                stop(paste("gzip_level has to be between 0 and 9, but is", gzip_level))
+            if(!is.null(gzip_level)) {
+                if(0 > gzip_level || gzip_level > 9) {
+                    stop(paste("gzip_level has to be between 0 and 9, but is", gzip_level))
+                }
+                dataset_create_pl$set_deflate(gzip_level)
             }
-            dataset_create_pl$set_deflate(gzip_level)
         }
         
         check_class(dtype, "H5T")
