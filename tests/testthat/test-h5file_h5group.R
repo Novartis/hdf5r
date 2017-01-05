@@ -30,6 +30,13 @@ test_that("File creation", {
     file_ls <- file.h5$ls(recursive=TRUE)
     expect_equal(file_ls$name, c("test1", "test1/test2"))
 
+    ## also check that ls prints the dimension of a file in the appropriate order when doing ls
+    file.h5[["test_matrix"]] <- matrix(0, nrow=10, ncol=5)
+    ls_res <- file.h5$ls()
+    ls_dataset <- ls_res[ls_res$name == "test_matrix",]
+    expect_equal(ls_dataset$dataset.dims, "10 x 5")
+    expect_equal(ls_dataset$dataset.rank, 2)
+    
     ## test that we can open the group by name and by index
     test1_opened <- file.h5$open("test1")
     test1_opened_idx <- file.h5$open_by_idx(0)
