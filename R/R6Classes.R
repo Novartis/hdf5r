@@ -92,7 +92,7 @@ H5RefClass <- R6Class("H5RefClass",
                               "Prints the class of the object and the id"
                               myclass <- class(self)[1]
                               if(!self$is_valid) {
-                                  cat(myclass, ": Object invalid; ID: ", id_as_hex, "\n", sep="")
+                                  cat(myclass, ": Object invalid\n", sep="")
                               }
                               else {
                                   id_as_hex <- as_hex(self$id)
