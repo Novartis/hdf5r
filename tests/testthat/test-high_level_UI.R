@@ -293,7 +293,7 @@ test_that("attributes", {
 })
 
 
-test_that("Subsetting dimensions, drop and repeated write", {
+test_that("Subsetting dimensions, drop and write", {
     test_file <- tempfile(fileext=".h5")
     file.h5 <- H5File$new(test_file, mode="w")
 
@@ -378,6 +378,15 @@ test_that("Subsetting dimensions, drop and repeated write", {
     copy_change_test_reset(ex_array2_ds, index_ident)
     copy_change_test_reset(ex_array2_ds, index_decreasing)
     copy_change_test_reset(ex_array2_ds, index_negative_all)
+
+    ## create a dataset with maximal dimensions
+    ## check that writing dimensions less than the maximum is ok, but larger than
+    ## the maximum will fail
+    h5s_finite_maxdims <- H5S$new(type="simple", dims=c(5, 10, 15), maxdims=c(10, 15, 20))
+    h5d_finite_maxdims <- file.h5$create_dataset(name="ds_finite_maxdims", dtype=h5types$H5T_NATIVE_DOUBLE, space=h5s_finite_maxdims)
+    h5d_finite_maxdims[10, , ] <- 1:150
+    expect_equal(h5d_finite_maxdims$dims, c(10, 10, 15))
+    expect_error({h5d_finite_maxdims[11, , ] <- 151:300}, regexp="The following coordinates are larger than the largest possible dataset dimensions \\(maxdims\\): 1")
     
     file.h5$close_all()
     file.remove(test_file)

@@ -356,6 +356,10 @@ subset_assign_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT
         ## if yes need to throw an error
         if(any(reg_eval_res$max_dims > simple_extent$dims)) {
             ## need to reset the extent of the arguments
+            if(any(reg_eval_res$max_dims > simple_extent$maxdims)) {
+                stop("The following coordinates are larger than the largest possible dataset dimensions (maxdims): ",
+                     paste(which(reg_eval_res$max_dims > simple_extent$maxdims), sep=", "))
+            }
             x$set_extent(reg_eval_res$max_dims)
             x_space <- x$get_space()
         }
