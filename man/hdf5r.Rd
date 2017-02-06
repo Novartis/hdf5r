@@ -6,9 +6,7 @@
 \alias{hdf5r-package}
 \title{hdf5r: A package to provide an interface to hdf5 from R}
 \description{
-hdf5r: A package to provide an interface to hdf5 from R
-}
-\section{Overview of classes}{
-
+A package that allows to interface with the HDF5 C-library. Proivdes acces to most of its
+functionality from inside R using R6 classes.
 }
 

@@ -65,28 +65,154 @@ test_that("Names and [[", {
 })
 
 
-test_that("dim_hyperslab", {
-    dim_hyperslab_wrapper <- function(x, envir=parent.frame()) {
-        return(dim_hyperslab(substitute(x), envir=envir))
-    }  
+index_logical <- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE)
+index_regular <- c(3, 4, 5, 6)
+index_regular2 <- c(3, 5, 7, 9)
+index_positive <- c(1, 5, 6, 10, 15)
+index_ident <- c(1, 3, 3, 6)
+index_decreasing <- c(5, 4, 2, 1)
+index_negative_all <- -index_regular
+index_negative_some <- c(1, 3, -2, 5, 6)
+index_large <- c(1, 15)
+index_empty <- list(quote(expr=))
 
-    expect_equal(dim_hyperslab_wrapper(1:4), hyperslab(1, 1, 1, 4))
-    expect_equal(dim_hyperslab_wrapper(seq(to=4, from=1, by=2)), hyperslab(1, 2, 2, 1))
-    expect_equal(dim_hyperslab_wrapper(seq_len(5)), hyperslab(1, 1, 1, 5))
+
+test_that("args_regularity_evaluation to selection", {
+    ## first, check arg for hyperslab func, i.e. for functions that can directly be interpreted as a 
+    ## a range of example arguments
+    a <- 4
+    example_calls <- list(call(":", a, 8),
+                          call("seq_len", 6),
+                          call("seq", from=4, to=9, by=2),
+                          call("seq", from=4, length.out=4, by=1),
+                          call(":", -2, 2),
+                          expression(1:5 / 10 * 2))
+    check_for_func_res <- lapply(example_calls, hdf5r:::check_arg_for_hyperslab_func, envir=sys.frame())
+    expect_equal(check_for_func_res, list(c(4, 1, 1, 5), c(1, 1, 1, 6), c(4, 3, 2, 1), c(4, 1, 1, 4), c(NA, NA, NA, NA), c(NA, NA, NA, NA)))
+
+    example_indices <- list(index_logical,
+                            index_regular,
+                            index_regular2, 
+                            index_positive,
+                            index_ident,
+                            index_decreasing,
+                            index_negative_all,
+                            index_large,
+                            quote(expr=))
+    ## now do the argument regularity evaluation
+    ds_dims <- rep(10, length(example_indices))
+    example_indices_regularity <- hdf5r:::args_regularity_evaluation(example_indices, ds_dims, envir=sys.frame())
+    ## now need to check every component
+    NA_hyperslab_row <- c(NA, NA, NA, NA)
+    example_indices_intended_output <- list(
+        args_in=example_indices,
+        args_point=list(c(1, 3, 4, 6, 10), NULL, NULL, index_positive, unique(index_ident), sort(index_decreasing),
+            seq_len(10)[index_negative_all], NULL, NULL),
+        is_hyperslab=c(FALSE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE, TRUE, TRUE),
+        hyperslab=matrix(c(NA_hyperslab_row, c(3, 1, 1, 4), c(3, 4, 2, 1), NA_hyperslab_row, NA_hyperslab_row,
+            NA_hyperslab_row, NA_hyperslab_row, c(1, 2, 14, 1), c(1, 1, 1, 10)),
+            byrow=TRUE, ncol=4, dimnames=list(NULL, c("start", "count", "stride", "block"))),
+        result_dims_pre_shuffle=c(5, 4, 4, 5, 3, 4, 6, 2, 10),
+        result_dims_post_shuffle=c(5, 4, 4, 5, 4, 4, 6, 2, 10),
+        max_dims=c(10, 6, 9, 15, 6, 5, 10, 15, 10),
+        needs_reshuffle=c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, FALSE, FALSE, FALSE),
+        reshuffle=list(NULL, NULL, NULL, NULL, c(1, 2, 2, 3), c(4, 3, 2, 1), NULL, NULL, NULL)
+        )
+    expect_equal(example_indices_regularity, example_indices_intended_output)
+    expect_error(args_regularity_evaluation(list(index_negative_some), ds_dims=10, envir=sys.frame()))
+
+    ## now need to translate the regularity evaluation either into a hyperslab or a pointlist selection
+    ## three cases; one with only points; one with a hyperslab and points and one with only hyperslabs
+    only_points_regularity <- args_regularity_evaluation(list(index_positive, index_positive), ds_dims=c(10, 10), envir=sys.frame())
+    mixed_regularity <- args_regularity_evaluation(list(index_regular, index_positive), ds_dims=c(10, 10), envir=sys.frame())
+    only_hyperslab_regularity <- args_regularity_evaluation(list(index_regular, index_regular2, quote(expr=)),
+                                                            ds_dims=c(10, 10, 10), envir=sys.frame())
+
+    only_points_selection <- regularity_eval_to_selection(only_points_regularity)
+    mixed_selection <- regularity_eval_to_selection(mixed_regularity)
+    only_hyperslab_selection <- regularity_eval_to_selection(only_hyperslab_regularity)
+
+    expect_equal(only_points_selection, structure(matrix(c(rep(index_positive, times=5), rep(index_positive, each=5)), ncol=2), class="point_selection"))
+    mixed_selection_array <- array(0, dim=c(2, 5, 4))
+    mixed_selection_array[1,,] <- rep(c(3, 1, 1, 4), each=5)
+    mixed_selection_array[2,,] <- 1
+    mixed_selection_array[2,,1] <- index_positive
+    expect_equal(mixed_selection, structure(mixed_selection_array, class="hyperslab_selection"))
+
+    only_hyperslab_array <- array(0, dim=c(3, 1, 4))
+    only_hyperslab_array[1,,] <- c(3, 1, 1, 4)
+    only_hyperslab_array[2,,] <- c(3, 4, 2, 1)
+    only_hyperslab_array[3,,] <- c(1, 1, 1, 10)
+    expect_equal(only_hyperslab_selection, structure(only_hyperslab_array, class="hyperslab_selection"))
 })
 
 
 
 test_that("subset_h5.H5S", {
     ## create a dataspace
-    h5s_obj <- H5S$new(type="simple", dims=c(10,20,30), maxdims=c(10,20,30))
+    h5s_obj <- H5S$new(type="simple", dims=c(10, 15, 20), maxdims=c(10, 15, 20))
     subset_h5.H5S(h5s_obj, seq_len(3), seq(2,4,by=3), 5:9)
     expect_equal(h5s_obj$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
-    expect_equal(h5s_obj$get_select_hyper_blocklist(), matrix(c(1,3,2,2,5,9), nrow=2))
+    expect_equal(h5s_obj$get_select_hyper_blocklist(), matrix(c(1,3,2,2,5,9), nrow=2, dimnames=list(c("block_1_start", "block_1_end"), NULL)))
 
     subset_h5.H5S(h5s_obj, seq_len(3), seq(2,4,by=3), c(1,2,4))
     expect_equal(h5s_obj$get_select_type(), h5const$H5S_SEL_POINTS)
+
+
+    ## setting one that is outside the limits of the space
+    expect_error(h5s_obj[11, 1, 1], "The following coordinates are outside the dataset dimensions: 1")
+
     
+    ## complicated subsetting in various forms
+    ## using logial
+    ## using non-uniform index
+    ## using decreasing index
+    ## using negative index (all of them)
+    ## using index (some of them)
+    ## using index with several identical values
+    ## GOAL: Ensure that a hyperslab selection is being done in the intended places
+    index_logical <- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE)
+    index_regular <- 3:6
+    index_positive <- c(1, 5, 6, 10)
+    index_ident <- c(1, 3, 3, 6)
+    index_decreasing <- c(5, 4, 2, 1)
+    index_negative_all <- -index_regular
+    index_negative_some <- c(1, 3, -2, 5, 6)
+    index_large <- c(1, 15)
+    
+    ## now make the tests with these indices; will use the h5s_obj
+    ## only use single indices
+    h5s_logical <- subset_h5.H5S(h5s_obj, index_logical, , )
+    expect_equal(h5s_logical$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_regular <- subset_h5.H5S(h5s_obj, index_regular, ,)
+    expect_equal(h5s_regular$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_positive <- subset_h5.H5S(h5s_obj, index_positive, ,)
+    expect_equal(h5s_positive$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_ident <- subset_h5.H5S(h5s_obj, index_ident, ,)
+    expect_equal(h5s_ident$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_decreasing <- subset_h5.H5S(h5s_obj, index_decreasing, ,)
+    expect_equal(h5s_decreasing$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    h5s_negative_all <- subset_h5.H5S(h5s_obj, index_negative_all, ,)
+    expect_equal(h5s_negative_all$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    expect_error(subset_h5.H5S(h5s_obj, index_negative_some, ,), regexp=".*not all subscripts are either positive or negative")
+    expect_error(subset_h5.H5S(h5s_obj, index_large, ,), "The following coordinates are outside the dataset dimensions:.*")
+
+    ## also a few using double or triple indices
+    ## logical should work, as it is recycled
+    h5s_logical_double <- subset_h5.H5S(h5s_obj, index_logical, index_logical, )
+    expect_equal(h5s_logical_double$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+    
+    h5s_logical_triple <- subset_h5.H5S(h5s_obj, index_logical, index_logical, index_logical)
+    expect_equal(h5s_logical_double$get_select_type(), h5const$H5S_SEL_POINTS)
+
+    h5s_logical_regular <- subset_h5.H5S(h5s_obj, index_logical, , index_regular)
+    expect_equal(h5s_logical_regular$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
 })
 
 test_that("subset_h5.H5D", {
@@ -120,12 +246,15 @@ test_that("subset_h5.H5D", {
 
 
     ## need to recreate an error where writing into an array failed when there was a missing dimension
-    ## and the other given dimension was a call
+    ## and the other given dimension was a a variable
     test2 <- file.h5$create_dataset("test_array", dtype=h5types$H5T_NATIVE_INT, space=H5S$new("simple", dims=c(10,10,100)),
                            chunk_dims=c(10,10,1))
     pos_list <- list(1)
     test2[,,pos_list[[1]]] <- 1:100
     expect_equal(test2[,,1], matrix(1:100, ncol=10))
+
+    ## need to ensure that an error is thrown when requesting a too large dimension
+    expect_error(test2[11, ,], "The following coordinates are outside the dataset dimensions: 1")
     
     file.h5$close_all()
     file.remove(test_file)
@@ -164,7 +293,7 @@ test_that("attributes", {
 })
 
 
-test_that("Subsetting dimensions, drop and repeated write", {
+test_that("Subsetting dimensions, drop and write", {
     test_file <- tempfile(fileext=".h5")
     file.h5 <- H5File$new(test_file, mode="w")
 
@@ -189,6 +318,76 @@ test_that("Subsetting dimensions, drop and repeated write", {
     expect_equal(ex_array[,,], ex_arr_ds[,,])
     
 
+    ## complicated subsetting in various forms
+    ## using logial
+    ## using non-uniform index
+    ## using decreasing index
+    ## using index with several identical values
+    ## GOAL: Ensure the correct values are being returned
+    ex_array2 <- array(as.numeric(seq_len(10 * 15* 20)), dim=c(10, 15, 20))
+    file.h5[["ex_array2"]] <- ex_array2
+    ex_array2_ds <- file.h5[["ex_array2"]]
+    index_logical <- c(TRUE, FALSE, TRUE, TRUE, FALSE, TRUE, FALSE, FALSE, FALSE, TRUE)
+    index_regular <- 3:6
+    index_regular2 <- c(3, 5, 7, 9)
+    index_positive <- c(1, 5, 6, 8, 10)
+    index_ident <- c(1, 3, 3, 6)
+    index_decreasing <- c(5, 4, 2, 1)
+    index_negative_all <- -index_regular
+    index_negative_some <- c(1, 3, -3, 5, 6)
+    index_large <- c(1, 15)
+    
+    ## now make the tests with these indices;
+    ## first reading it
+    ## only use single indices
+    expect_equal(ex_array2_ds[index_logical, ,], ex_array2[index_logical, ,])
+    expect_equal(ex_array2_ds[index_regular, ,], ex_array2[index_regular, ,])
+    expect_equal(ex_array2_ds[index_regular2, ,], ex_array2[index_regular2, ,])
+    expect_equal(ex_array2_ds[index_positive, ,], ex_array2[index_positive, ,])
+    expect_equal(ex_array2_ds[index_ident, ,], ex_array2[index_ident, ,])
+    expect_equal(ex_array2_ds[index_decreasing, ,], ex_array2[index_decreasing, ,])
+    expect_equal(ex_array2_ds[index_negative_all, ,], ex_array2[index_negative_all, ,])
+    expect_equal(ex_array2_ds[, ,], ex_array2[, ,])
+
+    expect_error(ex_array2_ds[index_large, ], "Number of arguments not equal to number of dimensions: 2 vs. 3")
+    expect_error(ex_array2_ds[index_negative_some, ,], "In index 1 not all subscripts are either positive or negative")
+    expect_error(ex_array2_ds[index_large,, ], "The following coordinates are outside the dataset dimensions:.*")
+
+    ## also a few using double or triple indices
+    ## logical should work, as it is recycled
+    expect_equal(ex_array2_ds[index_logical, index_logical,], ex_array2[index_logical, index_logical,])
+    expect_equal(ex_array2_ds[index_logical, index_logical, index_logical], ex_array2[index_logical, index_logical, index_logical])
+    expect_equal(ex_array2_ds[index_logical, , index_regular], ex_array2[index_logical, , index_regular])
+
+    ## then also writing it
+    copy_change_test_reset <- function(hdf5_ds, index) {
+        r_ds <- hdf5_ds[,,]
+        r_ds_changed <- r_ds
+        replace_vals <- runif(length(r_ds[index,,]))
+        r_ds_changed[index, ,] <- replace_vals
+        hdf5_ds[index, ,] <- replace_vals
+        hdf5_ds_read <- hdf5_ds[, ,]
+        hdf5_ds[, ,] <- r_ds
+        expect_equal(hdf5_ds_read, r_ds_changed[, ,])
+        return(invisible(NULL))
+    }
+    copy_change_test_reset(ex_array2_ds, index_logical)
+    copy_change_test_reset(ex_array2_ds, index_regular)
+    copy_change_test_reset(ex_array2_ds, index_regular2)
+    copy_change_test_reset(ex_array2_ds, index_positive)
+    copy_change_test_reset(ex_array2_ds, index_ident)
+    copy_change_test_reset(ex_array2_ds, index_decreasing)
+    copy_change_test_reset(ex_array2_ds, index_negative_all)
+
+    ## create a dataset with maximal dimensions
+    ## check that writing dimensions less than the maximum is ok, but larger than
+    ## the maximum will fail
+    h5s_finite_maxdims <- H5S$new(type="simple", dims=c(5, 10, 15), maxdims=c(10, 15, 20))
+    h5d_finite_maxdims <- file.h5$create_dataset(name="ds_finite_maxdims", dtype=h5types$H5T_NATIVE_DOUBLE, space=h5s_finite_maxdims)
+    h5d_finite_maxdims[10, ,1:10 ] <- 1:100
+    expect_equal(h5d_finite_maxdims$dims, c(10, 10, 15))
+    expect_error({h5d_finite_maxdims[11, , ] <- 151:300}, regexp="The following coordinates are larger than the largest possible dataset dimensions \\(maxdims\\): 1")
+    
     file.h5$close_all()
     file.remove(test_file)
     

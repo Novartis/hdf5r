@@ -141,7 +141,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D
   mem_type = NULL, dataset_xfer_pl = h5const$H5P_DEFAULT,
   flush = getOption("hdf5r.flush_on_write"))}
 Writes that data from the \code{robj} into the dataset.
-For a more convenient interace, use the \code{[<-} as for regular arrays.
+For a more convenient interface, use the \code{[<-} as for regular arrays.
 
 \strong{Parameters:}
 \describe{

@@ -30,10 +30,11 @@ NULL
 ##' hdf5r: A package to provide an interface to hdf5 from R
 ##'
 ##' 
-##' 
+##' A package that allows to interface with the HDF5 C-library. Proivdes acces to most of its
+##' functionality from inside R using R6 classes.
 ##' @name hdf5r
 ##' @docType package
-##' @section Overview of classes
+##'
 NULL
 
 
