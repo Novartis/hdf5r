@@ -360,7 +360,7 @@ subset_assign_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT
                 stop("The following coordinates are larger than the largest possible dataset dimensions (maxdims): ",
                      paste(which(reg_eval_res$max_dims > simple_extent$maxdims), sep=", "))
             }
-            x$set_extent(reg_eval_res$max_dims)
+            x$set_extent(pmax(reg_eval_res$max_dims, simple_extent$dims))
             x_space <- x$get_space()
         }
         robj_dim <- get_robj_dim(reg_eval_res, x$get_type()) 

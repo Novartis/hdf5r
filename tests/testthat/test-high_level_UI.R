@@ -384,7 +384,7 @@ test_that("Subsetting dimensions, drop and write", {
     ## the maximum will fail
     h5s_finite_maxdims <- H5S$new(type="simple", dims=c(5, 10, 15), maxdims=c(10, 15, 20))
     h5d_finite_maxdims <- file.h5$create_dataset(name="ds_finite_maxdims", dtype=h5types$H5T_NATIVE_DOUBLE, space=h5s_finite_maxdims)
-    h5d_finite_maxdims[10, , ] <- 1:150
+    h5d_finite_maxdims[10, ,1:10 ] <- 1:100
     expect_equal(h5d_finite_maxdims$dims, c(10, 10, 15))
     expect_error({h5d_finite_maxdims[11, , ] <- 151:300}, regexp="The following coordinates are larger than the largest possible dataset dimensions \\(maxdims\\): 1")
     
