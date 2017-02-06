@@ -18,7 +18,9 @@ A list with the dimensions of the resulting object, pre- and post shuffle
 Get the size of the resulting R object
 }
 \details{
-.. content for \details{} ..
+For normal objects, just uses the size of the indices in the request, and evaluates
+them bost pre- and post-shuffle. If the internal object is an array, additional dimensions
+are appeded at the end.
 }
 \author{
 Holger Hoefling

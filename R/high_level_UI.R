@@ -744,7 +744,9 @@ regularity_eval_to_selection <- function(reg_eval_res) {
 
 ##' Get the size of the resulting R object
 ##'
-##' .. content for \details{} ..
+##' For normal objects, just uses the size of the indices in the request, and evaluates
+##' them bost pre- and post-shuffle. If the internal object is an array, additional dimensions
+##' are appeded at the end.
 ##' @title Get the size of the resulting R object
 ##' @param reg_eval_res The result of the regularity evaluation
 ##' @param dtype The datatype under consideration
