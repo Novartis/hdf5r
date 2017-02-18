@@ -348,7 +348,40 @@ H5S <- R6Class("H5S",
 
                        standalone_H5S_select_hyperslab(id=self$id, start=start, count=count, stride=stride, block=block, op=op)
                        return(invisible(self))
-                   }                       
+                   },
+                   subset=function(args, op=h5const$H5S_SELECT_SET, envir=parent.frame()) {
+                       "Subsetting the space. This is mainly intended as a helper function for the '[' function, but"
+                       "can also be used on its own."
+                       "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
+                       "For interactive use we recomment the use of the \\code{[} operator."
+                       "@param op The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in"
+                       "\\code{h5const$H5S_seloper_t}"
+                       "@param envir The environment in which to evaluate \\code{args}}"
+                       if(!self$is_simple()) {
+                           stop("Dataspace has to be simple for a selection to occur")
+                       }
+                       simple_extent <- self$get_simple_extent_dims()    
+                       ## distinguish between scalar and non-scalar
+                       if(simple_extent$rank == 0 && self$get_select_npoint() == 1) {
+                           ## is a scalar
+                           if(!are_args_scalar(args)) {
+                               stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
+                           }
+                           ## nothing needs to be done; just fall through to the end
+                       }
+                       else {
+                           reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir)
+                           ## need to check if maximum dimension in indices are larger than dataset dimensions
+                           ## if yes need to throw an error
+                           if(any(reg_eval_res$max_dims > simple_extent$dims)) {
+                               stop("The following coordinates are outside the dataset dimensions: ",
+                                    paste(which(reg_eval_res$max_dims > simple_extent$dims), sep=", "))
+                           }
+                           selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
+                           apply_selection(space_id=self$id, selection=selection)
+                       }
+                       return(invisible(self))
+                   }
                    ),
                active=list(
                    dims=function() {

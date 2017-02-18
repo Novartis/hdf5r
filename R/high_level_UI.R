@@ -236,34 +236,7 @@ h5attr <- function(x, which) {
 subset_h5.H5S <- function(x,d1,  ..., op=h5const$H5S_SELECT_SET, envir=parent.frame()) {
     args <- eval(substitute(alist(d1, ...)))
 
-    if(!x$is_simple()) {
-        stop("Dataspace has to be simple for a selection to occur")
-    }
-    simple_extent <- x$get_simple_extent_dims()    
-    ## distinguish between scalar and non-scalar
-    if(simple_extent$rank == 0 && x$get_select_npoint() == 1) {
-        ## is a scalar
-        if(are_args_scalar(args)) {
-            return(invisible(x))
-        }
-        else {
-            stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
-        }
-    }
-    else {
-        reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir)
-        ## need to check if maximum dimension in indices are larger than dataset dimensions
-        ## if yes need to throw an error
-        if(any(reg_eval_res$max_dims > simple_extent$dims)) {
-            stop("The following coordinates are outside the dataset dimensions: ",
-                 paste(which(reg_eval_res$max_dims > simple_extent$dims), sep=", "))
-        }
-        selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
-        apply_selection(space_id=x$id, selection=selection) 
-
-        ## remember - on spaces everythign is done in as reference, so we can just return x
-        return(invisible(x))
-    }
+    return(x$subset(args=args, op=op, envir=envir))
 }
 
 
@@ -277,7 +250,6 @@ subset_h5.H5S <- function(x,d1,  ..., op=h5const$H5S_SELECT_SET, envir=parent.fr
 subset_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT,
                           flags=getOption("hdf5r.h5tor_default"), drop=TRUE, envir=parent.frame()) {
     op <- h5const$H5S_SELECT_SET
-    args <- eval(substitute(alist(d1, ...)))
     x_space <- x$get_space()
     args <- eval(substitute(alist(d1, ...)))
 
@@ -750,7 +722,7 @@ regularity_eval_to_selection <- function(reg_eval_res) {
 ##'
 ##' For normal objects, just uses the size of the indices in the request, and evaluates
 ##' them bost pre- and post-shuffle. If the internal object is an array, additional dimensions
-##' are appeded at the end.
+##' are appended at the end.
 ##' @title Get the size of the resulting R object
 ##' @param reg_eval_res The result of the regularity evaluation
 ##' @param dtype The datatype under consideration
