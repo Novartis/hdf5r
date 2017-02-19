@@ -133,8 +133,6 @@ all indices are being passed in the parameter \code{args}.
 \describe{
 \item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
 For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
-\item{op}{The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in
-\code{h5const$H5S_seloper_t}}
 \item{envir}{The environment in which to evaluate \code{args}}
 \item{dataset_xfer_pl}{An object of class \code{\link{H5P_DATASET_XFER-class}}.}
 \item{flags}{Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
@@ -143,9 +141,7 @@ the issue of R not being able to natively represent 64bit integers and not at al
 \code{H5TOR} and are documented there. The default set here returns a regular 32bit integer if it doesn't lead to an overflow
 and returns a 64bit integer from the \code{bit64} package otherwise. For 64bit unsigned int that are larger than 64bit signed int,
 it return a \code{double}. This looses precision, however.}
-\item{drop}{Logical. When reading data, should dimensions of size 1 be dropped.}
-\item{envir}{The environment in which the dimension indices \code{d1, ...} are to be evaluated. Usually the environment from
-where the function is called.
+\item{drop}{Logical. When reading data, should dimensions of size 1 be dropped.
 @return The data that was read as an R object}
 }}
 
@@ -177,7 +173,18 @@ of the dataset is being written.}
 \strong{Usage:}
 \preformatted{write(args, value, dataset_xfer_pl = h5const$H5P_DEFAULT,
   envir = parent.frame())}
-NO DOCUMENTATION AVAILABLE}
+Main interface for writing data to the dataset. It is the function that is used by \code{[<-}, where
+all indices are being passed in the parameter \code{args}.
+
+\strong{Parameters:}
+\describe{
+\item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
+For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
+\item{value}{The data to write to the dataset}
+\item{envir}{The environment in which to evaluate \code{args}}
+\item{dataset_xfer_pl}{An object of class \code{\link{H5P_DATASET_XFER-class}}.
+@return The HDF5 dataset object, returned invisibly}
+}}
 
 \item{\code{set_extent}}{
 

@@ -166,7 +166,7 @@ H5D <- R6Class("H5D",
                            ## get the actual file-space and ascertain its size
                            file_space_id <- .Call("R_H5Dget_space", self$id, PACKAGE="hdf5r")$return_val
                            on.exit(.Call("R_H5Sclose", file_space_id, PACKAGE = "hdf5r"), add=TRUE)
-                           .Call("R_H5Sselect_all", file_space_id, PACKAGE = "hdf5r")$return_val
+                           .Call("R_H5Sselect_all", file_space_id, PACKAGE = "hdf5r")
 
                            nelem <- .Call("R_H5Sget_select_npoints", file_space_id, PACKAGE = "hdf5r")$return_val
                            ## in this case, we ignore what mem_space is set to
@@ -257,8 +257,6 @@ H5D <- R6Class("H5D",
                        "all indices are being passed in the parameter \\code{args}."
                        "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
                        "For interactive use we recomment the use of the \\code{[} operator. If set to \\code{NULL}, the entire dataset will be read."
-                       "@param op The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in"
-                       "\\code{h5const$H5S_seloper_t}"
                        "@param envir The environment in which to evaluate \\code{args}"
                        "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER-class}}." 
                        "@param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and"
@@ -268,11 +266,8 @@ H5D <- R6Class("H5D",
                        "and returns a 64bit integer from the \\code{bit64} package otherwise. For 64bit unsigned int that are larger than 64bit signed int,"
                        "it return a \\code{double}. This looses precision, however."
                        "@param drop Logical. When reading data, should dimensions of size 1 be dropped."
-                       "@param envir The environment in which the dimension indices \\code{d1, ...} are to be evaluated. Usually the environment from"
-                       "where the function is called."
                        "@return The data that was read as an R object"
 
-                       op <- h5const$H5S_SELECT_SET
                        self_space_id <- as.integer64(.Call("R_H5Dget_space", self$id, PACKAGE="hdf5r")$return_val)
                        on.exit(.Call("R_H5Sclose", self_space_id, PACKAGE = "hdf5r"), add=TRUE)
                        
@@ -347,45 +342,69 @@ H5D <- R6Class("H5D",
                        "@param dataset_xfer_pl Dataset transfer property list. See \\code{\\link{H5P_DATASET_XFER-class}}"
                        "@param flush Should a flush be done after the write"
 
-                       if(is.null(mem_type)) {
-                           mem_type <- self$get_type()
+                       ## first ensure that file_space of the correct types and extract the id
+                       if(!inherits(file_space, "H5S") && !(is.integer64(file_space) && length(file_space) == 1)) {
+                           stop("file_space has to be an id or of type H5T")
                        }
+                       file_space_id <- get_id(file_space)
 
-                       check_class(mem_type, "H5T")
-                       if(!is.null(mem_space)) {
-                           check_class(mem_space, "H5S")
-                       }
-                       check_class(file_space, "H5S")
-                       check_pl(dataset_xfer_pl, "H5P_DATASET_XFER")
-
-                       ## compare if the number of elements matches
-                       if(file_space$id==h5const$H5S_ALL$id) {
+                       if(file_space_id==h5const$H5S_ALL$id) {
                            ## get the actual file-space and ascertain its size
-                           file_space_ds <- self$get_space()
-                           file_space_type <- as.character(file_space_ds$get_simple_extent_type())
+                           file_space_id <- .Call("R_H5Dget_space", self$id, PACKAGE="hdf5r")$return_val
+                           on.exit(.Call("R_H5Sclose", file_space_id, PACKAGE = "hdf5r"), add=TRUE)
+                           .Call("R_H5Sselect_all", file_space_id, PACKAGE = "hdf5r")
 
-                           nelem_file <- file_space_ds$get_select_npoints()
-                           mem_space <- file_space
+                           nelem_file <- .Call("R_H5Sget_select_npoints", file_space_id, PACKAGE = "hdf5r")$return_val
+                           ## in this case, we ignore what mem_space is set to
+                           mem_space_id <- h5const$H5S_ALL$id
                        }
                        else {
-                           nelem_file <- file_space$get_select_npoints()
+                            ## else, just get a linear space
+                           nelem_file <- .Call("R_H5Sget_select_npoints", file_space_id, PACKAGE = "hdf5r")$return_val
+
                            if(is.null(mem_space)) {
-                               mem_space <- H5S$new(type="simple", dims=nelem_file, maxdims=nelem_file)
+                               ## use this simple space; this may come with some speed penalties
+                               ## arguements are rank, dims, maxdims
+                               mem_space_id <- as.integer64(.Call("R_H5Screate_simple", 1, nelem_file, nelem_file, PACKAGE="hdf5r")$return_val)
+                               if(mem_space_id < 0) {
+                                   stop("Error creating simple dataspace")
+                               }
+                               on.exit(.Call("R_H5Sclose", mem_space_id, PACKAGE = "hdf5r"), add=TRUE)
+
+                           }
+                           else {
+                               if(!inherits(mem_space, "H5S") && !(is.integer64(mem_space) && length(mem_space) == 1)) {
+                                   stop("mem_space has to be an id or of type H5T")
+                               }
+                               ## extract the id that was given
+                               mem_space_id <- get_id(mem_space)
                            }
                        }
 
-                       nelem_robj <- guess_nelem(robj, mem_type)
+                       if(is.null(mem_type)) {
+                           mem_type_id <- standalone_H5D_get_type(h5d_id=self$id, native=TRUE)
+                           on.exit(.Call("R_H5Tclose", mem_type_id, PACKAGE = "hdf5r"), add=TRUE)
+                       }
+                       else {
+                           if(!inherits(mem_type, "H5T") && !(is.integer64(mem_type) && length(mem_type) == 1)) {
+                               stop("mem_type has to be an id or of type H5T")
+                           }
+                           ## now extract the ids
+                           mem_type_id <- get_id(mem_type)
+                       }
+                       
+                       nelem_robj <- .Call("R_guess_nelem", robj, mem_type_id, PACKAGE="hdf5r")
 
                        if(nelem_robj != nelem_file && (nelem_file %% nelem_robj != 0 || nelem_file < nelem_robj)) {
                            stop("Number of objects in robj is not the same and not a multiple of number of elements selected in file")
                        }
-                       buffer <- RToH5(robj, mem_type, nelem_robj)
+                       buffer <- .Call("R_RToH5", robj, mem_type_id, nelem_robj, PACKAGE="hdf5r")
                        if(nelem_robj != nelem_file) {
                            ## need to multiply input buffer
                            buffer <- rep(buffer, times=nelem_file / nelem_robj)
                        }
                        
-                       res <- .Call("R_H5Dwrite", self$id, mem_type$id, mem_space$id, file_space$id, dataset_xfer_pl$id,
+                       res <- .Call("R_H5Dwrite", self$id, mem_type_id, mem_space_id, file_space_id, dataset_xfer_pl$id,
                                     buffer, PACKAGE="hdf5r")
                        if(res$return_val < 0) {
                            stop("Error writing dataset")
@@ -396,25 +415,41 @@ H5D <- R6Class("H5D",
                        return(invisible(self))
                    },
                    write=function(args, value, dataset_xfer_pl=h5const$H5P_DEFAULT, envir=parent.frame()) {
+                       "Main interface for writing data to the dataset. It is the function that is used by \\code{[<-}, where"
+                       "all indices are being passed in the parameter \\code{args}."
+                       "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
+                       "For interactive use we recomment the use of the \\code{[} operator. If set to \\code{NULL}, the entire dataset will be read."
+                       "@param value The data to write to the dataset"
+                       "@param envir The environment in which to evaluate \\code{args}"
+                       "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER-class}}." 
+                       "@return The HDF5 dataset object, returned invisibly"
                        
-                       op <- h5const$H5S_SELECT_SET
-                       self_space <- self$get_space()
+                       self_space_id <- as.integer64(.Call("R_H5Dget_space", self$id, PACKAGE="hdf5r")$return_val)
+                       on.exit(.Call("R_H5Sclose", self_space_id, PACKAGE = "hdf5r"), add=TRUE)
                        
-                       if(!self_space$is_simple()) {
+                       self_space_is_simple <- as.logical(.Call("R_H5Sis_simple", self_space_id, PACKAGE = "hdf5r")$return_val)
+                       if(!self_space_is_simple) {
                            stop("Dataspace has to be simple for a selection to occur")
                        }
-                       simple_extent <- self_space$get_simple_extent_dims()    
+                       simple_extent <- standalone_H5S_get_simple_extent_dims(self_space_id)
                        ## distinguish between scalar and non-scalar
-                       if(simple_extent$rank == 0 && self_space$get_select_npoint() == 1) {
+                       if(simple_extent$rank == 0) {
+                           if(is.null(args)) {
+                               args <- list(quote(expr=))
+                           }
                            ## is a scalar
                            if(are_args_scalar(args)) {
-                               return(self$write(value, file_space=self_space, mem_space=self_space, dataset_xfer_pl=dataset_xfer_pl))
+                               return(self$write_low_level(value, file_space=self_space_id, mem_space=self_space_id, dataset_xfer_pl=dataset_xfer_pl))
                            }
                            else {
                                stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
                            }
                        }
                        else {
+                           if(is.null(args)) {
+                               ## create arguments that are missing in every dimension, i.e. represent all
+                               args <- rep(list(quote(expr=)), simple_extent$rank)
+                           }
                            reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir, post_read=FALSE)
                            ## need to check if maximum dimension in indices are larger than dataset dimensions
                            ## if yes need to throw an error
@@ -425,21 +460,29 @@ H5D <- R6Class("H5D",
                                         paste(which(reg_eval_res$max_dims > simple_extent$maxdims), sep=", "))
                                }
                                self$set_extent(pmax(reg_eval_res$max_dims, simple_extent$dims))
-                               self_space <- self$get_space()
+                               .Call("R_H5Sclose", self_space_id, PACKAGE = "hdf5r")
+                               self_space_id <- as.integer64(.Call("R_H5Dget_space", self$id, PACKAGE="hdf5r")$return_val)
+                               on.exit(.Call("R_H5Sclose", self_space_id, PACKAGE = "hdf5r"), add=FALSE)
                            }
                            robj_dim <- private$get_robj_dim(reg_eval_res) 
                            selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
-                           apply_selection(space_id=self_space$id, selection=selection) 
+                           apply_selection(space_id=self_space_id, selection=selection) 
                            
-                           mem_space_dims <- robj_dim$robj_dim_post_shuffle
-                           mem_space <- H5S$new(type="simple", dims=mem_space_dims, maxdims=mem_space_dims)
+                           mem_space_dims <- reg_eval_res$result_dims_post_shuffle
+                           mem_space_rank <- length(mem_space_dims)
+                           mem_space_id <- as.integer64(.Call("R_H5Screate_simple", mem_space_rank, rev(mem_space_dims), rev(mem_space_dims),
+                                                 PACKAGE="hdf5r")$return_val)
+                           if(mem_space_id < 0) {
+                               stop("Error creating simple dataspace")
+                           }
+                           on.exit(.Call("R_H5Sclose", mem_space_id, PACKAGE = "hdf5r"), add=TRUE)
                            
                            if(any(reg_eval_res$needs_reshuffle)) {
                                ## need to ensure that the input has the right dimensions attached in case it is just a vector)
-                               dim(value) <- reg_eval_res$result_dims_pre_shuffle
+                               dim(value) <- robj_dim$robj_dim_pre_shuffle
                                value <- do_reshuffle(value, reg_eval_res)
                            }
-                           return(self$write_low_level(value, file_space=self_space, mem_space=mem_space, dataset_xfer_pl=dataset_xfer_pl))
+                           return(self$write_low_level(value, file_space=self_space_id, mem_space=mem_space_id, dataset_xfer_pl=dataset_xfer_pl))
                        }
                    },
                    set_extent=function(dims) {
