@@ -136,15 +136,7 @@ H5S <- R6Class("H5S",
                    get_simple_extent_dims=function() {
                        "This function implements the HDF5-API function H5Sget_simple_extent_dims. Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-GetSimpleExtentDims} for details."
 
-                       rank <- self$get_simple_extent_ndims()
-                       res <- suppressWarnings(.Call("R_H5Sget_simple_extent_dims", self$id, request_empty(rank), request_empty(rank), PACKAGE = "hdf5r"))
-                       if(res$return_val < 0) {
-                           stop("Error when retrieving extent of simple dataspace")
-                       }
-                       names(res) <- c("rank", "dims", "maxdims")
-                       res$dims <- rev(res$dims)
-                       res$maxdims <- rev(res$maxdims)
-                       return(res)                           
+                       return(standalone_H5S_get_simple_extent_dims(self$id))
                    },
                    get_simple_extent_npoints=function() {
                        "This function implements the HDF5-API function H5Sget_simple_extent_npoints. Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-GetSimpleExtentNpoints} for details."
@@ -573,4 +565,18 @@ standalone_H5S_select_multiple_hyperslab <- function(id, hyperslab_array) {
         }
     }
     return(NULL)
+}
+
+
+
+standalone_H5S_get_simple_extent_dims=function(id) {
+    rank <- standalone_H5S_get_simple_extent_ndims(id)
+    res <- suppressWarnings(.Call("R_H5Sget_simple_extent_dims", id, request_empty(rank), request_empty(rank), PACKAGE = "hdf5r"))
+    if(res$return_val < 0) {
+        stop("Error when retrieving extent of simple dataspace")
+    }
+    names(res) <- c("rank", "dims", "maxdims")
+    res$dims <- rev(res$dims)
+    res$maxdims <- rev(res$maxdims)
+    return(res)                           
 }

@@ -455,7 +455,11 @@ H5R_DATASET_REGION <- R6Class("H5R_DATASET_REGION",
                                       obj_ds <- H5D$new(id=id_ds)
                                       obj_space <- H5S$new(id=id_space)
                                       if(get_value) {
-                                          res[[i]] <- obj_ds$read_low_level(file_space=obj_space)
+                                          ## need to determine which dimensionality the output should have
+                                          obj_ds_dtype <- obj_ds$get_type()
+                                          dim_to_set <- extract_dim(obj_space, obj_ds_dtype)
+                                          res[[i]] <- obj_ds$read_low_level(file_space=obj_space, mem_type=obj_ds_dtype, set_dim=TRUE,
+                                                                            dim_to_set=dim_to_set)
                                       }
                                       else {
                                           res[[i]] <- list(dataset=obj_ds, space=obj_space)
@@ -472,7 +476,11 @@ H5R_DATASET_REGION <- R6Class("H5R_DATASET_REGION",
                                       obj_ds <- H5D$new(id=id_ds)
                                       obj_space <- H5S$new(id=id_space)
                                       if(get_value) {
-                                          res[[i]] <- obj_ds$read_low_level(file_space=obj_space)
+                                          ## need to determine which dimensionality the output should have
+                                          obj_ds_dtype <- obj_ds$get_type()
+                                          dim_to_set <- extract_dim(obj_space, obj_ds_dtype)
+                                          res[[i]] <- obj_ds$read_low_level(file_space=obj_space, mem_type=obj_ds_dtype, set_dim=TRUE,
+                                                                            dim_to_set=dim_to_set)
                                       }
                                       else {
                                           res[[i]] <- list(dataset=obj_ds, space=obj_space)

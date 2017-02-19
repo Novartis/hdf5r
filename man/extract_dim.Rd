@@ -21,10 +21,10 @@ Set the correct dimension attribute for an object
 }
 \details{
 This function uses the space and the selection in it to set the correct dimension
-for the resulting object (but without dropping dimensions). Furhtermore, if the
-datatype is an array, those dimensions are correctly attached as well.
+for the resulting object (but without dropping dimensions). Furthermore, if the
+datatype is an array, those dimensions are correctly determined as well.
 
-Internal use only; not exported
+Internal use only; currently unused
 }
 \author{
 Holger Hoefling

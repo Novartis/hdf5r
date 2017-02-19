@@ -95,8 +95,8 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D
 \strong{Usage:}
 \preformatted{read_low_level(file_space = h5const$H5S_ALL, mem_space = NULL,
   mem_type = NULL, dataset_xfer_pl = h5const$H5P_DEFAULT,
-  flags = getOption("hdf5r.h5tor_default"), set_dim = TRUE,
-  dim_to_set = "auto", drop = TRUE)}
+  flags = getOption("hdf5r.h5tor_default"), set_dim = FALSE,
+  dim_to_set = NULL, drop = TRUE)}
 This function is for advanced users. It is recommended to use \code{read} instead or the \code{[} interface.
 This function implements the HDF5-API function H5Dread, with minor changes to the API to accomodate R.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details.
@@ -105,22 +105,25 @@ It reads the data in the dataset as specified by \code{mem_space} and return it 
 \strong{Parameters:}
 \describe{
 \item{file_space}{An HDF5-space, represented as class \code{\link{H5S-class}} that determines which part
-of the dataset is being read.}
-\item{mem_space}{The space as it is represented in memory; advanced feature; may be removed in the future}
-\item{mem_type}{Memory type; extracted from the dataset if null (can be passed in for efficiency reasons}
+of the dataset is being read. Can also be given as an id}
+\item{mem_space}{The space as it is represented in memory; advanced feature; may be removed in the future.
+Can also be given as an id.}
+\item{mem_type}{Memory type; extracted from the dataset if null (can be passed in for efficiency reasons
+Can also be given as an id.}
 \item{dataset_xfer_pl}{Dataset transfer property list. See \code{\link{H5P_DATASET_XFER-class}}}
 \item{flags}{Conversion rules for integer values. See also \code{\link{h5const}}}
 \item{set_dim}{If \code{TRUE}, the dimension attribute is set in the return value. How it is set 
 is determined by \code{dim_to_set}.}
-\item{dim_to_set}{The dimension to set; if \code{auto}, it is determined automatically using the internal
-datatypes; otherwise, the object passed is used as the dimension attribute}
+\item{dim_to_set}{The dimension to set; Has to be numeric and needs to be specified if \code{set_dim} is \code{TRUE}.
+If the result is a data.frame, i.e. the data-type is a compound, then the dimension is ignored as the
+correct dimension is already set.}
 \item{drop}{Logical. Should dimensions of length 1 be dropped (R-default for arrays)}
 }}
 
 \item{\code{read}}{
 
 \strong{Usage:}
-\preformatted{read(args, dataset_xfer_pl = h5const$H5P_DEFAULT,
+\preformatted{read(args = NULL, dataset_xfer_pl = h5const$H5P_DEFAULT,
   flags = getOption("hdf5r.h5tor_default"), drop = TRUE,
   envir = parent.frame())}
 Main interface for reading data from the dataset. It is the function that is used by \code{[}, where
@@ -129,7 +132,7 @@ all indices are being passed in the parameter \code{args}.
 \strong{Parameters:}
 \describe{
 \item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
-For interactive use we recomment the use of the \code{[} operator.}
+For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
 \item{op}{The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in
 \code{h5const$H5S_seloper_t}}
 \item{envir}{The environment in which to evaluate \code{args}}

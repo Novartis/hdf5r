@@ -632,28 +632,6 @@ regularity_eval_to_selection <- function(reg_eval_res) {
 
 
 
-##' Get the size of the resulting R object
-##'
-##' For normal objects, just uses the size of the indices in the request, and evaluates
-##' them bost pre- and post-shuffle. If the internal object is an array, additional dimensions
-##' are appended at the end.
-##' @title Get the size of the resulting R object
-##' @param reg_eval_res The result of the regularity evaluation
-##' @param dtype The datatype under consideration
-##' @return A list with the dimensions of the resulting object, pre- and post shuffle
-##' @author Holger Hoefling
-##' @keywords internal
-get_robj_dim <- function(reg_eval_res, dtype) {
-    ## need to see if we have to add array dimensions
-    add_array_dims <- NULL
-    if(dtype$get_class() == h5const$H5T_ARRAY) {
-        add_array_dims <- dtype$get_array_dims()
-    }
-    robj_dim_pre_shuffle <- c(reg_eval_res$result_dims_pre_shuffle, add_array_dims)
-    robj_dim_post_shuffle <- c(reg_eval_res$result_dims_post_shuffle, add_array_dims)
-    return(list(robj_dim_pre_shuffle=robj_dim_pre_shuffle,
-                robj_dim_post_shuffle=robj_dim_post_shuffle, add_array_dims=add_array_dims))
-}
 
 
 ##' Expand list of points for each dimension into a matrix of all combinations

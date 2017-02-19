@@ -58,7 +58,7 @@ test_that("Names and [[", {
 
     ## and a dataset
     file.h5[["test_dataset2"]] <- robj
-    expect_equal(file.h5[["test_dataset2"]]$read_low_level(), robj)
+    expect_equal(file.h5[["test_dataset2"]]$read(), robj)
     
     file.h5$close_all()
     file.remove(test_file)

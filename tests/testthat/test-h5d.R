@@ -21,7 +21,7 @@ context("H5D")
 
 read_write_roundtrip <- function(ds, robj) {
     ds$write_low_level(robj)
-    res <- ds$read_low_level()
+    res <- ds$read()
     return(list(input=robj, output=res))
 }
 

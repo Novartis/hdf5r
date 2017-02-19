@@ -35,4 +35,8 @@ profvis_read <- profvis({
     }
 })
 
+print(profvis_write)
+print(profvis_read)
+
+file_h5$close_all()
 
