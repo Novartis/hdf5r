@@ -20,8 +20,8 @@
 context("H5D")
 
 read_write_roundtrip <- function(ds, robj) {
-    ds$write(robj)
-    res <- ds$read()
+    ds$write_low_level(robj)
+    res <- ds$read_low_level()
     return(list(input=robj, output=res))
 }
 
@@ -65,7 +65,7 @@ test_that("Basic dataset function", {
     ## now write a dataset directly
     ds_int64_robj <- file.h5$create_dataset(name="int64_robj", 1:20)
     ## check that we can read the data out
-    expect_equal(ds_int64_robj$read(), 1:20)
+    expect_equal(ds_int64_robj$read_low_level(), 1:20)
 
     ## also try it with a 2-dimensional space; and a version with a one-dimensional space and an internal array
     array_type <- H5T_ARRAY$new(4, h5types$H5T_NATIVE_INT)

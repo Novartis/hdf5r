@@ -150,27 +150,12 @@ H5D <- R6Class("H5D",
                        }
                        return(invisible(self))
                    },
-                   read_low_level=function(buffer, mem_type, mem_space=h5const$H5S_ALL, file_space=h5const$H5S_ALL,
-                       dataset_xfer_pl=h5const$H5P_DEFAULT, duplicate_buffer=FALSE) {
-                       "This function is for advanced users. It is recommended to use \\code{read} instead."
-                       "This function implements the HDF5-API function H5Dread."
-                       "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details."
-
-                       check_class(mem_type, "H5T")
-                       check_class(mem_space, "H5S")
-                       check_class(file_space, "H5S")
-                       check_pl(dataset_xfer_pl, "H5P_DATASET_XFER")
-                       res <- .Call("R_H5Dread", self$id, mem_type$id, mem_space$id, file_space$id, dataset_xfer_pl$id,
-                                    buffer, duplicate_buffer, PACKAGE="hdf5r")
-                       if(res$return_val < 0) {
-                           stop("Error reading dataset")
-                       }
-                       return(res$buffer)
-                   },
-                   read=function(file_space=h5const$H5S_ALL, mem_space=NULL, mem_type=NULL,
+                   read_low_level=function(file_space=h5const$H5S_ALL, mem_space=NULL, mem_type=NULL,
                        dataset_xfer_pl=h5const$H5P_DEFAULT, flags=getOption("hdf5r.h5tor_default"), set_dim=TRUE, dim_to_set="auto", drop=TRUE) {
-                       "Read the data in the dataset and return it as an R-obj"
-                       "For a more convenient interface, access the data using the regular \\code{[} notation as used with arrays"
+                       "This function is for advanced users. It is recommended to use \\code{read} instead or the \\code{[} interface."
+                       "This function implements the HDF5-API function H5Dread, with minor changes to the API to accomodate R."
+                       "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details."
+                       "It reads the data in the dataset as specified by \\code{mem_space} and return it as an R-obj"
                        "@param file_space An HDF5-space, represented as class \\code{\\link{H5S-class}} that determines which part"
                        "of the dataset is being read."
                        "@param mem_space The space as it is represented in memory; advanced feature; may be removed in the future"
@@ -240,27 +225,78 @@ H5D <- R6Class("H5D",
 
                        return(buffer_post)
                    },
-                   write_low_level=function(buffer, mem_type, mem_space=h5const$H5S_ALL, file_space=h5const$H5S_ALL,
-                       dataset_xfer_pl=h5const$H5P_DEFAULT) {
-                       "This function is for advanced users. It is recommended to use \\code{read} instead."
-                       "This function implements the HDF5-API function H5Dwrite."
-                       "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write} for details."
+                   read=function(args, dataset_xfer_pl=h5const$H5P_DEFAULT, flags=getOption("hdf5r.h5tor_default"), drop=TRUE, envir=parent.frame()) {
+                       "Main interface for reading data from the dataset. It is the function that is used by \\code{[}, where"
+                       "all indices are being passed in the parameter \\code{args}."
+                       "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
+                       "For interactive use we recomment the use of the \\code{[} operator."
 
-                       check_class(mem_type, "H5T")
-                       check_class(mem_space, "H5S")
-                       check_class(file_space, "H5S")
-                       check_pl(dataset_xfer_pl, "H5P_DATASET_XFER")
-                       res <- .Call("R_H5Dwrite", self$id, mem_type$id, mem_space$id, file_space$id, dataset_xfer_pl$id,
-                                    buffer, PACKAGE="hdf5r")
-                       if(res$return_val < 0) {
-                           stop("Error reading dataset")
+                       "@param op The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in"
+                       "\\code{h5const$H5S_seloper_t}"
+                       "@param envir The environment in which to evaluate \\code{args}"
+                       "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER-class}}." 
+                       "@param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and"
+                       "the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers"
+                       "(even using add-on packages). The constants governing this are part of \\code{\\link{h5const}}. The relevant ones start with the term"
+                       "\\code{H5TOR} and are documented there. The default set here returns a regular 32bit integer if it doesn't lead to an overflow"
+                       "and returns a 64bit integer from the \\code{bit64} package otherwise. For 64bit unsigned int that are larger than 64bit signed int,"
+                       "it return a \\code{double}. This looses precision, however."
+                       "@param drop Logical. When reading data, should dimensions of size 1 be dropped."
+                       "@param envir The environment in which the dimension indices \\code{d1, ...} are to be evaluated. Usually the environment from"
+                       "where the function is called."
+                       "@return The data that was read as an R object"
+
+                       op <- h5const$H5S_SELECT_SET
+                       self_space <- self$get_space()
+                       
+                       if(!self_space$is_simple()) {
+                           stop("Dataspace has to be simple for a selection to occur")
                        }
-                       return(invisible(self))
+                       simple_extent <- self_space$get_simple_extent_dims()    
+                       ## distinguish between scalar and non-scalar
+                       if(simple_extent$rank == 0 && self_space$get_select_npoint() == 1) {
+                           ## is a scalar
+                           if(are_args_scalar(args)) {
+                               res <- self$read_low_level(file_space=self_space, mem_space=self_space, dataset_xfer_pl=dataset_xfer_pl)
+                           }
+                           else {
+                               stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
+                           }
+                       }
+                       else {
+                           reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir)
+                           ## need to check if maximum dimension in indices are larger than dataset dimensions
+                           ## if yes need to throw an error
+                           if(any(reg_eval_res$max_dims > simple_extent$dims)) {
+                               stop("The following coordinates are outside the dataset dimensions: ",
+                                    paste(which(reg_eval_res$max_dims > simple_extent$dims), sep=", "))
+                           }
+                           robj_dim <- get_robj_dim(reg_eval_res, self$get_type()) 
+                           selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
+                           apply_selection(space_id=self_space$id, selection=selection) 
+                           
+                           mem_space_dims <- robj_dim$robj_dim_pre_shuffle
+                           mem_space <- H5S$new(type="simple", dims=mem_space_dims, maxdims=mem_space_dims)
+                           
+                           ## check if we have a compound, where we don't have to set 
+                           dim_to_set <- robj_dim$robj_dim_pre_shuffle
+                           
+                           res <- self$read_low_level(file_space=self_space, mem_space=mem_space,
+                                         dataset_xfer_pl=dataset_xfer_pl, set_dim=TRUE, dim_to_set=dim_to_set, drop=drop)
+                           
+                           if(any(reg_eval_res$needs_reshuffle)) {
+                               res <- do_reshuffle(res, reg_eval_res)
+                           }
+                       }
+                       return(res)
                    },
-                   write=function(robj, file_space=h5const$H5S_ALL, mem_space=NULL, mem_type=NULL, dataset_xfer_pl=h5const$H5P_DEFAULT,
+                   write_low_level=function(robj, file_space=h5const$H5S_ALL, mem_space=NULL, mem_type=NULL, dataset_xfer_pl=h5const$H5P_DEFAULT,
                        flush=getOption("hdf5r.flush_on_write")) {
-                       "Writes that data from the \\code{robj} into the dataset."
-                       "For a more convenient interface, use the \\code{[<-} as for regular arrays."
+                       "This function is for advanced users. It is recommended to use \\code{read} instead or the \\code{[<-} interface"
+                       "as used for arrays."
+                       "This function implements the HDF5-API function H5Dwrite, with some changes to accomodate R."
+                       "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write} for details."
+                       "It writes that data from the \\code{robj} into the dataset."
                        "@param robj The object to write into the dataset"
                        "@param mem_space The space as it is represented in memory; advanced feature; may be removed in the future"
                        "@param mem_type Memory type; extracted from the dataset if null (can be passed in for efficiency reasons"
@@ -316,6 +352,53 @@ H5D <- R6Class("H5D",
                            self$flush
                        }
                        return(invisible(self))
+                   },
+                   write=function(args, value, dataset_xfer_pl=h5const$H5P_DEFAULT, envir=parent.frame()) {
+                       
+                       op <- h5const$H5S_SELECT_SET
+                       self_space <- self$get_space()
+                       
+                       if(!self_space$is_simple()) {
+                           stop("Dataspace has to be simple for a selection to occur")
+                       }
+                       simple_extent <- self_space$get_simple_extent_dims()    
+                       ## distinguish between scalar and non-scalar
+                       if(simple_extent$rank == 0 && self_space$get_select_npoint() == 1) {
+                           ## is a scalar
+                           if(are_args_scalar(args)) {
+                               return(self$write(value, file_space=self_space, mem_space=self_space, dataset_xfer_pl=dataset_xfer_pl))
+                           }
+                           else {
+                               stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
+                           }
+                       }
+                       else {
+                           reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir, post_read=FALSE)
+                           ## need to check if maximum dimension in indices are larger than dataset dimensions
+                           ## if yes need to throw an error
+                           if(any(reg_eval_res$max_dims > simple_extent$dims)) {
+                               ## need to reset the extent of the arguments
+                               if(any(reg_eval_res$max_dims > simple_extent$maxdims)) {
+                                   stop("The following coordinates are larger than the largest possible dataset dimensions (maxdims): ",
+                                        paste(which(reg_eval_res$max_dims > simple_extent$maxdims), sep=", "))
+                               }
+                               self$set_extent(pmax(reg_eval_res$max_dims, simple_extent$dims))
+                               self_space <- self$get_space()
+                           }
+                           robj_dim <- get_robj_dim(reg_eval_res, self$get_type()) 
+                           selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
+                           apply_selection(space_id=self_space$id, selection=selection) 
+                           
+                           mem_space_dims <- robj_dim$robj_dim_post_shuffle
+                           mem_space <- H5S$new(type="simple", dims=mem_space_dims, maxdims=mem_space_dims)
+                           
+                           if(any(reg_eval_res$needs_reshuffle)) {
+                               ## need to ensure that the input has the right dimensions attached in case it is just a vector)
+                               dim(value) <- reg_eval_res$result_dims_pre_shuffle
+                               value <- do_reshuffle(value, reg_eval_res)
+                           }
+                           return(self$write_low_level(value, file_space=self_space, mem_space=mem_space, dataset_xfer_pl=dataset_xfer_pl))
+                       }
                    },
                    set_extent=function(dims) {
                        "This function implements the HDF5-API function H5Dset_extent."

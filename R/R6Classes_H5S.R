@@ -356,7 +356,7 @@ H5S <- R6Class("H5S",
                        "For interactive use we recomment the use of the \\code{[} operator."
                        "@param op The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in"
                        "\\code{h5const$H5S_seloper_t}"
-                       "@param envir The environment in which to evaluate \\code{args}}"
+                       "@param envir The environment in which to evaluate \\code{args}"
                        if(!self$is_simple()) {
                            stop("Dataspace has to be simple for a selection to occur")
                        }

@@ -447,7 +447,7 @@ commonFG <- list(
         ds <- H5D$new(id)
         if(!is.null(robj)) {
             ## need to write the sample object data
-            ds$write(robj)
+            ds$write_low_level(robj)
         }
         return(invisible(ds))
     },
