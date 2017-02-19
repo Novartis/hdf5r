@@ -964,7 +964,7 @@ H5T_ARRAY <- R6Class("H5T_ARRAY",
                              dims <- integer(rank)
                              res <- .Call("R_H5Tget_array_dims2", self$id, dims, PACKAGE="hdf5r")
                              if(res$return_val < 0) {
-                                 stop("Error tryin to get array-type dimensions")
+                                 stop("Error trying to get array-type dimensions")
                              }
                              return(rev(res$dims))
                          },

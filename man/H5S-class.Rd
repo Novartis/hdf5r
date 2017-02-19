@@ -180,6 +180,22 @@ This function implements the HDF5-API function H5Sselect_elements. Please see th
   op = h5const$H5S_SELECT_SET)}
 This function implements the HDF5-API function H5Sselect_hyperslab. Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab} for details.}
 
+\item{\code{subset}}{
+
+\strong{Usage:}
+\preformatted{subset(args, op = h5const$H5S_SELECT_SET, envir = parent.frame())}
+Subsetting the space. This is mainly intended as a helper function for the '[' function, but
+can also be used on its own.
+
+\strong{Parameters:}
+\describe{
+\item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
+For interactive use we recomment the use of the \code{[} operator.}
+\item{op}{The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in
+\code{h5const$H5S_seloper_t}}
+\item{envir}{The environment in which to evaluate \code{args}}
+}}
+
 \item{\code{dims}}{Active method
 
 \strong{Usage:}

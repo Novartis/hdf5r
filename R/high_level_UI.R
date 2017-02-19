@@ -236,34 +236,7 @@ h5attr <- function(x, which) {
 subset_h5.H5S <- function(x,d1,  ..., op=h5const$H5S_SELECT_SET, envir=parent.frame()) {
     args <- eval(substitute(alist(d1, ...)))
 
-    if(!x$is_simple()) {
-        stop("Dataspace has to be simple for a selection to occur")
-    }
-    simple_extent <- x$get_simple_extent_dims()    
-    ## distinguish between scalar and non-scalar
-    if(simple_extent$rank == 0 && x$get_select_npoint() == 1) {
-        ## is a scalar
-        if(are_args_scalar(args)) {
-            return(invisible(x))
-        }
-        else {
-            stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
-        }
-    }
-    else {
-        reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir)
-        ## need to check if maximum dimension in indices are larger than dataset dimensions
-        ## if yes need to throw an error
-        if(any(reg_eval_res$max_dims > simple_extent$dims)) {
-            stop("The following coordinates are outside the dataset dimensions: ",
-                 paste(which(reg_eval_res$max_dims > simple_extent$dims), sep=", "))
-        }
-        selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
-        apply_selection(space_id=x$id, selection=selection) 
-
-        ## remember - on spaces everythign is done in as reference, so we can just return x
-        return(invisible(x))
-    }
+    return(x$subset(args=args, op=op, envir=envir))
 }
 
 
@@ -276,51 +249,8 @@ subset_h5.H5S <- function(x,d1,  ..., op=h5const$H5S_SELECT_SET, envir=parent.fr
 ##' @export
 subset_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT,
                           flags=getOption("hdf5r.h5tor_default"), drop=TRUE, envir=parent.frame()) {
-    op <- h5const$H5S_SELECT_SET
     args <- eval(substitute(alist(d1, ...)))
-    x_space <- x$get_space()
-    args <- eval(substitute(alist(d1, ...)))
-
-    if(!x_space$is_simple()) {
-        stop("Dataspace has to be simple for a selection to occur")
-    }
-    simple_extent <- x_space$get_simple_extent_dims()    
-    ## distinguish between scalar and non-scalar
-    if(simple_extent$rank == 0 && x_space$get_select_npoint() == 1) {
-        ## is a scalar
-        if(are_args_scalar(args)) {
-            res <- x$read(file_space=x_space, mem_space=x_space, dataset_xfer_pl=dataset_xfer_pl)
-        }
-        else {
-            stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
-        }
-    }
-    else {
-        reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir)
-        ## need to check if maximum dimension in indices are larger than dataset dimensions
-        ## if yes need to throw an error
-        if(any(reg_eval_res$max_dims > simple_extent$dims)) {
-            stop("The following coordinates are outside the dataset dimensions: ",
-                 paste(which(reg_eval_res$max_dims > simple_extent$dims), sep=", "))
-        }
-        robj_dim <- get_robj_dim(reg_eval_res, x$get_type()) 
-        selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
-        apply_selection(space_id=x_space$id, selection=selection) 
-
-        mem_space_dims <- robj_dim$robj_dim_pre_shuffle
-        mem_space <- H5S$new(type="simple", dims=mem_space_dims, maxdims=mem_space_dims)
-        
-        ## check if we have a compound, where we don't have to set 
-        dim_to_set <- robj_dim$robj_dim_pre_shuffle
-
-        res <- x$read(file_space=x_space, mem_space=mem_space,
-                      dataset_xfer_pl=dataset_xfer_pl, set_dim=TRUE, dim_to_set=dim_to_set, drop=drop)
-
-        if(any(reg_eval_res$needs_reshuffle)) {
-            res <- do_reshuffle(res, reg_eval_res)
-        }
-    }
-    return(res)
+    return(x$read(args=args, dataset_xfer_pl=dataset_xfer_pl, flags=flags, drop=drop, envir=envir))
 }
 
 ##' @rdname subset_h5.H5S
@@ -331,52 +261,8 @@ subset_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT,
 ##' @rdname subset_h5.H5S
 ##' @export
 subset_assign_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT, envir=parent.frame(), value) {
-
-    op <- h5const$H5S_SELECT_SET
-    x_space <- x$get_space()
     args <- eval(substitute(alist(d1, ...)))
-
-    if(!x_space$is_simple()) {
-        stop("Dataspace has to be simple for a selection to occur")
-    }
-    simple_extent <- x_space$get_simple_extent_dims()    
-    ## distinguish between scalar and non-scalar
-    if(simple_extent$rank == 0 && x_space$get_select_npoint() == 1) {
-        ## is a scalar
-        if(are_args_scalar(args)) {
-            return(x$write(value, file_space=x_space, mem_space=x_space, dataset_xfer_pl=dataset_xfer_pl))
-        }
-        else {
-            stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
-        }
-    }
-    else {
-        reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir, post_read=FALSE)
-        ## need to check if maximum dimension in indices are larger than dataset dimensions
-        ## if yes need to throw an error
-        if(any(reg_eval_res$max_dims > simple_extent$dims)) {
-            ## need to reset the extent of the arguments
-            if(any(reg_eval_res$max_dims > simple_extent$maxdims)) {
-                stop("The following coordinates are larger than the largest possible dataset dimensions (maxdims): ",
-                     paste(which(reg_eval_res$max_dims > simple_extent$maxdims), sep=", "))
-            }
-            x$set_extent(pmax(reg_eval_res$max_dims, simple_extent$dims))
-            x_space <- x$get_space()
-        }
-        robj_dim <- get_robj_dim(reg_eval_res, x$get_type()) 
-        selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
-        apply_selection(space_id=x_space$id, selection=selection) 
-
-        mem_space_dims <- robj_dim$robj_dim_post_shuffle
-        mem_space <- H5S$new(type="simple", dims=mem_space_dims, maxdims=mem_space_dims)
-
-        if(any(reg_eval_res$needs_reshuffle)) {
-            ## need to ensure that the input has the right dimensions attached in case it is just a vector)
-            dim(value) <- reg_eval_res$result_dims_pre_shuffle
-            value <- do_reshuffle(value, reg_eval_res)
-        }
-        return(x$write(value, file_space=x_space, mem_space=mem_space, dataset_xfer_pl=dataset_xfer_pl))
-    }
+    return(x$write(args=args, value=value, dataset_xfer_pl=dataset_xfer_pl, envir=envir))
 }
 
 ##' @rdname subset_h5.H5S
@@ -746,28 +632,6 @@ regularity_eval_to_selection <- function(reg_eval_res) {
 
 
 
-##' Get the size of the resulting R object
-##'
-##' For normal objects, just uses the size of the indices in the request, and evaluates
-##' them bost pre- and post-shuffle. If the internal object is an array, additional dimensions
-##' are appeded at the end.
-##' @title Get the size of the resulting R object
-##' @param reg_eval_res The result of the regularity evaluation
-##' @param dtype The datatype under consideration
-##' @return A list with the dimensions of the resulting object, pre- and post shuffle
-##' @author Holger Hoefling
-##' @keywords internal
-get_robj_dim <- function(reg_eval_res, dtype) {
-    ## need to see if we have to add array dimensions
-    add_array_dims <- NULL
-    if(dtype$get_class() == h5const$H5T_ARRAY) {
-        add_array_dims <- dtype$get_array_dims()
-    }
-    robj_dim_pre_shuffle <- c(reg_eval_res$result_dims_pre_shuffle, add_array_dims)
-    robj_dim_post_shuffle <- c(reg_eval_res$result_dims_post_shuffle, add_array_dims)
-    return(list(robj_dim_pre_shuffle=robj_dim_pre_shuffle,
-                robj_dim_post_shuffle=robj_dim_post_shuffle, add_array_dims=add_array_dims))
-}
 
 
 ##' Expand list of points for each dimension into a matrix of all combinations

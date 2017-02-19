@@ -93,55 +93,69 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D
 \item{\code{read_low_level}}{
 
 \strong{Usage:}
-\preformatted{read_low_level(buffer, mem_type, mem_space = h5const$H5S_ALL,
-  file_space = h5const$H5S_ALL, dataset_xfer_pl = h5const$H5P_DEFAULT,
-  duplicate_buffer = FALSE)}
-This function is for advanced users. It is recommended to use \code{read} instead.
-This function implements the HDF5-API function H5Dread.
-Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details.}
-
-\item{\code{read}}{
-
-\strong{Usage:}
-\preformatted{read(file_space = h5const$H5S_ALL, mem_space = NULL, mem_type = NULL,
-  dataset_xfer_pl = h5const$H5P_DEFAULT,
-  flags = getOption("hdf5r.h5tor_default"), set_dim = TRUE,
-  dim_to_set = "auto", drop = TRUE)}
-Read the data in the dataset and return it as an R-obj
-For a more convenient interface, access the data using the regular \code{[} notation as used with arrays
+\preformatted{read_low_level(file_space = h5const$H5S_ALL, mem_space = NULL,
+  mem_type = NULL, dataset_xfer_pl = h5const$H5P_DEFAULT,
+  flags = getOption("hdf5r.h5tor_default"), set_dim = FALSE,
+  dim_to_set = NULL, drop = TRUE)}
+This function is for advanced users. It is recommended to use \code{read} instead or the \code{[} interface.
+This function implements the HDF5-API function H5Dread, with minor changes to the API to accomodate R.
+Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details.
+It reads the data in the dataset as specified by \code{mem_space} and return it as an R-obj
 
 \strong{Parameters:}
 \describe{
 \item{file_space}{An HDF5-space, represented as class \code{\link{H5S-class}} that determines which part
-of the dataset is being read.}
-\item{mem_space}{The space as it is represented in memory; advanced feature; may be removed in the future}
-\item{mem_type}{Memory type; extracted from the dataset if null (can be passed in for efficiency reasons}
+of the dataset is being read. Can also be given as an id}
+\item{mem_space}{The space as it is represented in memory; advanced feature; may be removed in the future.
+Can also be given as an id.}
+\item{mem_type}{Memory type; extracted from the dataset if null (can be passed in for efficiency reasons
+Can also be given as an id.}
 \item{dataset_xfer_pl}{Dataset transfer property list. See \code{\link{H5P_DATASET_XFER-class}}}
 \item{flags}{Conversion rules for integer values. See also \code{\link{h5const}}}
 \item{set_dim}{If \code{TRUE}, the dimension attribute is set in the return value. How it is set 
 is determined by \code{dim_to_set}.}
-\item{dim_to_set}{The dimension to set; if \code{auto}, it is determined automatically using the internal
-datatypes; otherwise, the object passed is used as the dimension attribute}
+\item{dim_to_set}{The dimension to set; Has to be numeric and needs to be specified if \code{set_dim} is \code{TRUE}.
+If the result is a data.frame, i.e. the data-type is a compound, then the dimension is ignored as the
+correct dimension is already set.}
 \item{drop}{Logical. Should dimensions of length 1 be dropped (R-default for arrays)}
+}}
+
+\item{\code{read}}{
+
+\strong{Usage:}
+\preformatted{read(args = NULL, dataset_xfer_pl = h5const$H5P_DEFAULT,
+  flags = getOption("hdf5r.h5tor_default"), drop = TRUE,
+  envir = parent.frame())}
+Main interface for reading data from the dataset. It is the function that is used by \code{[}, where
+all indices are being passed in the parameter \code{args}.
+
+\strong{Parameters:}
+\describe{
+\item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
+For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
+\item{envir}{The environment in which to evaluate \code{args}}
+\item{dataset_xfer_pl}{An object of class \code{\link{H5P_DATASET_XFER-class}}.}
+\item{flags}{Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
+the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
+(even using add-on packages). The constants governing this are part of \code{\link{h5const}}. The relevant ones start with the term
+\code{H5TOR} and are documented there. The default set here returns a regular 32bit integer if it doesn't lead to an overflow
+and returns a 64bit integer from the \code{bit64} package otherwise. For 64bit unsigned int that are larger than 64bit signed int,
+it return a \code{double}. This looses precision, however.}
+\item{drop}{Logical. When reading data, should dimensions of size 1 be dropped.
+@return The data that was read as an R object}
 }}
 
 \item{\code{write_low_level}}{
 
 \strong{Usage:}
-\preformatted{write_low_level(buffer, mem_type, mem_space = h5const$H5S_ALL,
-  file_space = h5const$H5S_ALL, dataset_xfer_pl = h5const$H5P_DEFAULT)}
-This function is for advanced users. It is recommended to use \code{read} instead.
-This function implements the HDF5-API function H5Dwrite.
-Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write} for details.}
-
-\item{\code{write}}{
-
-\strong{Usage:}
-\preformatted{write(robj, file_space = h5const$H5S_ALL, mem_space = NULL,
+\preformatted{write_low_level(robj, file_space = h5const$H5S_ALL, mem_space = NULL,
   mem_type = NULL, dataset_xfer_pl = h5const$H5P_DEFAULT,
   flush = getOption("hdf5r.flush_on_write"))}
-Writes that data from the \code{robj} into the dataset.
-For a more convenient interface, use the \code{[<-} as for regular arrays.
+This function is for advanced users. It is recommended to use \code{read} instead or the \code{[<-} interface
+as used for arrays.
+This function implements the HDF5-API function H5Dwrite, with some changes to accomodate R.
+Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write} for details.
+It writes that data from the \code{robj} into the dataset.
 
 \strong{Parameters:}
 \describe{
@@ -152,6 +166,24 @@ For a more convenient interface, use the \code{[<-} as for regular arrays.
 of the dataset is being written.}
 \item{dataset_xfer_pl}{Dataset transfer property list. See \code{\link{H5P_DATASET_XFER-class}}}
 \item{flush}{Should a flush be done after the write}
+}}
+
+\item{\code{write}}{
+
+\strong{Usage:}
+\preformatted{write(args, value, dataset_xfer_pl = h5const$H5P_DEFAULT,
+  envir = parent.frame())}
+Main interface for writing data to the dataset. It is the function that is used by \code{[<-}, where
+all indices are being passed in the parameter \code{args}.
+
+\strong{Parameters:}
+\describe{
+\item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
+For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
+\item{value}{The data to write to the dataset}
+\item{envir}{The environment in which to evaluate \code{args}}
+\item{dataset_xfer_pl}{An object of class \code{\link{H5P_DATASET_XFER-class}}.
+@return The HDF5 dataset object, returned invisibly}
 }}
 
 \item{\code{set_extent}}{
