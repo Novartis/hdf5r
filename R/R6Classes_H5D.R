@@ -479,7 +479,10 @@ H5D <- R6Class("H5D",
                            
                            if(any(reg_eval_res$needs_reshuffle)) {
                                ## need to ensure that the input has the right dimensions attached in case it is just a vector)
-                               dim(value) <- robj_dim$robj_dim_pre_shuffle
+                               ## and dimensions doesn't need to be reset for data.frames; there they are automatically correct
+                               if(!inherits(value, "data.frame")) {
+                                   dim(value) <- robj_dim$robj_dim_pre_shuffle
+                               }
                                value <- do_reshuffle(value, reg_eval_res)
                            }
                            return(self$write_low_level(value, file_space=self_space_id, mem_space=mem_space_id, dataset_xfer_pl=dataset_xfer_pl))
