@@ -337,17 +337,28 @@ test_that("Subsetting dimensions, drop and write", {
     index_negative_some <- c(1, 3, -3, 5, 6)
     index_large <- c(1, 15)
     
-    ## now make the tests with these indices;
-    ## first reading it
-    ## only use single indices
-    expect_equal(ex_array2_ds[index_logical, ,], ex_array2[index_logical, ,])
-    expect_equal(ex_array2_ds[index_regular, ,], ex_array2[index_regular, ,])
-    expect_equal(ex_array2_ds[index_regular2, ,], ex_array2[index_regular2, ,])
-    expect_equal(ex_array2_ds[index_positive, ,], ex_array2[index_positive, ,])
-    expect_equal(ex_array2_ds[index_ident, ,], ex_array2[index_ident, ,])
-    expect_equal(ex_array2_ds[index_decreasing, ,], ex_array2[index_decreasing, ,])
-    expect_equal(ex_array2_ds[index_negative_all, ,], ex_array2[index_negative_all, ,])
-    expect_equal(ex_array2_ds[, ,], ex_array2[, ,])
+    ## a read/write test
+    copy_change_test_reset_array <- function(hdf5_ds, r_ds, index) {
+        ## make a read test
+        expect_equal(hdf5_ds[index,,], r_ds[index,,]) 
+        r_ds_changed <- r_ds
+        replace_vals <- runif(length(r_ds[index,,]))
+        r_ds_changed[index, ,] <- replace_vals
+        hdf5_ds[index, ,] <- replace_vals
+        hdf5_ds_read <- hdf5_ds[index, ,]
+        ## and reset
+        hdf5_ds[, ,] <- r_ds
+        expect_equal(hdf5_ds_read, r_ds_changed[index, ,])
+        return(invisible(NULL))
+    }
+    copy_change_test_reset_array(ex_array2_ds, ex_array2, index_logical)
+    copy_change_test_reset_array(ex_array2_ds, ex_array2, index_regular)
+    copy_change_test_reset_array(ex_array2_ds, ex_array2, index_regular2)
+    copy_change_test_reset_array(ex_array2_ds, ex_array2, index_positive)
+    copy_change_test_reset_array(ex_array2_ds, ex_array2, index_ident)
+    copy_change_test_reset_array(ex_array2_ds, ex_array2, index_decreasing)
+    copy_change_test_reset_array(ex_array2_ds, ex_array2, index_negative_all)
+    expect_equal(ex_array2_ds[,,], ex_array2[,,])
 
     expect_error(ex_array2_ds[index_large, ], "Number of arguments not equal to number of dimensions: 2 vs. 3")
     expect_error(ex_array2_ds[index_negative_some, ,], "In index 1 not all subscripts are either positive or negative")
@@ -359,26 +370,48 @@ test_that("Subsetting dimensions, drop and write", {
     expect_equal(ex_array2_ds[index_logical, index_logical, index_logical], ex_array2[index_logical, index_logical, index_logical])
     expect_equal(ex_array2_ds[index_logical, , index_regular], ex_array2[index_logical, , index_regular])
 
-    ## then also writing it
-    copy_change_test_reset <- function(hdf5_ds, index) {
-        r_ds <- hdf5_ds[,,]
-        r_ds_changed <- r_ds
-        replace_vals <- runif(length(r_ds[index,,]))
-        r_ds_changed[index, ,] <- replace_vals
-        hdf5_ds[index, ,] <- replace_vals
-        hdf5_ds_read <- hdf5_ds[, ,]
-        hdf5_ds[, ,] <- r_ds
-        expect_equal(hdf5_ds_read, r_ds_changed[, ,])
-        return(invisible(NULL))
-    }
-    copy_change_test_reset(ex_array2_ds, index_logical)
-    copy_change_test_reset(ex_array2_ds, index_regular)
-    copy_change_test_reset(ex_array2_ds, index_regular2)
-    copy_change_test_reset(ex_array2_ds, index_positive)
-    copy_change_test_reset(ex_array2_ds, index_ident)
-    copy_change_test_reset(ex_array2_ds, index_decreasing)
-    copy_change_test_reset(ex_array2_ds, index_negative_all)
 
+    ## we also want to try the same for compounds
+    ex_cpd <- data.frame(a=LETTERS[1:10], b=1:10, stringsAsFactors = FALSE)
+    file.h5[["ex_cpd"]] <- ex_cpd
+    ex_cpd_ds <- file.h5[["ex_cpd"]]
+
+    ## then also writing it
+    copy_change_test_reset_cpd <- function(hdf5_cpd, r_cpd, index) {
+        # and reset
+        hdf5_cpd[] <- r_cpd
+        ## make a read test
+        ## for data.frame we currently ignore the row numbers
+        hdf5_cpd_read <- hdf5_cpd[index]
+        rownames(hdf5_cpd_read) <- NULL
+        r_cpd_read <- r_cpd[index,]
+        rownames(r_cpd_read) <- NULL
+        expect_equal(hdf5_cpd_read, r_cpd_read)
+        r_cpd_changed <- r_cpd
+        replace_length <- nrow(r_cpd[index,])
+        replace_vals <- data.frame(a=sample(LETTERS, size=replace_length), b=sample(1:50, size=replace_length), stringsAsFactors = FALSE)
+        r_cpd_changed[index,] <- replace_vals
+        hdf5_cpd[index] <- replace_vals
+
+        hdf5_cpd_read <- hdf5_cpd[]
+        # and reset
+        hdf5_cpd[] <- r_cpd
+        ## check everything after the write
+        expect_equal(hdf5_cpd_read, r_cpd_changed[,])
+        return(invisible(NULL))  
+    }
+    copy_change_test_reset_cpd(ex_cpd_ds, ex_cpd, index_logical)
+    copy_change_test_reset_cpd(ex_cpd_ds, ex_cpd, index_regular)
+    copy_change_test_reset_cpd(ex_cpd_ds, ex_cpd, index_regular2)
+    copy_change_test_reset_cpd(ex_cpd_ds, ex_cpd, index_positive)
+    copy_change_test_reset_cpd(ex_cpd_ds, ex_cpd, index_ident)
+    copy_change_test_reset_cpd(ex_cpd_ds, ex_cpd, index_decreasing)
+    copy_change_test_reset_cpd(ex_cpd_ds, ex_cpd, index_negative_all)
+
+    expect_error(ex_cpd_ds[index_large, ], "Number of arguments not equal to number of dimensions: 2 vs. 1")
+    expect_error(ex_cpd_ds[index_negative_some], "In index 1 not all subscripts are either positive or negative")
+    expect_error(ex_cpd_ds[index_large], "The following coordinates are outside the dataset dimensions:.*")
+    
     ## create a dataset with maximal dimensions
     ## check that writing dimensions less than the maximum is ok, but larger than
     ## the maximum will fail
@@ -387,6 +420,9 @@ test_that("Subsetting dimensions, drop and write", {
     h5d_finite_maxdims[10, ,1:10 ] <- 1:100
     expect_equal(h5d_finite_maxdims$dims, c(10, 10, 15))
     expect_error({h5d_finite_maxdims[11, , ] <- 151:300}, regexp="The following coordinates are larger than the largest possible dataset dimensions \\(maxdims\\): 1")
+
+    
+
     
     file.h5$close_all()
     file.remove(test_file)

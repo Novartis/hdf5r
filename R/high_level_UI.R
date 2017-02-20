@@ -696,9 +696,22 @@ match.call.withDef <- function(definition, call) {
 ##' @keywords internal
 do_reshuffle <- function (x, reg_eval_res) {
     ## for the post read shuffle, we just have to use the order as noted in reg_eval_res
-    reorder_params <- rep(list(quote(expr=)), length(reg_eval_res$reshuffle))
-
-    reorder_params[reg_eval_res$needs_reshuffle] <- reg_eval_res$reshuffle[reg_eval_res$needs_reshuffle]
+    ## however, data.frames have an additional dimension the evaluator currently
+    ## does not know about, so have to add it
+    if(inherits(x, "data.frame")) {
+        if(length(reg_eval_res$needs_reshuffle) != 1) {
+            stop("For data.frame, the selection can only have 1 dimension")
+        }
+        reorder_params <- rep(list(quote(expr=)), 2)
+        if(reg_eval_res$needs_reshuffle) {
+            reorder_params[1] <- reg_eval_res$reshuffle[1]
+        }
+    }
+    else {
+        reorder_params <- rep(list(quote(expr=)), length(reg_eval_res$reshuffle))
+        
+        reorder_params[reg_eval_res$needs_reshuffle] <- reg_eval_res$reshuffle[reg_eval_res$needs_reshuffle]
+    }
     res <- do.call("[", c(list(x), reorder_params))
     return(res)
 }
