@@ -2,4 +2,11 @@ hdf5
 libhdf5.a
 libhdf5_hl.a
 hdf5r.so
-
+Wrapper_auto*
+HelperStructs.h
+Makevars
+const_export.c
+const_export.h
+datatype_export.c
+datatype_export.h
+export_auto.h
