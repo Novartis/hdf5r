@@ -1,4 +1,4 @@
-context("DataSet-createDataset")
+context("h5-DataSet-createDataset")
 
 fname <- tempfile(fileext=".h5")
 

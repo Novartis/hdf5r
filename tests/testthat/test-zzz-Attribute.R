@@ -1,4 +1,4 @@
-context("Attribute")
+context("h5-Attribute")
 
 fname <- tempfile(fileext=".h5")
 
