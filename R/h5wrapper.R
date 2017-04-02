@@ -13,7 +13,20 @@ h5file <- H5File$new
 
 #' @rdname h5-wrapper
 #' @export
-createGroup <- function(object, name, ...) object$create_group(name, ...)
+createGroup <- function(object, name, ...) {
+  paths <- strsplit(name, "/")[[1]]
+  paths <- paths[paths != ""]
+  currentpath <- ""
+  currentgroup <- NULL
+  for(p in paths) {
+    currentpath <- paste(currentpath, p, sep = "/")
+    currentpath <- gsub("^\\/", "", currentpath)
+    if (! object$exists(currentpath) ) {
+      currentgroup <- object$create_group(currentpath, ...)
+    }
+  }
+  currentgroup
+}
 
 #' @rdname h5-wrapper
 #' @export
