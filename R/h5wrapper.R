@@ -17,7 +17,15 @@ createGroup <- function(object, name, ...) object$create_group(name, ...)
 
 #' @rdname h5-wrapper
 #' @export
+openLocation <- function(object, name) object$open(name=name)
+
+#' @rdname h5-wrapper
+#' @export
 createDataSet <- function(object, name, ...) object$create_dataset(name, ...)
+
+#' @rdname h5-wrapper
+#' @export
+readDataSet <- function(object) object$read()
 
 #' @rdname h5-wrapper
 #' @export

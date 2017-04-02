@@ -10,6 +10,8 @@
 \alias{is.h5file}
 \alias{list.groups}
 \alias{list.datasets}
+\alias{openLocation}
+\alias{readDataSet}
 \title{h5 wrapper functions}
 \usage{
 h5file(...)
@@ -29,6 +31,10 @@ is.h5file(name)
 list.groups(object, path = "/", recursive = TRUE, ...)
 
 list.datasets(object, path = "/", recursive = TRUE, ...)
+
+openLocation(object, name)
+
+readDataSet(object)
 
 }
 \arguments{
