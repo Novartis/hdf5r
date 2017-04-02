@@ -8,6 +8,8 @@
 \alias{h5flush}
 \alias{existsGroup}
 \alias{is.h5file}
+\alias{list.groups}
+\alias{list.datasets}
 \title{h5 wrapper functions}
 \usage{
 h5file(...)
@@ -23,6 +25,11 @@ h5flush(object)
 existsGroup(object, name)
 
 is.h5file(name)
+
+list.groups(object, path = "/", recursive = TRUE, ...)
+
+list.datasets(object, path = "/", recursive = TRUE, ...)
+
 }
 \arguments{
 \item{...}{Additional Parameters passed to \code{file$create_group}, \code{file$create_dataset}}
@@ -30,6 +37,11 @@ is.h5file(name)
 \item{object}{H5RefClass; H5 Reference Class to be used}
 
 \item{name}{character; Group/Filename to be created}
+
+\item{path}{character; Path named to be used for iteration.}
+
+\item{recursive}{logical; Specify if object should be traversed recursively.}
+
 }
 \description{
 Wrapper functions to provide h5 compatible interface.

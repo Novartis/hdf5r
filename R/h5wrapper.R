@@ -3,7 +3,10 @@
 #' Wrapper functions to provide h5 compatible interface.
 #' @param object H5RefClass; H5 Reference Class to be used
 #' @param name character; Group/Filename to be created
+#' @param path character; Path named to be used for iteration.
+#' @param recursive logical; Specify if object should be traversed recursively.
 #' @param ... Additional Parameters passed to \code{file$create_group}, \code{file$create_dataset}
+#' 
 #' @rdname h5-wrapper
 #' @export
 h5file <- H5File$new
@@ -40,3 +43,23 @@ function(name) {
   }
   res
 }
+
+#' @rdname h5-wrapper
+#' @export
+list.groups <- function(object, path = "/", recursive = TRUE, ...) {
+  obj <- object
+  if (path != "/") obj <- object[[path]]
+  df <- obj$ls(... ,recursive = recursive)
+  df[df$object.type == "H5O_TYPE_GROUP", 1]
+}
+
+#' @rdname h5-wrapper
+#' @export
+list.datasets <- function(object, path = "/", recursive = TRUE, ...) {
+  obj <- object
+  if (path != "/") obj <- object[[path]]
+  df <- obj$ls(... ,recursive = recursive)
+  df[df$object.type == "H5O_TYPE_DATASET", 1]
+}
+
+ 

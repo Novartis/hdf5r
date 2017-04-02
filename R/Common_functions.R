@@ -143,12 +143,12 @@ commonFG <- list(
             stop(paste("An object with name", group_name, "does not exist"))
         }
     },
-    ls=function(recursive=FALSE, detailed=FALSE, index_type=h5const$H5_INDEX_NAME, order=h5const$H5_ITER_NATIVE, link_access_pl=h5const$H5P_DEFAULT,
-        dataset_access_pl=h5const$H5P_DEFAULT, type_access_pl=h5const$H5P_DEFAULT) {
+    ls=function(recursive=FALSE, detailed=FALSE, index_type=h5const$H5_INDEX_NAME, order=h5const$H5_ITER_NATIVE, link_access_pl=h5const$H5P_DEFAULT$id,
+        dataset_access_pl=h5const$H5P_DEFAULT$id, type_access_pl=h5const$H5P_DEFAULT$id) {
         "Returns the contents of a file or group as a data.frame."
         
-        ls_res <- .Call("R_H5ls", self$id, recursive, index_type, order, link_access_pl$id,
-                        dataset_access_pl$id, type_access_pl$id, PACKAGE='hdf5r')$return_val
+        ls_res <- .Call("R_H5ls", self$id, recursive, index_type, order, link_access_pl,
+                        dataset_access_pl, type_access_pl, PACKAGE='hdf5r')$return_val
         ls_res <- clean_ls_df(ls_res)
         if(detailed) {
             return(ls_res)
