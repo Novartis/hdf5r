@@ -17,3 +17,4 @@
 # Issues
 - H5S$new(maxdims = "test") should immediately throw error
 - Check why H5T_STD_I64LE is not mapped to 64bit integer?
+- Check why enum test case ist not working (test-zzz.enum.R)
