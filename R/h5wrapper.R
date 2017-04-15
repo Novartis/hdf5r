@@ -83,4 +83,82 @@ list.datasets <- function(object, path = "/", recursive = TRUE, ...) {
   df[df$object.type == "H5O_TYPE_DATASET", 1]
 }
 
- 
+GetDimensions <- function(data) {
+  datadim <- NULL
+  if(is.vector(data)) {
+    datadim <- length(data)
+  } else if (is.matrix(data)) {
+    datadim <- dim(data)
+  } else if (is.array(data)) {
+    datadim <- dim(data)
+  } else {
+    stop("Argument data must be of type vector, matrix or array.")
+  }
+  datadim
+}
+
+#' @rdname h5-wrapper
+#' @export
+extendDataSet <- function(dset, dims) {
+  ddset <- dset$dims
+  #dobj <- GetDimensions(object)
+  if (length(dims) != length(ddset)) {
+    stop("Number of extendible dimensions must agree with DataSet dimensions.")
+  }
+  if(!all(dims >= ddset)) {
+    stop("Number of extendible dimensions must be greater or equal than DataSet dimensions.")
+  }
+  
+  if(!all(dims <= dset$maxdims)) {
+    stop("Number of extendible dimensions exceeds maximum dimensions of DataSet.")
+  }
+  
+  dset$set_extent(dims = dims)
+  invisible(dset)
+}
+
+#' @rdname h5-wrapper
+#' @export
+rbind.H5D <- function(x, mat) {
+  startx <- x$dims[1] + 1
+  endx <- x$dims[1] + nrow(mat)
+
+  if(x$dims[2] != ncol(mat)) {
+    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).", 
+                 x$dims[2], ncol(mat)))
+  }
+  
+  x[startx:endx, 1:x$dims[2]] <- mat
+  invisible(x)
+}
+
+#' @rdname h5-wrapper
+#' @export
+cbind.H5D <- function(x, mat) {
+  starty <- x$dims[2] + 1
+  endy <- x$dims[2] + ncol(mat)
+  
+  if(x$dims[1] != nrow(mat)) {
+    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).", 
+                 x$dims[1], nrow(mat)))
+  }
+  
+  x[1:x$dims[1], starty:endy] <- mat
+  invisible(x)
+}
+
+#' @rdname h5-wrapper
+#' @export
+c.H5D <- function(x, ...) {
+  vec <- do.call(c, list(...))
+  start <- x$dims + 1
+  end <- x$dims + length(vec)
+  
+  if(length(x$dims) != length(GetDimensions(vec))) {
+    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).", 
+                 length(x$dims), length(GetDimensions(vec))))
+  }
+  x[start:end] <- vec
+  invisible(x)
+}
+
