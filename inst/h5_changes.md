@@ -30,3 +30,5 @@
 - Move package startup message to README / doc
 - Check datatype before dataset is extended
 - Fix Issues for HDF5 1.8.12
+- NA handling for strings does not work properly
+- Fix Issues for HDF5 1.8.14
