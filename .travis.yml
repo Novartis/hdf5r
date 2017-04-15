@@ -30,6 +30,7 @@ matrix:
       env: HDF5_VERSION=1.8.16
   allow_failures:
     - os: osx
+    - env: HDF5_VERSION=1.8.12
   fast_finish: true
   
 warnings_are_errors: true

@@ -19,3 +19,8 @@
 - Check why H5T_STD_I64LE is not mapped to 64bit integer?
 - Check why enum test case ist not working (test-zzz.enum.R)
 - Does array retrieval work?
+- Subsetting allows zero and negative values
+- insert check before expand
+  `f <- function() dset2[10:11, 9] <- matrix(rep(0, 2*9), nrow = 2)`
+- Reading entire dataset using [] (instead of [,]) for 2-dimensional objects should also work, like in
+  `matrix(1:9, nrow = 3)[]`
