@@ -98,9 +98,10 @@ GetDimensions <- function(data) {
 }
 
 #' @rdname h5-wrapper
+#' @param dims numeric; Dimension vector to which dataset should be extended.
 #' @export
-extendDataSet <- function(dset, dims) {
-  ddset <- dset$dims
+extendDataSet <- function(object, dims) {
+  ddset <- object$dims
   #dobj <- GetDimensions(object)
   if (length(dims) != length(ddset)) {
     stop("Number of extendible dimensions must agree with DataSet dimensions.")
@@ -109,12 +110,12 @@ extendDataSet <- function(dset, dims) {
     stop("Number of extendible dimensions must be greater or equal than DataSet dimensions.")
   }
   
-  if(!all(dims <= dset$maxdims)) {
+  if(!all(dims <= object$maxdims)) {
     stop("Number of extendible dimensions exceeds maximum dimensions of DataSet.")
   }
   
-  dset$set_extent(dims = dims)
-  invisible(dset)
+  object$set_extent(dims = dims)
+  invisible(object)
 }
 
 #' @rdname h5-wrapper

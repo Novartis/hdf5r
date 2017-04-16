@@ -12,6 +12,7 @@
 \alias{list.datasets}
 \alias{openLocation}
 \alias{readDataSet}
+\alias{extendDataSet}
 \title{h5 wrapper functions}
 \usage{
 h5file(...)
@@ -36,6 +37,8 @@ openLocation(object, name)
 
 readDataSet(object)
 
+extendDataSet(object, dims)
+
 }
 \arguments{
 \item{...}{Additional Parameters passed to \code{file$create_group}, \code{file$create_dataset}}
@@ -47,6 +50,8 @@ readDataSet(object)
 \item{path}{character; Path named to be used for iteration.}
 
 \item{recursive}{logical; Specify if object should be traversed recursively.}
+
+\item{dims}{numeric; Dimension vector to which dataset should be extended.}
 
 }
 \description{
