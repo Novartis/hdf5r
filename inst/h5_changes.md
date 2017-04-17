@@ -32,3 +32,6 @@
 - Fix Issues for HDF5 1.8.12
 - NA handling for strings does not work properly
 - Fix Issues for HDF5 1.8.14
+- Implement test cases DataSet-Select-Elem/DataSet-Select-Hyperslab needs refactoring of H5D$read functions (separate dataspace from read).
+  - ~Should all elements be returned if index is zero for element-wise selection?~
+  - ~Subscribt out of bounds not thrown for element-wise selection. Instead, indexing starts at 1.~
