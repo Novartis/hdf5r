@@ -50,7 +50,12 @@ h5flush <- function(object) object$flush()
 
 #' @rdname h5-wrapper
 #' @export
-existsGroup <- function(object, name) object$exists(name)
+existsGroup <- function(object, name) {
+  out <- tryCatch({
+    object$exists(name)
+  }, error = function(e) FALSE)
+  out
+}
 
 #' @rdname h5-wrapper
 #' @export
@@ -163,3 +168,14 @@ c.H5D <- function(x, ...) {
   invisible(x)
 }
 
+#' @rdname h5-wrapper
+#' @export
+h5unlink <- function(object, name) {
+  out <- sapply(name, function(n) {
+    tryCatch({
+      object$link_delete(n)
+      TRUE
+      }, error = function(e) FALSE)
+  })
+  invisible(out)
+}

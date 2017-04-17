@@ -1,9 +1,11 @@
 # Changes from h5 to hdf5r
 
 - Change subset operator to [[
-- Support on-the-fly group creation / Recursive group creation ? 
+  - Q: Why [[ instead of [? 
+  - Q: Implement [ to support multiple arguments?
+- No Support for on-the-fly group creation / Recursive group creation ? 
     e.g. file[["testgroup/testset"]] <- 1:10 without existing testgroup
-- full.names in list.xxx does not return global path name
+- full.names in list.xxx does not return global path name, changed parameters
 
 # Missing Features
 
@@ -15,6 +17,7 @@
 - Get Chunk size from dataset
 - Implement follow.link
 - How to set up dataset with specified maximum dimensions, only using set_extent?
+- General: Improve error messages
 
 
 # Issues
@@ -47,7 +50,9 @@
 - Fix Issues for HDF5 1.8.14
 
 # Organizational
-- Add mannau to hhoeflin/hdf5r as Collaborator
-- Add Mario Annau as Author to package
-- Specify release date (e.g May 1st)
+- hhoeflin: Add mannau to repo hhoeflin/hdf5r as Collaborator
+- hhoeflin: Add Mario Annau as Author to package (DESCRIPTION)
+- mannau: Set **h5** as deprecated, link to **hdf5r** 
+- all: Specify release date (e.g May 1st)
+- mannau: Inform HDF5 Group about new CRAN release (make **hdf5r** standard HDF5 package)
 

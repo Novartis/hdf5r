@@ -13,6 +13,7 @@
 \alias{openLocation}
 \alias{readDataSet}
 \alias{extendDataSet}
+\alias{h5unlink}
 \title{h5 wrapper functions}
 \usage{
 h5file(...)
@@ -38,6 +39,8 @@ openLocation(object, name)
 readDataSet(object)
 
 extendDataSet(object, dims)
+
+h5unlink(object, name)
 
 }
 \arguments{
