@@ -34,6 +34,9 @@
 H5File.open <-  function(name, mode=c("a", "r", "r+", "w", "w-", "x"), file_create_pl=h5const$H5P_DEFAULT, file_access_pl=h5const$H5P_DEFAULT) {
     check_pl(file_create_pl, "H5P_FILE_CREATE")
     check_pl(file_access_pl, "H5P_FILE_ACCESS")
+    
+    stopifnot(is.character(name))
+    stopifnot(length(name) == 1)
 
     mode <- match.arg(mode)
     mode.save <- mode
@@ -105,7 +108,9 @@ is_hdf5 <- function(name) {
 H5File <- R6Class("H5File",
                   inherit=H5RefClass,
                   public=list(
-                      initialize=function(filename, mode=c("a", "r", "r+", "w", "w-", "x"), file_create_pl=h5const$H5P_DEFAULT,
+                      mode = NULL,
+                      filename = NULL,
+                      initialize=function(filename=NULL, mode=c("a", "r", "r+", "w", "w-", "x"), file_create_pl=h5const$H5P_DEFAULT,
                           file_access_pl=h5const$H5P_DEFAULT, id=NULL) {
                           "Opens or creates a new HDF5 File"
                           "@param filename Name of the file"
@@ -113,11 +118,18 @@ H5File <- R6Class("H5File",
                           "existing file for reading, \\code{r+} opens an existing file for read/write. \\code{w} creates a file, truncating any"
                           "existing ones and \\code{w-}/\\code{x} are synonyms, creating a file and failing if it already exists."
 
-
-                          if(is.null(id) && !missing(filename)) {
-                              id <- H5File.open(filename, mode, file_create_pl, file_access_pl)
+                      
+                          if (is.null(id)) {
+                             if (!is.null(filename)) {
+                               id <- H5File.open(filename, mode, file_create_pl, file_access_pl)
+                             } else {
+                               stop("Either filename or id must be given to initialize H5File.")
+                             }
                           }
+
                           super$initialize(id)
+                          self$mode <- mode
+                          self$filename <- self$get_file_name()
                       },
                       get_obj_count=function(types=h5const$H5F_OBJ_ALL) {
                           "This function implements the HDF5-API function H5Aget_info."

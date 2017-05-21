@@ -286,3 +286,16 @@ SEXP R_H5ls(SEXP _g_id, SEXP _recursive, SEXP _index_type, SEXP _order, SEXP _la
   return(__ret_list);
 }
 
+// gather the information on the contents of a group
+// if recurse, the will use H5Lvisit, otherwise H5Literate
+// all this complexity does not need to be exposed here, 
+// so will keep the interface as simple as possible 
+/*
+SEXP R_H5attributes(SEXP _g_id) {
+  hid_t g_id = SEXP_to_longlong(_g_id, 0);
+  H5Aiterate2(g_id, H5_INDEX_NAME, H5_ITER_INC, NULL, attr_info, &out);
+ 
+ 
+ 
+} */
+
