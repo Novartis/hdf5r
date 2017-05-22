@@ -50,8 +50,6 @@
 - Fix Issues for HDF5 1.8.14
 
 # Organizational
-- hhoeflin: Add mannau to repo hhoeflin/hdf5r as Collaborator
-- hhoeflin: Add Mario Annau as Author to package (DESCRIPTION)
 - mannau: Set **h5** as deprecated, link to **hdf5r** 
 - all: Specify release date (e.g May 1st)
 - mannau: Inform HDF5 Group about new CRAN release (make **hdf5r** standard HDF5 package)
