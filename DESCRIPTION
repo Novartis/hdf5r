@@ -2,7 +2,10 @@ Package: hdf5r
 Type: Package
 Title: HDF5 interface to R
 Version: 0.9.7
-Authors@R: person("Holger", "Hoefling", email = "hhoeflin@gmail.com", role = c("aut", "cre"))
+Authors@R: c(
+    person("Holger", "Hoefling", email = "hhoeflin@gmail.com", role = c("aut", "cre")),
+    person("Mario", "Annau", email = "mario.annau@gmail.com", role = "aut")
+    )
 Description: This package provides an interface to the HDF5 API. HDF5 is a
     data model, library and file format for storing and managing data. The HDF5
     API is written in C. This package provides functions in R that allow access to
