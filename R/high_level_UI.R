@@ -36,7 +36,7 @@
 ##' The items are then accessed, again similar to a list, using \code{[[}.
 ##' @title Get the names of the items in the group or at the \code{/} root of the file
 ##' @param x An object of class \code{\link{H5File}} or \code{\link{H5Group}}
-##' @return A character vector with the names of the items in the group/file. 
+##' @return A character vector with the names of the items in the group/file.
 ##' @author Holger Hoefling
 ##' @export
 names.H5Group <- function(x) {
@@ -61,13 +61,13 @@ names.H5File <- names.H5Group
 ##' HDF5-File or group \code{x}.
 ##'
 ##' One can also assign objects under a not yet existing name. For Either a  \code{\link{H5Group-class}} or \code{\link{H5D-class}},
-##' a hard link is created. If it is a datatype, \code{\link{H5T-class}}, this is committed under the chosen name \code{name}. 
+##' a hard link is created. If it is a datatype, \code{\link{H5T-class}}, this is committed under the chosen name \code{name}.
 ##' @title Retrieve object from a group of file
 ##' @param x An object of class \code{\link{H5File}} or \code{\link{H5Group}}
 ##' @param name Name of the object to retrieve. Has to be a character vector of length one. No integer values allowed/
 ##' @param ... Currently ignored
-##' @param link_access_pl An object of class \code{\link{H5P_LINK_ACCESS-class}}. 
-##' @param dataset_access_pl An object of class \code{\link{H5P_DATASET_ACCESS-class}}. 
+##' @param link_access_pl An object of class \code{\link{H5P_LINK_ACCESS-class}}.
+##' @param dataset_access_pl An object of class \code{\link{H5P_DATASET_ACCESS-class}}.
 ##' @param type_access_pl Currently always \code{h5const$H5P_DEFAULT}
 ##' @param value What to assign. Has to be one of \code{\link{H5Group-class}},  \code{\link{H5D-class}} or  \code{\link{H5T-class}}
 ##' @return A \code{\link{H5Group-class}},  \code{\link{H5D-class}} or  \code{\link{H5T-class}}, depending on the object saved in the group under
@@ -108,7 +108,7 @@ names.H5File <- names.H5Group
                 return(invisible(x))
             }
         }
-        
+
         stop("Cannot assign - already exists. Please use the 'link_delete' to delete the object before assigning a new one")
     }
     if(inherits(value, "H5Group")) {
@@ -137,10 +137,10 @@ names.H5File <- names.H5Group
 ##' Interface for HDF5 attributes
 ##'
 ##' Implements high-level functions that allows interactions with HDF5-attributes in a way very similar to regular R-object attributes
-##' in R are handled. 
+##' in R are handled.
 ##' @title Interface for HDF5 attributes
 ##' @param x The object to which to attach the attribute to or retrieve it from. Can be one of \code{\link{H5Group-class}},  \code{\link{H5D-class}},
-##' \code{\link{H5T-class}} or  \code{\link{H5File-class}} 
+##' \code{\link{H5T-class}} or  \code{\link{H5File-class}}
 ##' @param which The name of the attribute to assign it to
 ##' @param value The value to assign to the attribute.
 ##' @return For \code{h5attributes}, a named list with the content of the attributes read out. FOr \code{h5attr_names},
@@ -217,7 +217,7 @@ h5attr <- function(x, which) {
 ##' @param op Operation to perform on the \code{\link{H5S-class}}. Look into the HDF5 online help
 ##' \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements} and
 ##' \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab}
-##' @param dataset_xfer_pl An object of class \code{\link{H5P_DATASET_XFER-class}}. 
+##' @param dataset_xfer_pl An object of class \code{\link{H5P_DATASET_XFER-class}}.
 ##' @param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
 ##' the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
 ##' (even using add-on packages). The constants governing this are part of \code{\link{h5const}}. The relevant ones start with the term
@@ -400,12 +400,12 @@ args_regularity_evaluation <- function(args, ds_dims, envir, post_read=TRUE) {
     if(length(args) != length(ds_dims)) {
         stop("Number of arguments not equal to number of dimensions: ", length(args), " vs. ", length(ds_dims))
     }
-    
+
     ## create the skeleton for the regularity report
     ## has columns: start, count, stride, block
     hyperslab <- matrix(rep(NA, length(args) * 4), ncol=4)
     colnames(hyperslab) <- c("start", "count", "stride", "block")
-    
+
     is_hyperslab <- rep(FALSE, length(args))
     needs_reshuffle <- is_hyperslab
     args_in <- args
@@ -414,7 +414,7 @@ args_regularity_evaluation <- function(args, ds_dims, envir, post_read=TRUE) {
     result_dims_post_shuffle <- numeric(length(args))
     max_dims <- result_dims_pre_shuffle
     reshuffle <- args_point
-    
+
     for(i in seq_along(args)) {
         cur_arg <- args[[i]]
         if(length(args[[i]]) == 1 && args[[i]]==quote(expr=)) {
@@ -428,7 +428,7 @@ args_regularity_evaluation <- function(args, ds_dims, envir, post_read=TRUE) {
             res_hyper <- c(NA, NA, NA, NA)
         }
         ## res_hyper contains the information if the argument can be interpreted as a hyperslab
-        
+
         if(!any(is.na(res_hyper))) { ## is a hyperslab made from a function
             is_hyperslab[i] <- TRUE
             hyperslab[i,] <- res_hyper
@@ -468,7 +468,7 @@ args_regularity_evaluation <- function(args, ds_dims, envir, post_read=TRUE) {
                         cur_arg <- seq_len(ds_dims[[i]])[cur_arg]
                     }
                     else if(!all(cur_arg > 0)) {
-                        stop("In index ", i, " not all subscripts are either positive or negative") 
+                        stop("In index ", i, " not all subscripts are either positive or negative")
                     }
                     ## then check if it can be written as a hyperslab
                     cur_arg_diff_unique <- unique(diff(cur_arg))
@@ -479,7 +479,7 @@ args_regularity_evaluation <- function(args, ds_dims, envir, post_read=TRUE) {
                         result_dims_post_shuffle[i] <- length(cur_arg)
                         if(length(cur_arg_diff_unique) == 1) {
                             is_hyperslab[i] <- TRUE
-                            
+
                             if(cur_arg_diff_unique == 1) {
                                 hyperslab[i, ] <- c(cur_arg[[1]], 1, 1, length(cur_arg))
                             }
@@ -518,8 +518,8 @@ args_regularity_evaluation <- function(args, ds_dims, envir, post_read=TRUE) {
                         max_dims[i] <- sort_arg[length(sort_arg)]
                         if(length(sort_arg_diff_unique) == 1) {
                             is_hyperslab[i] <- TRUE
-                            
-                            if(cur_arg_diff_unique == 1) {
+
+                            if(sort_arg_diff_unique == 1) {
                                 hyperslab[i, ] <- c(sort_arg[[1]], 1, 1, length(sort_arg))
                             }
                             else {
@@ -567,7 +567,7 @@ hyperslab_to_points <- function(hyperslab) {
         res <- rep(seq_len(hyperslab[[4]]), times=hyperslab[[2]])
         ## now add it the stride component
         res <- res + rep((seq_len(hyperslab[[2]]) - 1) * hyperslab[[3]], each=hyperslab[[4]])
-        res <- res + hyperslab[[1]] - 1       
+        res <- res + hyperslab[[1]] - 1
     }
     return(res)
 }
@@ -624,7 +624,7 @@ regularity_eval_to_selection <- function(reg_eval_res) {
                 args_point[[i]] <- hyperslab_to_points(reg_eval_res$hyperslab[i,])
             }
         }
-        
+
         sel <- expand_point_grid(args_point)
     }
     return(structure(.Data=sel, class=sel_type))
@@ -687,7 +687,7 @@ match.call.withDef <- function(definition, call) {
 
 ##' Reshuffle the input as needed - see \code{args_regularity_evaluation}
 ##'
-##' When necessary, this function performs the reshuffle as defined by \code{args_regularity_evaluation}. 
+##' When necessary, this function performs the reshuffle as defined by \code{args_regularity_evaluation}.
 ##' @title Reshuffle the input as needed - see \code{args_regularity_evaluation}
 ##' @param x The array to reshuffle
 ##' @param reg_eval_res The result of the regularity evaluation
@@ -709,7 +709,7 @@ do_reshuffle <- function (x, reg_eval_res) {
     }
     else {
         reorder_params <- rep(list(quote(expr=)), length(reg_eval_res$reshuffle))
-        
+
         reorder_params[reg_eval_res$needs_reshuffle] <- reg_eval_res$reshuffle[reg_eval_res$needs_reshuffle]
     }
     res <- do.call("[", c(list(x), reorder_params))

@@ -93,7 +93,7 @@ commonFG <- list(
         "\\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Open} for datasets, "
         "\\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5O.html#Object-Open} for types and "
         "\\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5O.html#Object-Open} for general objects."
-        
+
         if (length(name)!=1 || !is.character(name)) stop("'name' must be a character string of length 1")
 
         ## check the property lists and get their ids if they aren't already default
@@ -110,7 +110,7 @@ commonFG <- list(
             else if(type_access_pl$id != h5const$H5P_DEFAULT$id) {
                 oid <- .Call("R_H5Topen2", self$id, name, type_access_pl$id, PACKAGE = "hdf5r")$return_val
             }
-            else {            
+            else {
                 oid <- .Call("R_H5Oopen", self$id, name, link_access_pl$id, PACKAGE = "hdf5r")$return_val
             }
             if(oid < 0) {
@@ -146,7 +146,7 @@ commonFG <- list(
     ls=function(recursive=FALSE, detailed=FALSE, index_type=h5const$H5_INDEX_NAME, order=h5const$H5_ITER_NATIVE, link_access_pl=h5const$H5P_DEFAULT,
         dataset_access_pl=h5const$H5P_DEFAULT, type_access_pl=h5const$H5P_DEFAULT) {
         "Returns the contents of a file or group as a data.frame."
-        
+
         ls_res <- .Call("R_H5ls", self$id, recursive, index_type, order, link_access_pl$id,
                         dataset_access_pl$id, type_access_pl$id, PACKAGE='hdf5r')$return_val
         ls_res <- clean_ls_df(ls_res)
@@ -206,7 +206,7 @@ commonFG <- list(
         }
         check_pl(link_create_pl, "H5P_LINK_CREATE")
         check_pl(object_copy_pl, "H5P_OBJECT_COPY")
-        
+
         herr <- .Call("R_H5Ocopy", self$id, src_name, dst_loc$id, dst_name, object_copy_pl$id, link_create_pl$id, PACKAGE = "hdf5r")$return_val
         if(herr < 0) {
             stop("Error copying object")
@@ -222,7 +222,7 @@ commonFG <- list(
         }
         check_pl(link_create_pl, "H5P_LINK_CREATE")
         check_pl(object_copy_pl, "H5P_OBJECT_COPY")
-        
+
         herr <- .Call("R_H5Ocopy", src_loc$id, src_name, self$id, dst_name, object_copy_pl$id, link_create_pl$id, PACKAGE = "hdf5r")$return_val
         if(herr < 0) {
             stop("Error copying object")
@@ -240,7 +240,7 @@ commonFG <- list(
         if(res$return_val < 0) {
             stop("Could not retrieve object info by index")
         }
-        
+
         if(remove_internal_use_only) {
             oinfo <- res$oinfo
             oinfo$meta_size <- NULL
@@ -319,11 +319,11 @@ commonFG <- list(
         if(length(name) > 1) {
             stop("name has to be of length at most 1")
         }
-        
+
         check_pl(link_create_pl, "H5P_LINK_CREATE")
         check_pl(group_create_pl, "H5P_GROUP_CREATE")
         check_pl(group_access_pl, "H5P_GROUP_ACCESS")
-        
+
         if(length(name)==0) { ## create anonymous group
             id <- .Call("R_H5Gcreate_anon", self$id, group_create_pl$id, group_access_pl$id, PACKAGE = "hdf5r")$return_val
         }
@@ -335,7 +335,7 @@ commonFG <- list(
         }
         return(H5Group$new(id))
     },
-    create_dataset=function(name, robj=NULL, dtype=NULL, space=NULL, chunk_dims="auto", gzip_level=4, 
+    create_dataset=function(name, robj=NULL, dtype=NULL, space=NULL, chunk_dims="auto", gzip_level=4,
         link_create_pl=h5const$H5P_DEFAULT, dataset_create_pl=h5const$H5P_DEFAULT, dataset_access_pl=h5const$H5P_DEFAULT) {
         "This function is the main interface to create a new dataset. Its parameters allow for customization of the default"
         "behaviour, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality."
@@ -423,13 +423,13 @@ commonFG <- list(
                 dataset_create_pl$set_deflate(gzip_level)
             }
         }
-        
+
         check_class(dtype, "H5T")
         check_class(space, "H5S")
         check_pl(link_create_pl, "H5P_LINK_CREATE")
         check_pl(dataset_create_pl, "H5P_DATASET_CREATE")
         check_pl(dataset_access_pl, "H5P_DATASET_ACCESS")
-        
+
         if(is.character(name) && length(name)==1) {
             id <- .Call("R_H5Dcreate2", self$id, name, dtype$id, space$id, link_create_pl$id, dataset_create_pl$id,
                         dataset_access_pl$id, PACKAGE="hdf5r")$return_val
@@ -485,7 +485,7 @@ commonFG <- list(
         if(herr < 0) {
             stop("An error occured creating the dataset")
         }
-        return(invisible(dtype))       
+        return(invisible(dtype))
 
     },
     ## functions around the link interface
@@ -519,7 +519,7 @@ commonFG <- list(
             stop(paste("Error creating soft link for path", target_path, "with link_name", link_name))
         }
         return(invisible(self))
-        
+
     },
     link_create_external=function(target_file_name, target_obj_name, link_name, link_create_pl=h5const$H5P_DEFAULT,
         link_access_pl=h5const$H5P_DEFAULT) {
@@ -535,7 +535,7 @@ commonFG <- list(
             stop(paste("Error creating external link for file", target_file_name, "with target object", target_obj_name, " and link_name", link_name))
         }
         return(invisible(self))
-               
+
     },
     link_exists=function(name, link_access_pl=h5const$H5P_DEFAULT) {
         "This function implements the HDF5-API function H5Lexists."
@@ -564,7 +564,7 @@ commonFG <- list(
             stop("Error copying object")
         }
         return(invisible(self))
-        
+
     },
     link_move_to=function(dst_loc, dst_name, src_name, link_create_pl=h5const$H5P_DEFAULT, link_access_pl=h5const$H5P_DEFAULT) {
         "This function implements the HDF5-API function H5Lmove."
@@ -581,7 +581,7 @@ commonFG <- list(
             stop("Error copying object")
         }
         return(invisible(self))
-      
+
     },
     link_copy_from=function(src_loc, src_name, dst_name, link_create_pl=h5const$H5P_DEFAULT, link_access_pl=h5const$H5P_DEFAULT) {
         "This function implements the HDF5-API function H5Lcopy."
@@ -598,7 +598,7 @@ commonFG <- list(
             stop("Error copying object")
         }
         return(invisible(self))
-        
+
     },
     link_copy_to=function(dst_loc, dst_name, src_name, link_create_pl=h5const$H5P_DEFAULT, link_access_pl=h5const$H5P_DEFAULT) {
         "This function implements the HDF5-API function H5Lcopy."
@@ -615,12 +615,12 @@ commonFG <- list(
             stop("Error copying object")
         }
         return(invisible(self))
-      
+
     },
     link_delete=function(name, link_access_pl=h5const$H5P_DEFAULT) {
         "This function implements the HDF5-API function H5Ldelete."
         "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-Delete} for details."
-        
+
         check_pl(link_access_pl, "H5P_LINK_ACCESS")
 
         herr <- .Call("R_H5Ldelete", self$id, name, link_access_pl$id, PACKAGE="hdf5r")$return_val
@@ -628,7 +628,7 @@ commonFG <- list(
             stop(paste("Error deleting link", name))
         }
         return(invisible(self))
-        
+
     },
     link_delete_by_idx=function(n, group_name=".", index_field=h5const$H5_INDEX_NAME, order=h5const$H5_ITER_NATIVE,
         link_access_pl=h5const$H5P_DEFAULT) {
@@ -646,7 +646,7 @@ commonFG <- list(
             stop(paste("Error deleting link number", n, "in group", group_name))
         }
         return(invisible(self))
-       
+
     },
     link_info=function(name, link_access_pl=h5const$H5P_DEFAULT) {
         "This function implements the HDF5-API function H5Lget_info."
@@ -771,7 +771,7 @@ commonFG <- list(
             stop("Problem getting name of link by index")
         }
         return(res$name)
-        
+
     },
     mount=function(name, child) {
         "This function implements the HDF5-API function H5Fmount."
@@ -806,7 +806,7 @@ commonFG <- list(
             stop("Error mounting file onto group")
         }
         return(self)
-    }    
+    }
     )
 
 
@@ -862,10 +862,10 @@ commonFGDT <- list(
         if(self$attr_exists(attr_name)) {
             stop("Can't create attribute; already exists")
         }
-        
+
         attr_create_pl <- h5const$H5P_DEFAULT
         attr_access_pl <- h5const$H5P_DEFAULT
-        
+
         ## adapt dtype, space as necessary
         if(is.null(robj) && (is.null(dtype) || is.null(space))) {
             stop("If a sample robj is not provided, both dtype and space have to be given")
@@ -876,7 +876,7 @@ commonFGDT <- list(
         if(is.null(space)) {
             space <- guess_space(x=robj, dtype=dtype, chunked=FALSE)
         }
-        
+
         id <- .Call("R_H5Acreate2", self$id, attr_name, dtype$id, space$id,
                      attr_create_pl$id, attr_access_pl$id, PACKAGE="hdf5r")$return_val
 
@@ -918,7 +918,7 @@ commonFGDT <- list(
         }
         attr_create_pl <- h5const$H5P_DEFAULT
         attr_access_pl <- h5const$H5P_DEFAULT
-        
+
         if(is.null(robj) && (is.null(dtype) || is.null(space))) {
             stop("If a sample robj is not provided, both dtype and space have to be given")
         }
@@ -978,7 +978,7 @@ commonFGDT <- list(
             stop("Problem creating new attribute")
         }
         return(H5A$new(id=id))
-        
+
     },
     attr_exists_by_name=function(attr_name, obj_name, link_access_pl=h5const$H5P_DEFAULT) {
         "This function implements the HDF5-API function H5Aexists_by_name."
@@ -1092,7 +1092,7 @@ commonFGDT <- list(
             stop("Problem deleting attribute by index")
         }
         return(invisible(self))
-        
+
     },
     attr_info_by_name=function(attr_name, obj_name, link_access_pl=h5const$H5P_DEFAULT) {
         "This function implements the HDF5-API function H5Aget_info_by_name."
@@ -1165,7 +1165,7 @@ commonFGDT <- list(
             stop("Error returning name of object")
         }
         return(res$name)
-    }    
+    }
     )
 
 
@@ -1176,7 +1176,7 @@ commonFGT <- list(
         "This function implements the HDF5-API function H5Rcreate. If \\code{space=NULL} then a \\code{H5R_OBJECT} reference"
         "is created, otherwise a \\code{H5R_DATASET_REGION} reference"
         "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Create} for details."
-        
+
         if(is.null(space)) {
             ref_type <- h5const$H5R_OBJECT
             space_id <- -1
@@ -1213,5 +1213,5 @@ commonFGDTA <- list(
             return(invisible(self))
         }
     }
-    
+
     )

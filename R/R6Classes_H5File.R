@@ -34,15 +34,15 @@
 H5File.open <-  function(name, mode=c("a", "r", "r+", "w", "w-", "x"), file_create_pl=h5const$H5P_DEFAULT, file_access_pl=h5const$H5P_DEFAULT) {
     check_pl(file_create_pl, "H5P_FILE_CREATE")
     check_pl(file_access_pl, "H5P_FILE_ACCESS")
-    
+
     stopifnot(is.character(name))
     stopifnot(length(name) == 1)
 
     mode <- match.arg(mode)
     mode.save <- mode
-    
+
     filename <- normalizePath(name, mustWork=FALSE)
-    
+
     ## now do the appropriate thing depending on the mode
     if(mode=="a") { # read/write if exists, create otherwise
         if(file.exists(filename)) {
@@ -85,7 +85,7 @@ H5File.open <-  function(name, mode=c("a", "r", "r+", "w", "w-", "x"), file_crea
 ##' @param name The name of the file to check; doesn't check for existence
 ##' @return Logical, TRUE if file is of type HDF5
 ##' @author Holger Hoefling
-##' @export 
+##' @export
 is_hdf5 <- function(name) {
     res <- .Call("R_H5Fis_hdf5", name, PACKAGE = "hdf5r")
     if(res < 0) {
@@ -101,7 +101,7 @@ is_hdf5 <- function(name) {
 #' \code{\link{H5RefClass-class}}. #'
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link{H5File}}. 
+#' @return Object of class \code{\link{H5File}}.
 #' @export
 #' @author Holger Hoefling
 #' @seealso H5Class_overview
@@ -118,7 +118,7 @@ H5File <- R6Class("H5File",
                           "existing file for reading, \\code{r+} opens an existing file for read/write. \\code{w} creates a file, truncating any"
                           "existing ones and \\code{w-}/\\code{x} are synonyms, creating a file and failing if it already exists."
 
-                      
+
                           if (is.null(id)) {
                              if (!is.null(filename)) {
                                id <- H5File.open(filename, mode, file_create_pl, file_access_pl)
@@ -185,7 +185,7 @@ H5File <- R6Class("H5File",
                       close_all=function(close_self=TRUE) {
                           "Closes the file, flushes it and also closes all open objects that are still open in it. This is the recommended way of"
                           "closing any file. If not all objects in a file are closed, the file remains open and cannot be re-opened the regular way."
-                          
+
                           ## first trigger the garbage collection, so that lost, but not yet collected objects are closed
                           gc()
                           obj_ids <- self$get_obj_ids()
@@ -202,8 +202,24 @@ H5File <- R6Class("H5File",
                               rm_obj(self$id)
                           }
                           return(invisible(self))
-                      } 
-                      ),                  
+                      }
+                      ## close=function(all=TRUE) {
+                      ##     "Closes an object and calls the appropriate HDF5 function for the type of object"
+                      ##     "@param all Closes all open objects of the file"
+                      ##     if(self$is_valid) {
+                      ##         if(all) {
+                      ##             self$close_all(close_self=TRUE)
+                      ##         }
+                      ##         else {
+                      ##             id <- private$pid$id
+                      ##             private$closeFun(id)
+                      ##             decr_count(id)
+                      ##         }
+                      ##         private$pid <- NA
+                      ##     }
+                      ##     return(invisible(self))
+                      ## }
+                      ),
                   private=list(
                       closeFun=function(id) {
                           if(!is.na(id) && is.loaded("R_H5Fclose", PACKAGE="hdf5r")) {
@@ -225,7 +241,7 @@ R6_set_list_of_items(H5File, "public", commonFGDTA, overwrite=TRUE)
 
 
 
-    
+
 ##' Closes any HDF5 id using the appropriate library function
 ##'
 ##' Internal function to help with management of open ids. It is used to close
@@ -257,7 +273,7 @@ H5_close_any <- function(id) {
                            H5I_GENPROP_CLS=.Call("R_H5Pclose_class", id, PACKAGE="hdf5r"),
                            H5I_GENPROP_LST=.Call("R_H5Pclose", id, PACKAGE="hdf5r"),
                            stop("Unknown type; can't close"))
-        
+
             if(herr < 0) {
                 stop(paste("Error closing id", id, "of type", type))
             }
@@ -267,4 +283,4 @@ H5_close_any <- function(id) {
 }
 
 
-    
+

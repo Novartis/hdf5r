@@ -1,12 +1,12 @@
 #' h5 wrapper functions
-#' 
+#'
 #' Wrapper functions to provide h5 compatible interface.
 #' @param object H5RefClass; H5 Reference Class to be used
 #' @param name character; Group/Filename to be created
 #' @param path character; Path named to be used for iteration.
 #' @param recursive logical; Specify if object should be traversed recursively.
 #' @param ... Additional Parameters passed to \code{file$create_group}, \code{file$create_dataset}
-#' 
+#'
 #' @rdname h5-wrapper
 #' @export
 h5file <- H5File$new
@@ -42,7 +42,14 @@ readDataSet <- function(object) object$read()
 
 #' @rdname h5-wrapper
 #' @export
-h5close <- function(object) object$close()
+h5close <- function(object) {
+    if(inherits(object, "H5File")) {
+        object$close_all()
+    }
+    else {
+        object$close()
+    }
+}
 
 #' @rdname h5-wrapper
 #' @export
@@ -114,11 +121,11 @@ extendDataSet <- function(object, dims) {
   if(!all(dims >= ddset)) {
     stop("Number of extendible dimensions must be greater or equal than DataSet dimensions.")
   }
-  
+
   if(!all(dims <= object$maxdims)) {
     stop("Number of extendible dimensions exceeds maximum dimensions of DataSet.")
   }
-  
+
   object$set_extent(dims = dims)
   invisible(object)
 }
@@ -130,10 +137,10 @@ rbind.H5D <- function(x, mat) {
   endx <- x$dims[1] + nrow(mat)
 
   if(x$dims[2] != ncol(mat)) {
-    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).", 
+    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).",
                  x$dims[2], ncol(mat)))
   }
-  
+
   x[startx:endx, 1:x$dims[2]] <- mat
   invisible(x)
 }
@@ -143,12 +150,12 @@ rbind.H5D <- function(x, mat) {
 cbind.H5D <- function(x, mat) {
   starty <- x$dims[2] + 1
   endy <- x$dims[2] + ncol(mat)
-  
+
   if(x$dims[1] != nrow(mat)) {
-    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).", 
+    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).",
                  x$dims[1], nrow(mat)))
   }
-  
+
   x[1:x$dims[1], starty:endy] <- mat
   invisible(x)
 }
@@ -159,9 +166,9 @@ c.H5D <- function(x, ...) {
   vec <- do.call(c, list(...))
   start <- x$dims + 1
   end <- x$dims + length(vec)
-  
+
   if(length(x$dims) != length(GetDimensions(vec))) {
-    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).", 
+    stop(sprintf("Data to append does not match dataset dimensions (%d != %d).",
                  length(x$dims), length(GetDimensions(vec))))
   }
   x[start:end] <- vec
