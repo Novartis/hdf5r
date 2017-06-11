@@ -5,7 +5,7 @@
 echo "  checking hdf5 headers and libraries"
 allok=yes
 
-LIBWIN="$(echo ${LIB_HDF5}/lib${R_ARCH} | sed 's/\\/\//g')"
+LIBWIN="$(echo ${LIB_HDF5}/lib/${R_ARCH} | sed 's/\\/\//g')"
 INC_HDF5=""
 
 if [ ! -e ${LIBWIN}/libhdf5_cpp.a ]; then
