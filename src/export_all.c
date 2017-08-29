@@ -104,8 +104,8 @@ void R_init_hdf5r (DllInfo * winDll) {
   R_CallMethodDef null_ptr = {NULL, NULL, 0};
   library_all_methods[total_num_methods] = null_ptr;
 
-  R_registerRoutines (winDll, NULL, library_all_methods, NULL, NULL);
-  R_useDynamicSymbols (winDll, FALSE);
+  R_registerRoutines(winDll, NULL, library_all_methods, NULL, NULL);
+  R_useDynamicSymbols(winDll, FALSE);
 }
 
 
