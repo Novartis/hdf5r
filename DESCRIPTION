@@ -1,7 +1,7 @@
 Package: hdf5r
 Type: Package
 Title: HDF5 interface to R
-Version: 0.9.7
+Version: 0.9.7.9000
 Authors@R: c(
     person("Holger", "Hoefling", email = "hhoeflin@gmail.com", role = c("aut", "cre")),
     person("Mario", "Annau", email = "mario.annau@gmail.com", role = "aut")
@@ -31,4 +31,4 @@ SystemRequirements: GNU make (on Linux/Mac) or cmake (on windows); HDF5 (>=
     1.8.13)
 VignetteBuilder: knitr
 NeedsCompilation: yes
-RoxygenNote: 5.0.1.9001
+RoxygenNote: 6.0.1.9000

@@ -3,16 +3,19 @@
 \name{h5file}
 \alias{h5file}
 \alias{createGroup}
+\alias{openLocation}
 \alias{createDataSet}
+\alias{readDataSet}
 \alias{h5close}
 \alias{h5flush}
 \alias{existsGroup}
 \alias{is.h5file}
 \alias{list.groups}
 \alias{list.datasets}
-\alias{openLocation}
-\alias{readDataSet}
 \alias{extendDataSet}
+\alias{rbind.H5D}
+\alias{cbind.H5D}
+\alias{c.H5D}
 \alias{h5unlink}
 \title{h5 wrapper functions}
 \usage{
@@ -20,7 +23,11 @@ h5file(...)
 
 createGroup(object, name, ...)
 
+openLocation(object, name)
+
 createDataSet(object, name, ...)
+
+readDataSet(object)
 
 h5close(object)
 
@@ -34,17 +41,18 @@ list.groups(object, path = "/", recursive = TRUE, ...)
 
 list.datasets(object, path = "/", recursive = TRUE, ...)
 
-openLocation(object, name)
-
-readDataSet(object)
-
 extendDataSet(object, dims)
 
-h5unlink(object, name)
+\method{rbind}{H5D}(x, mat, ..., deparse.level = 1)
 
+\method{cbind}{H5D}(x, mat, ..., deparse.level = 1)
+
+\method{c}{H5D}(x, ...)
+
+h5unlink(object, name)
 }
 \arguments{
-\item{...}{Additional Parameters passed to \code{file$create_group}, \code{file$create_dataset}}
+\item{...}{Additional Parameters passed to \code{file$create_group}, \code{file$create_dataset} or ignored for \code{cbind} and \code{rbind}.}
 
 \item{object}{H5RefClass; H5 Reference Class to be used}
 
@@ -56,6 +64,11 @@ h5unlink(object, name)
 
 \item{dims}{numeric; Dimension vector to which dataset should be extended.}
 
+\item{x}{An object of class H5D; the dataset to add rows or columns to; Needs to be a matrix}
+
+\item{mat}{The matrix to add to x}
+
+\item{deparse.level}{Set to 1; ignored otherwise; only present as required by generic}
 }
 \description{
 Wrapper functions to provide h5 compatible interface.
