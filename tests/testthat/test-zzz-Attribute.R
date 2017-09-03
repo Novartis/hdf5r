@@ -147,19 +147,17 @@ test_that("Attribute-list-attributes", {
   #  h5attr(file["testgroup/testset"], "dsteattr3") <- 1:10
   
   # TODO(mario): Implement list.attributes
-  # expect_that(list.attributes(file), 
-  #     is_identical_to(c("fileattr1", "fileattr2", "fileattr3")))
-  # expect_that(list.attributes(testset), 
-  #     is_identical_to(c("dsetattr1", "dsetattr2", "dsetattr3")))
+  expect_that(list.attributes(file),
+      is_identical_to(c("fileattr1", "fileattr2", "fileattr3")))
+  expect_that(list.attributes(testset),
+      is_identical_to(c("dsetattr1", "dsetattr2", "dsetattr3")))
   
   h5close(testset)
-# TODO(mario): check why  Attribute-list-attributes not working for file subset
-  h5attr(file[["testgroup"]], "groupattr1") <- 1:10
-  h5attr(file[["testgroup"]], "groupattr2") <- 1:10
-  h5attr(file[["testgroup"]], "groupattr3") <- 1:10
-  
-  # TODO(mario): Implement list.attributes
-  # expect_that(list.attributes(file["testgroup"]), 
+  # TODO(mario): check why  Attribute-list-attributes not working for file subset
+  # h5attr(file[["testgroup"]], "groupattr1") <- 1:10
+  # h5attr(file[["testgroup"]], "groupattr2") <- 1:10
+  # h5attr(file[["testgroup"]], "groupattr3") <- 1:10
+  # expect_that(list.attributes(file["testgroup"]),
   #     is_identical_to(c("groupattr1", "groupattr2", "groupattr3")))
 
   h5close(file) 

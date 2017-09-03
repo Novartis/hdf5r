@@ -30,6 +30,7 @@ R_CallMethodDef library_WRAPPER_MANUAL_H5T[] = {
   {"h5get_compound_classes", (DL_FUNC) &h5get_compound_classes, 1},
   {"h5get_compound_offsets", (DL_FUNC) &h5get_compound_offsets, 1},
   {"R_H5Tdetect_vlen", (DL_FUNC) &R_H5Tdetect_vlen, 1},
+  {"R_H5attributes",  (DL_FUNC) &R_H5attributes, 1},
   {NULL, NULL, 0}
 };
 #endif

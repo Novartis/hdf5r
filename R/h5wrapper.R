@@ -197,3 +197,9 @@ h5unlink <- function(object, name) {
   })
   invisible(out)
 }
+
+#' @rdname h5-wrapper
+#' @export
+list.attributes <- function(object) {
+  .Call("R_H5attributes", object$id, PACKAGE = "hdf5r")
+}

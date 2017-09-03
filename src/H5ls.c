@@ -286,16 +286,31 @@ SEXP R_H5ls(SEXP _g_id, SEXP _recursive, SEXP _index_type, SEXP _order, SEXP _la
   return(__ret_list);
 }
 
-// gather the information on the contents of a group
-// if recurse, the will use H5Lvisit, otherwise H5Literate
-// all this complexity does not need to be exposed here, 
-// so will keep the interface as simple as possible 
-/*
+herr_t attr_info(hid_t loc_id, const char *name, const H5A_info_t *ainfo, void *opdata) {
+  if( strcmp(name, "NA") == 0) {
+    SET_STRING_ELT(opdata, ainfo->corder, NA_STRING);
+  } else {
+    SET_STRING_ELT(opdata, ainfo->corder, mkChar(name));
+  }
+  return 0;
+}
+
+// gather the information on the attributes of a location
+// currently using H5Aiterate2
 SEXP R_H5attributes(SEXP _g_id) {
   hid_t g_id = SEXP_to_longlong(_g_id, 0);
-  H5Aiterate2(g_id, H5_INDEX_NAME, H5_ITER_INC, NULL, attr_info, &out);
- 
- 
- 
-} */
-
+  
+  H5O_info_t object_info;
+  H5Oget_info( g_id, &object_info );
+  hsize_t num_attributes = object_info.num_attrs;
+  
+  SEXP out;
+  if (num_attributes <= 0) {
+    out = PROTECT(allocVector(STRSXP, 0));
+  } else {
+    out = PROTECT(allocVector(STRSXP, num_attributes));
+    H5Aiterate2(g_id, H5_INDEX_NAME, H5_ITER_INC, NULL, attr_info, out);
+  }
+  UNPROTECT(1);
+  return out;
+}

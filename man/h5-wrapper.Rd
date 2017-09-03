@@ -17,6 +17,7 @@
 \alias{cbind.H5D}
 \alias{c.H5D}
 \alias{h5unlink}
+\alias{list.attributes}
 \title{h5 wrapper functions}
 \usage{
 h5file(...)
@@ -40,6 +41,8 @@ is.h5file(name)
 list.groups(object, path = "/", recursive = TRUE, ...)
 
 list.datasets(object, path = "/", recursive = TRUE, ...)
+
+list.attributes(object)
 
 extendDataSet(object, dims)
 
