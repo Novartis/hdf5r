@@ -17,7 +17,8 @@ Copyright: For the hdf5r package: Novartis Institutes for BioMedical Research
 LazyLoad: true
 Depends:
     R (>= 3.2.2),
-    methods,
+    methods
+Imports:
     R6,
     bit64,
     utils
@@ -26,7 +27,7 @@ Suggests:
     knitr,
     rmarkdown,
     nycflights13,
-    reshape2
+    reshape2,
 SystemRequirements: GNU make (on Linux/Mac) or cmake (on windows); HDF5 (>=
     1.8.13)
 VignetteBuilder: knitr

@@ -127,6 +127,10 @@ h5attr(cars_ds, "rownames")
 file.h5$close_all()
 ```
 
+# 64-bit Signed Integers
+
+Please note that for 64-bit signed integers, the bit64 package is used. For technical reasons, it is possible for a function that is not bit64-aware to misrepresent 64bit values from the bit64 package as 'doubles' of a completely different value. Therefore, please be advised to ensure that the functions you are using are bit64-aware or cast the values to regular numeric values (but be aware - this may result in a loss of precision). For illustration of this issue see the difference between `print(as.integer64(1))` and `cat(as.integer64(1), "\n")`. Another possible source of issues can be `matrix(as.integer64(1))` or `min(as.integer64(1), as.integer64(2))`, among possibly others. By default, hdf5r tries to return regular R objects (integer or double) wherever this is possible without loss of precision. If you need 64bit integers, proceed with care keeping these issues in mind.
+
 # License
 
 The hdf5r package is licensend under Apache License Version 2.0. HDF5 itself doesn't ship with the hdf5r package on Linux or Mac, but on windows the downloadable binary compiled on CRAN has the HDF5 binary included. The HDF5 Copyright notice can be found below.
