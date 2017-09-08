@@ -27,8 +27,8 @@
 #include <math.h>
 #include "global.h"
 
-#define MAX_INT_DOUBLE_PREC (1LL << 53)
-#define MIN_INT_DOUBLE_PREC (-1LL << 53)
+#define MAX_INT_DOUBLE_PREC (9007199254740992)   // (1LL << 53)
+#define MIN_INT_DOUBLE_PREC -(9007199254740992) // (-1LL << 53)
 #define NA_INTEGER64 LLONG_MIN
 
 #define STRING2(x) #x
