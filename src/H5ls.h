@@ -30,6 +30,4 @@ herr_t gather_data_from_link(hid_t g_id, const char *name, const H5L_info_t *inf
 
 SEXP R_H5ls(SEXP _g_id, SEXP _recursive, SEXP _index_type, SEXP _order, SEXP _lapl_id, SEXP _dapl_id, SEXP _tapl_id);
 
-SEXP R_H5attributes(SEXP _g_id);
-
 #endif

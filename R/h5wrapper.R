@@ -201,5 +201,5 @@ h5unlink <- function(object, name) {
 #' @rdname h5-wrapper
 #' @export
 list.attributes <- function(object) {
-  .Call("R_H5attributes", object$id, PACKAGE = "hdf5r")
+  h5attr_names(object)
 }

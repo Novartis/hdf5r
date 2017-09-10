@@ -295,22 +295,3 @@ herr_t attr_info(hid_t loc_id, const char *name, const H5A_info_t *ainfo, void *
   return 0;
 }
 
-// gather the information on the attributes of a location
-// currently using H5Aiterate2
-SEXP R_H5attributes(SEXP _g_id) {
-  hid_t g_id = SEXP_to_longlong(_g_id, 0);
-  
-  H5O_info_t object_info;
-  H5Oget_info( g_id, &object_info );
-  hsize_t num_attributes = object_info.num_attrs;
-  
-  SEXP out;
-  if (num_attributes <= 0) {
-    out = PROTECT(allocVector(STRSXP, 0));
-  } else {
-    out = PROTECT(allocVector(STRSXP, num_attributes));
-    H5Aiterate2(g_id, H5_INDEX_NAME, H5_ITER_INC, NULL, attr_info, out);
-  }
-  UNPROTECT(1);
-  return out;
-}
