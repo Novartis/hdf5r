@@ -90,14 +90,10 @@ H5RefClass <- R6Class("H5RefClass",
  #                         },
                           print=function(...) {
                               "Prints the class of the object and the id"
-                              myclass <- class(self)[1]
-                              if(!self$is_valid) {
-                                  cat(myclass, ": Object invalid\n", sep="")
-                              }
-                              else {
-                                  id_as_hex <- as_hex(self$id)
-                                  cat(myclass, ": ", id_as_hex, "\n", sep="")
-                              }
+
+                              is_valid <- self$is_valid
+
+                              print_class_id(self, is_valid)
                               return(invisible(self))
                           },
                           methods=function() {
@@ -160,9 +156,6 @@ H5RefClass <- R6Class("H5RefClass",
                       )
 
 R6_set_list_of_items(H5RefClass, "public", interface, overwrite=TRUE)
-
-
-
 
 
 

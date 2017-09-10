@@ -196,3 +196,77 @@ H5Class_overview <- function(browser = getOption("browser")) {
     browseURL(system.file("manual/function_overview.html", package="hdf5r"), browser=browser)
     return(invisible(system.file("manual/function_overview.html", package="hdf5r")))
 }
+
+
+
+##' Print the class and ID
+##'
+##' Used by the print-methods
+##' @title Print the class and ID
+##' @param obj The object for which to print the class and id
+##' @param is_valid is the object valid
+##' @return invisible NULL
+##' @author Holger Hoefling
+##' @keywords internal
+print_class_id <- function(obj, is_valid) {
+    myclass <- class(obj)[1]
+    cat("Class: ", myclass, "\n", sep="")
+    if(!is_valid) {
+        cat("ID: Object invalid\n")
+    }
+    else {
+        if(getOption("hdf5r.print_id")) {
+            id_as_hex <- as_hex(obj$id)
+            cat("ID: ", id_as_hex, "\n", sep="")
+        }
+    }
+    return(invisible(NULL))
+}
+
+##' Print attributes
+##'
+##' Prints the names of the attributes up to a given maximum number
+##' @title Print attributes
+##' @param obj The obj for which to print the attributes
+##' @param max_to_print Maximum number of attributes to print
+##' @return Invisible NULL
+##' @author Holger Hoefling
+##' @keywords internal
+print_attributes <- function(obj, max_to_print) {
+    obj_attr_names <- h5attr_names(obj)
+    if(length(obj_attr_names) > 0) {
+        if(length(obj_attr_names) <= max_to_print) {
+            cat("Attributes: ", paste(obj_attr_names, collapse=", "), "\n", sep="")
+        }
+        else {
+            cat("Attributes: ", paste(obj_attr_names[seq_len(max_to_print)], collapse=", "),
+                " ... < truncated at ", max_to_print, " out of ", length(obj_attr_names), ">\n", sep="")
+        }
+    }
+    return(invisible(NULL))
+}
+
+##' Print listing
+##'
+##' Prints a smaller part of the \code{ls} output of an object, up to a maximum number
+##' @title Print listing 
+##' @param obj Object for which to print the listing
+##' @param max_to_print Maximum number of listing items to print
+##' @return Invisible NULL
+##' @author Holger Hoefling
+##' @keywords internal
+print_listing <- function(obj, max_to_print) {
+    listing <- obj$ls(recursive=FALSE, detailed=FALSE)
+    listing <- listing[, c("name", "object.type", "dataset.dims", "dataset.type_class")]
+    if(nrow(listing) > 0) {
+        cat("Listing:\n")
+        if(nrow(listing) <= max_to_print) {
+            print(listing, row.names=FALSE)
+        }
+        else {
+            print(listing[seq_len(max_to_print),], row.names=FALSE)
+            cat("< Printed ", max_to_print, ", out of ", nrow(listing), ">\n", sep="")
+        }
+    }
+    return(invisible(NULL))
+}

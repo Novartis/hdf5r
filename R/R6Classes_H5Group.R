@@ -36,6 +36,26 @@
 ##' @seealso H5Class_overview
 H5Group <- R6Class("H5Group",
                    inherit=H5RefClass,
+                   public=list(
+                       print=function(..., max.attributes=10, max.listing=10){
+                           "Prints information for the group"
+                           "@param max.attributes Maximum number of attribute names to print"
+                           "@param max.listing Maximum number of ls-items to print"
+                           "@param ... ignored"
+
+                           is_valid <- self$is_valid
+
+                           print_class_id(self, is_valid)
+                           if(is_valid) {
+                               cat("Filename: ", normalizePath(self$get_filename(), mustWork=FALSE), "\n", sep="")
+                               cat("Group: ", self$get_obj_name(), "\n", sep="")
+                               print_attributes(self, max_to_print=max.attributes)
+                               print_listing(self, max_to_print=max.listing)
+                           }
+                           return(invisible(self))
+                       }
+            
+                       ),
                    private=list(
                        closeFun=function(id) if(!is.na(id) && is.loaded("R_H5Gclose", PACKAGE="hdf5r")) {
                           invisible(.Call("R_H5Gclose", id, PACKAGE = "hdf5r"))}
