@@ -32,3 +32,4 @@ travis_setup.sh
 ^.*\.Rproj$
 ^\.Rproj\.user$
 TODO.md
+.wercker.yml
