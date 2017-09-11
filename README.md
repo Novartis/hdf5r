@@ -2,7 +2,7 @@
 | ------------- |--------|:-------------:|
 | **Linux, OSX**|[Travis](https://travis-ci.org)|[![Build Status](https://travis-ci.org/hhoeflin/hdf5r.svg?branch=master)](https://travis-ci.org/hhoeflin/hdf5r)|
 |**Windows**|[AppVeyor](https://www.appveyor.com)|[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hhoeflin/hdf5r?branch=master&svg=true)](https://ci.appveyor.com/project/hhoeflin/hdf5r)|
-|**ASAN, valgrind**|[Wercker](http://www.wercker.com)|[![wercker status](https://app.wercker.com/status/369ab140b23ca64afdd6e4a05c326442/s/master "wercker status")](https://app.wercker.com/project/byKey/369ab140b23ca64afdd6e4a05c326442)|
+|**ASAN, valgrind**|[Wercker](http://www.wercker.com)|[![wercker status](https://app.wercker.com/status/6a30e9d63b5d38539e28505b2fe6c440/s/master "wercker status")](https://app.wercker.com/project/byKey/6a30e9d63b5d38539e28505b2fe6c440)|
 |**Code Coverage**|[Codecov](https://codecov.io/)|[![codecov.io](http://codecov.io/github/hhoeflin/hdf5r/coverage.svg?branch=master)](http://codecov.io/github/hhoeflin/hdf5r?branch=master)|
 
 **hdf5r** is an R interface to the HDF5 library. It is implemented using R6 classes based on the HDF5-C-API, 
