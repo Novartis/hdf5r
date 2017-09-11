@@ -22,4 +22,4 @@ check_valgrind:
     - script:
         name: Rdevel CMD check
         code: |
-          Rdevel CMD check $(ls hdf5r_*.tar.gz) --use-valgrind --use-gct
+          Rdevel CMD check $(ls hdf5r_*.tar.gz) --use-valgrind
