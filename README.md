@@ -5,55 +5,64 @@
 |**ASAN, valgrind**|[Wercker](http://www.wercker.com)|[![wercker status](https://app.wercker.com/status/6a30e9d63b5d38539e28505b2fe6c440/s/master "wercker status")](https://app.wercker.com/project/byKey/6a30e9d63b5d38539e28505b2fe6c440)|
 |**Code Coverage**|[Codecov](https://codecov.io/)|[![codecov.io](http://codecov.io/github/hhoeflin/hdf5r/coverage.svg?branch=master)](http://codecov.io/github/hhoeflin/hdf5r?branch=master)|
 
-**hdf5r** is an R interface to the HDF5 library. It is implemented using R6 classes based on the HDF5-C-API, 
-supports all data-types supported by HDF5 (including references),
-is (almost) feature complete, provides many convenience functions yet also an extensive selection of the native HDF5-C-API functions. It is also 
+**hdf5r** is an R interface to the [HDF5](https://www.hdfgroup.org/HDF5) library. It is implemented using [R6](https://CRAN.R-project.org/package=R6) classes based on the [HDF5-C-API](https://support.hdfgroup.org/HDF5/doc/RM/RM_H5Front.html). The package supports all data-types as specified by HDF5 (including references) and provides many convenience functions yet also an extensive selection of the native HDF5-C-API functions. **hdf5r** is available on [Github](https://github.com/hhoeflin/hdf5r) and has already been released on [CRAN](https://cran.r-project.org/web/packages/hdf5r/index.html) for all major platforms (Windows, OS X, Linux). It is also 
 tested using several hundred assertions.
 
-Currently, OS X, Linux and Windows are supported.
+[HDF5](https://www.hdfgroup.org/HDF5/) is an excellent library and data model to 
+store huge amounts of data in a binary file format. Supporting most major 
+platforms and programming languages it can be used to exchange data files in a 
+language independent format. Compared to R's integrated *save()* and *load()* 
+functions it also supports access to only parts of the binary data files and can
+therefore be used to process data not fitting into memory.
 
 # Install
 
-As hdf5r is currently not yet released on CRAN, it has to be installed from Github. 
-
-```r
-library(devtools)
-install_github("Novartis/hdf5r")
-```
-
-The package is compatible with HDf5 version 1.8.12 or higher (also Version 1.10.0). 
+**hdf5r** is available for all major platforms, namely Linux, OS X and Windows. 
+The package is compatible with HDf5 version 1.8.13 or higher (also Version 1.10.0). 
 
 ## Requirements
 
-### Windows
+For OS X and Linux the HDF5 library needs to be installed via one of the (shell) commands specified below:
 
-Binary can be downloaded from CRAN. (not yet published on CRAN).
+| System                                    | Command
+|:------------------------------------------|:---------------------------------|
+|**OS X (using Homebrew)**                  | `brew install hdf5`
+|**Debian-based systems (including Ubuntu)**| `sudo apt-get install libhdf5-dev` 
+|**Systems supporting yum and RPMs**        | `sudo yum install hdf5-devel`
 
-### OS X
+HDF5 1.8.14 has been pre-compiled for Windows and is available at https://github.com/mannau/h5-libwin - thus no manual installation is required.
 
-On OS X you can install HDF5 with the necessary header files using [Homebrew](http://brew.sh). The command for the installation is
+## Basic Install
 
+The latest release version of **hdf5r** can be installed from any CRAN [Mirror](https://cran.r-project.org/mirrors.html) using the R command
+```r
+install.packages("hdf5r")
 ```
-brew install homebrew/science/hdf5
-```
-
-
-### Linux
-
-On Linux, HDF5 can be installed on Debian-based systems (including Ubuntu) with 
-```
-sudo apt-get install libhdf5-dev
-```
-
-On systems supporting yum and RPMs, the command is
-
-```
-sudo yum install hdf5-devel
+For the latest development version from Github you can use
+```r
+devtools::install_github("hhoeflin/hdf5r")
 ```
 
-# Getting started
+## Custom INSTALL Parameters
+If the hdf5 library is not located in a standard directory recognized by the configure script the parameters CPPFLAGS and LIBS may need to be set manually. 
+This can be done using the --configure-vars option for R CMD INSTALL in the command line, e.g
+```shell
+R CMD INSTALL hdf5r_<version>.tar.gz --configure-vars='LIBS=<LIBS> CPPFLAGS=<CPPFLAGS>'
+```
 
-## How to get help
+The most recent version with required paramters can also be directly installed from github using **devtools** in R:
+```r
+devtools::install_github("mannau/h5", args = "--configure-vars='LIBS=<LIBS> CPPFLAGS=<CPPFLAGS>'")
+```
+
+A concrete OS X example setting could look like this:
+```shell
+R CMD check hdf5r_0.9.7.9000.tar.gz --configure-vars="LIBS='-L/usr/local/Cellar/hdf5/1.10.0/lib  -L. -lhdf5_cpp -lhdf5 -lz -lm' CPPFLAGS='-I/usr/local/include'"
+```
+
+# Getting Started
+
+## How to Get Help
 
 The package provides most of the regular HDF5-API in addition to a number of convenience functions. As such, the number of available methods is 
 quite large. As the package uses R6 classes, all applicable methods for a class are contained in that class. The easiest way to get an 
@@ -92,7 +101,7 @@ vignette("hdf5r", package="hdf5r")
 ```
 
 
-## Simple code example
+## Simple Code Example
 
 If you don't have time to read the vignette, which contains more code example, here is a very brief code example to 
 create a file, write some data and read it back again.
@@ -130,7 +139,7 @@ h5attr(cars_ds, "rownames")
 file.h5$close_all()
 ```
 
-# 64-bit Signed Integers
+# 64-bit Integers
 
 Please note that for 64-bit signed integers, the bit64 package is used. For technical reasons, it is possible for a function that is not bit64-aware to misrepresent 64bit values from the bit64 package as 'doubles' of a completely different value. Therefore, please be advised to ensure that the functions you are using are bit64-aware or cast the values to regular numeric values (but be aware - this may result in a loss of precision). For illustration of this issue see the difference between `print(as.integer64(1))` and `cat(as.integer64(1), "\n")`. Another possible source of issues can be `matrix(as.integer64(1))` or `min(as.integer64(1), as.integer64(2))`, among possibly others. By default, hdf5r tries to return regular R objects (integer or double) wherever this is possible without loss of precision. If you need 64bit integers, proceed with care keeping these issues in mind.
 
