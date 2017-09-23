@@ -43,23 +43,6 @@ For the latest development version from Github you can use
 devtools::install_github("hhoeflin/hdf5r")
 ```
 
-## Custom INSTALL Parameters
-If the hdf5 library is not located in a standard directory recognized by the configure script the parameters CPPFLAGS and LIBS may need to be set manually. 
-This can be done using the --configure-vars option for R CMD INSTALL in the command line, e.g
-```shell
-R CMD INSTALL hdf5r_<version>.tar.gz --configure-vars='LIBS=<LIBS> CPPFLAGS=<CPPFLAGS>'
-```
-
-The most recent version with required paramters can also be directly installed from github using **devtools** in R:
-```r
-devtools::install_github("mannau/h5", args = "--configure-vars='LIBS=<LIBS> CPPFLAGS=<CPPFLAGS>'")
-```
-
-A concrete OS X example setting could look like this:
-```shell
-R CMD check hdf5r_0.9.7.9000.tar.gz --configure-vars="LIBS='-L/usr/local/Cellar/hdf5/1.10.0/lib  -L. -lhdf5_cpp -lhdf5 -lz -lm' CPPFLAGS='-I/usr/local/include'"
-```
-
 # Getting Started
 
 ## How to Get Help
