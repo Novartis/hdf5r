@@ -1,4 +1,4 @@
-Rscript := 'Rscript' --vanilla -e
+R := R --slave --vanilla -e
 
 PKG_VERSION := $(shell grep -i ^version DESCRIPTION | cut -d : -d \  -f 2)
 PKG_NAME := $(shell grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)
@@ -59,12 +59,11 @@ src/Makevars.in > src/Makevars.win
 	rm src/Makevars.win
 
 roxygen: $(R_FILES)
-#	$(Rscript) 'library(roxygen2); roxygenize(clean = TRUE)'
+	$(R) 'devtools::document()'
 	
 $(RCPPEXPORTS): compileAttributes
 	
 compileAttributes: $(SRC_FILES)
-	@echo $(SRC_FILES)
 	$(Rscript) 'library(Rcpp); Rcpp::compileAttributes()'
 	
 check: $(PKG_NAME)_$(PKG_VERSION).tar.gz 
