@@ -142,7 +142,7 @@ clean_ls_df <- function(df) {
 }
 
 
-##' Print a data frame with extended factor objects
+##' Print a data frame that includes extended factor objects
 ##'
 ##' The regular print function for data-frames has special methods built-in for factors so that
 ##' the label is printed instead of the constant. This function is intended to provide the same functionality
