@@ -18,7 +18,7 @@ It inherits all functions of the \code{\link{H5P-class}}.
 
 Create a new class of type \code{\link{H5P_DATASET_CREATE}}
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{id}{Internal use only}
 }}
@@ -121,7 +121,8 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P
 This function implements the HDF5-API function H5Pset_nbit.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetNbit} for details.}
 
-\item{\code{set_scaleoffset(scale_type = h5const$H5Z_SO_FLOAT_DSCALE, scale_factor = 0)}}{
+\item{\code{set_scaleoffset(scale_type = h5const$H5Z_SO_FLOAT_DSCALE,
+  scale_factor = 0)}}{
 
 This function implements the HDF5-API function H5Pset_scaleoffset.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetScaleoffset} for details.}

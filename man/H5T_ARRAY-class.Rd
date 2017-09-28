@@ -18,7 +18,7 @@ Inherits from class \code{\link[=H5T-class]{H5T}}.
 
 Create an array datatype.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{dims}{The dimension of the datatype}
 \item{dtype_base}{The datatype that makes up the elements of the array}

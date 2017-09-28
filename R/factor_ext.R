@@ -142,24 +142,67 @@ factor_ext <- function(x, values, levels, drop=FALSE) {
 ## need to overload the same functions that are also available for factors
 ## also, is.factor and a conversion function as.factor (which should be really simple)
 
-##' Extract values from an object
+
+
+
+##' Various functions for \code{factor_ext} objects
 ##'
-##' A \code{factor_ext} variable does not use consequitive value. This is a generic function and it is currently only
-##' overloaded for \code{factor_ext} classes. It extract the values used in the \code{factor_ext} object.
-##' @title Extract values from an object
-##' @param x The object for which to extract the factors. Currently only implemented for \code{factor_ext}
+##' \describe{
+##'   \item{values}{Extracts the underlying values of an object (the generic here)}
+##'   \item{values.factor_ext}{Extracts the underlying values of a \code{factor_ext} object}
+##'   \item{values.factor}{Extracts the underlying values of a \code{factor}}
+##'   \item{values.default}{Default of the values function; currently returns an error}
+##'   \item{as.character}{Coerces \code{factor_ext} to a character-respresentation using it levels, not values}
+##'   \item{[[.factor_ext}{Single-item subsetting of a \code{factor_ext} object}
+##'   \item{[[<-.factor_ext}{Single-item subset assignment to a \code{factor_ext} object}
+##'   \item{[.factor_ext}{Subsetting of a \code{factor_ext} object}
+##'   \item{[<-.factor_ext}{Subset assignment to a \code{factor_ext} object}
+##'   \item{is.factor_ext}{Check if it is a \code{factor_ext} object. Returns a logical}
+##'   \item{coercible_to_factor}{Checks if a \code{factor_ext} could be coerced to a \code{factor}. Return a logical.}
+##'   \item{coerce_to_factor}{Coerces to a \code{factor}, otherwise throws an error if not possible.}
+##'   \item{print.factor_ext}{Prints a \code{factor_ext} object.}
+##'   \item{==.factor_ext}{Compare two \code{factor_ext} for equality.}
+##'   \item{!=.factor_ext}{Compare two \code{factor_ext} for inequality.}
+##'   \item{c.factor_ext}{Concatenate objects of type \code{factor_ext}.}
+##' }
+##' @title Various functions for \code{factor_ext} objects
+##' @param x Object of type \code{factor_ext}
+##' @param quote logical, indicating whether or not strings should be printed with surrounding quotes.
+##' @param max.levels integer, indicating how many levels should be printed. if '0', no extra "Levels" line will be printed.  The
+##' default, 'NULL', entails choosing 'max.levels' such that the levels print on one line of width 'width' (same for values).
+##' @param width only used when \code{max.levels} is NULL (see above)
+##' @param e1,e2 The two objects in the equality or inequality comparison.
 ##' @param ... Currently ignored
-##' @return Return the integer values used for the factor
+##' @param drop Should dimensions of size 1 be dropped?
+##' @param value The object to assign; here has be a level of \code{factor_ext}
+##' @return Depending on the function
 ##' @author Holger Hoefling
+##' @name factor_ext_functions
+NULL
+
+
 ##' @export
+##' @rdname factor_ext_functions 
 values <- function(x, ...) {
     UseMethod("values")
 }
 
-##' @rdname values
 ##' @export
+##' @rdname factor_ext_functions 
 values.factor_ext <- function(x, ...) {
     attr(x, "values")
+}
+
+##' @export
+##' @rdname factor_ext_functions 
+values.factor <- function(x, ...) {
+    as.numeric(x)
+}
+
+##' @export
+##' @rdname factor_ext_functions 
+values.default <- function(x, ...) {
+    stop("Currently not implemented")
 }
 
 ## internal helper function
@@ -175,32 +218,14 @@ position <- function(x) {
     }
 }
 
-##' Coerce a \code{factor_ext} to a character vector
-##'
-##' Coerces an extended factor to a character vector. Each item is replaced with it level name.
-##' @title Coerce a \code{factor_ext} to a character vector
-##' @param x The \code{factor_ext} object to coerce
-##' @param ... Currently ignored
-##' @return Character vector with the level name for each item of an \code{factor_ext}
-##' @author Holger Hoefling
 ##' @export
+##' @rdname factor_ext_functions 
 as.character.factor_ext <- function (x, ...) {
     levels(x)[position(x)]
 }
 
-##' Subset or assign into a subset of a \code{factor_ext} object
-##'
-##' Subset and assignment into an extended factor object
-##' @title Subset or assign into a subset of a \code{factor_ext} object
-##' @param x \code{factor_ext} object to subset or to assign into
-##' @param drop Should dimensions of size 1 be dropped?
-##' @param value The object to assign
-##' @param ... Currently ignored
-##' @return Returns single item of a \code{factor_ext} object
-##' @author Holger Hoefling
 ##' @export
-##' @rdname factor_ext_sub
-##' @name factor_ext_sub
+##' @rdname factor_ext_functions 
 "[[.factor_ext" <- function (x, ...) {
     y <- NextMethod("[[")
     attr(y, "contrasts") <- attr(x, "contrasts")
@@ -210,8 +235,8 @@ as.character.factor_ext <- function (x, ...) {
     y
 }
 
-##' @rdname factor_ext_sub
 ##' @export
+##' @rdname factor_ext_functions 
 "[[<-.factor_ext" <- function(x, ..., value) {    
     lx <- levels(x)
     vx <- values(x)
@@ -230,8 +255,8 @@ as.character.factor_ext <- function (x, ...) {
 }
 
 
-##' @rdname factor_ext_sub
 ##' @export
+##' @rdname factor_ext_functions 
 "[.factor_ext" <- function (x, ..., drop = FALSE) 
 {
     y <- NextMethod("[")
@@ -246,8 +271,8 @@ as.character.factor_ext <- function (x, ...) {
     else y
 }
 
-##' @rdname factor_ext_sub
 ##' @export
+##' @rdname factor_ext_functions 
 "[<-.factor_ext" <- function(x, ..., value) {
     lx <- levels(x)
     vx <- values(x)
@@ -265,20 +290,14 @@ as.character.factor_ext <- function (x, ...) {
     x
 }
 
-##' Check if it is an extended factor
-##'
-##' Check if it is an object of class \code{factor_ext}
-##' @title Check if it is an extended factor
-##' @param x Object to check
-##' @return Logical of length 1
-##' @author Holger Hoefling
 ##' @export
+##' @rdname factor_ext_functions 
 is.factor_ext <- function(x) {
     return(inherits(x, "factor_ext"))
 }
 
-##' @rdname coerce_to_factor
 ##' @export
+##' @rdname factor_ext_functions 
 coercible_to_factor <- function(x) {
     if(!inherits(x, "factor_ext")) {
         stop("Only for objects of factor_ext classes")
@@ -292,15 +311,8 @@ coercible_to_factor <- function(x) {
     }
 }
 
-##' Coercing to a factor
-##'
-##' Function to test if a \code{factor_ext} can be coerced into a factor and a function that does the coercion.
-##' A \code{factor_ext} is coercible if its values are consequtive and starting at 1.
-##' @title Coercing to a factor
-##' @param x Object of type \code{factor_ext}
-##' @return Either a \code{factor} for \code{coerce_to_factor} or a logical for \code{coercible_to_factor}. 
-##' @author Holger Hoefling
 ##' @export
+##' @rdname factor_ext_functions 
 coerce_to_factor <- function(x) {
     if(!inherits(x, "factor_ext")) {
         stop("Only for objects of factor_ext classes")
@@ -314,19 +326,9 @@ coerce_to_factor <- function(x) {
     }
 }
 
-##' Print an \code{factor_ext} object to the screen
-##'
-##' Printing an \code{factor_ext} object. Adapted from \code{\link{print.factor}}.
-##' @title Print an \code{factor_ext} object to the screen
-##' @param x \code{factor_ext} object to print
-##' @param quote Should they be quoted
-##' @param max.levels Maximum number of levels to print
-##' @param width Width of how much to print for the levels and values
-##' @param ... Currently ignored
-##' @return The object to print itsef, invisibly
-##' @author Holger Hoefling
-##' @seealso \code{\link{print.factor}}
+
 ##' @export
+##' @rdname factor_ext_functions 
 print.factor_ext <- function (x, quote = FALSE, max.levels = NULL, width = getOption("width"), ...) {
     if (length(x) == 0L) 
         cat("factor_ext", "(0)\n", sep = "")
@@ -386,19 +388,8 @@ print.factor_ext <- function (x, quote = FALSE, max.levels = NULL, width = getOp
     invisible(x)
 }
 
-##' Compare two \code{factor_ext} for equality
-##'
-##' Compares two \code{factor_ext} for equality. In order for them to be considered as equal,
-##' they have to be equal after being coerced to character vectors. I.e. the can have different level values,
-##' as long as the level names are the same. 
-##' @title Compare two \code{factor_ext} for equality
-##' @param e1 First item in the comparison
-##' @param e2 Second item in the comparison
-##' @return A logical
-##' @author Holger Hoefling
 ##' @export
-##' @rdname factor_ext_eq
-##' @name factor_ext_eq
+##' @rdname factor_ext_functions 
 "==.factor_ext" <- function(e1, e2){
     if(inherits(e2, "factor_ext")) {
         e1 <- as.character(e1)
@@ -415,8 +406,8 @@ print.factor_ext <- function (x, quote = FALSE, max.levels = NULL, width = getOp
     }
 }
 
-##' @rdname factor_ext_eq
 ##' @export
+##' @rdname factor_ext_functions 
 "!=.factor_ext" <- function(e1, e2){
     if(inherits(e2, "factor_ext")) {
         e1 <- as.character(e1)
@@ -434,14 +425,8 @@ print.factor_ext <- function (x, quote = FALSE, max.levels = NULL, width = getOp
 }
 
 
-##' Concatenation of \code{factor_ext} objects
-##'
-##' Concatenation of \code{factor_ext} objects. 
-##' @title Concatenation of \code{factor_ext} objects
-##' @param ... Items to concatenate
-##' @return A \code{factor_ext}
-##' @author Holger Hoefling
 ##' @export
+##' @rdname factor_ext_functions 
 c.factor_ext <- function(...) {
     l <- list(...)
     ## check that the values and the levels for all of them the same and the class is all the same

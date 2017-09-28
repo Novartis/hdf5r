@@ -131,7 +131,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/HL/RM_H5L
 
 Prints information for the group
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{...}{ignored}
 }}
@@ -156,24 +156,28 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A
 This function implements the HDF5-API function H5Aopen.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-Open} for details.}
 
-\item{\code{create_attr_by_name(attr_name, obj_name, robj = NULL, dtype = NULL,
-  space = NULL, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{create_attr_by_name(attr_name, obj_name, robj = NULL,
+  dtype = NULL, space = NULL,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Acreate_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-CreateByName} for details.}
 
-\item{\code{attr_open_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_open_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aopen_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-OpenByName} for details.}
 
 \item{\code{attr_open_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aopen_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-OpenByIdx} for details.}
 
-\item{\code{attr_exists_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_exists_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aexists_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-ExistsByName} for details.}
@@ -199,30 +203,35 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A
 This function implements the HDF5-API function H5Adelete.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-Delete} for details.}
 
-\item{\code{attr_delete_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_delete_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Adelete_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-DeleteByName} for details.}
 
 \item{\code{attr_delete_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Adelete_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-DeleteByIdx} for details.}
 
-\item{\code{attr_info_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_info_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_info_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetInfoByName} for details.}
 
 \item{\code{attr_info_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_info_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetInfoByIdx} for details.}
 
 \item{\code{attr_name_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_name_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetNameByIdx} for details.}

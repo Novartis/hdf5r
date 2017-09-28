@@ -18,7 +18,7 @@ It inherits all functions of the \code{\link{H5P-class}}.
 
 Create a new class of type \code{\link{H5P_DATASET_XFER}}
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{id}{Internal use only}
 }}

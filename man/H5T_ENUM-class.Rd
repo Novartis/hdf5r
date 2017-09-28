@@ -19,7 +19,7 @@ Inherits from class \code{\link[=H5T-class]{H5T}}.
 Create an enumeration datatype. This is either a factor-like object or a logical variable (that is
 internally represented as an ENUM-type.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{labels}{The labels of the ENUM-type}
 \item{values}{The values corresponding to the labels}

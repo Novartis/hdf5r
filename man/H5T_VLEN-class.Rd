@@ -18,7 +18,7 @@ Inherits from class \code{\link[=H5T-class]{H5T}}.
 
 Create a variable length datatype
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{dtype_base}{The basis-type of the variable length datatype}
 \item{id}{Internal use only}

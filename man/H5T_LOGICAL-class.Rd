@@ -20,7 +20,7 @@ Inherits from class \code{\link[=H5T-class]{H5T}}.
 Create a logical datatype. This is
 internally represented by an ENUM-type
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{id}{Internal use only}
 }}

@@ -20,7 +20,7 @@ Inherits from class \code{\link[=H5T_COMPOUND-class]{H5T_COMPOUND}}.
 
 Create a new complex datatype
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{id}{Internal use only}
 }}
