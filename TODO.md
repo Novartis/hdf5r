@@ -1,3 +1,22 @@
+# Release Checklist
+
+- [] Add readme for **h5** wrapper functions
+- [] Add examples
+- [] Read/Improve Documentation
+
+Release Sunday:
+- [] See if All checks (Travis, Appveyor, Wercker) are green
+- [] build package using `make build-cran`
+- [] upload package to winbuilder: https://win-builder.r-project.org/
+- [] If all worked as expected, submit package: https://cran.r-project.org/submit.html
+
+After Release / Marketing:
+- [] Deprecate **h5**, Release 1.0.0 with deprecation notice in Description and link to **hdf5r**
+- [] Announce **hdf5r** at the R-packages mailinglist
+- [] Announce **hdf5** at the HDF5 Group (David) and tell them that there's a new package in town ;), maybe inform at HDF5 mailing list.
+- [] Blog at R-Bloggers?
+- [] R-Journal?
+
 # Changes from h5 to hdf5r
 
 - Change subset operator to [[
