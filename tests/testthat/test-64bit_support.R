@@ -18,19 +18,21 @@
 context("64bit-support")
 
 test_that("Dataset with more than 2^31 rows", {
+    ## but will only support to the length of LONG accuracy
+    ## just as normal R arrays
     large_space <- H5S$new(type="simple", dim=as.integer64(2)^33)
     
     ## first try that writing a hyperslab is done correctly
     large_space$select_hyperslab(start=1, count=1, stride=1, block=as.integer64(2)^32)
-    expect_equal(large_space$get_select_hyper_blocklist()[,1], c(1, 2^32))
+    expect_equal(large_space$get_select_hyper_blocklist()[,1], setNames(c(1, 2^32), c("block_1_start", "block_1_end")))
         
     ## now test that the reading also works correctly using the high-level array functionality
     large_space$select_none()
     large_space[2:2^32]
-    expect_equal(large_space$get_select_hyper_blocklist()[,1], c(2, 2^32))
+    expect_equal(large_space$get_select_hyper_blocklist()[,1], setNames(c(2, 2^32), c("block_1_start", "block_1_end")))
     large_space$select_none()
     large_space[as.integer64(2):(as.integer64(2)^32)]
-    expect_equal(large_space$get_select_hyper_blocklist()[,1], c(2, 2^32))
+    expect_equal(large_space$get_select_hyper_blocklist()[,1], setNames(c(2, 2^32), c("block_1_start", "block_1_end")))
     
     ## create a large dataset on disk for read/write test (won't actually be physically large in size
     test_file <- tempfile(fileext=".h5")

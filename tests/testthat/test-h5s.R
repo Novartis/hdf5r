@@ -61,7 +61,10 @@ test_that("Setting and retrieving hyperslabs", {
     blocklist <- ds_simple$get_select_hyper_blocklist()
     ## now check that the blocklist is as expected
     expect_equal(blocks, 2)
-    expect_equal(blocklist, matrix(c(2,3,2, 3, 5, 3, 5, 3, 2, 6, 5, 3), ncol=3, byrow=TRUE))
+    expect_equal(blocklist, structure(matrix(c(2,3,2, 3, 5, 3, 5, 3, 2, 6, 5, 3), ncol=3, byrow=TRUE),
+                                      dimnames=list(c("block_1_start", "block_1_end", "block_2_start", "block_2_end"), NULL)))
+
+    
 })
 
 test_that("Testing encode/decode as well as copy", {

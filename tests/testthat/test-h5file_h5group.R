@@ -30,6 +30,17 @@ test_that("File creation", {
     file_ls <- file.h5$ls(recursive=TRUE)
     expect_equal(file_ls$name, c("test1", "test1/test2"))
 
+    ## also check that ls prints the dimension of a file in the appropriate order when doing ls
+    file.h5[["test_matrix"]] <- matrix(0, nrow=10, ncol=5)
+    file.h5[["test_vector"]] <- numeric(10)
+    ls_res <- file.h5$ls()
+    ls_matrix <- ls_res[ls_res$name == "test_matrix",]
+    expect_equal(ls_matrix$dataset.dims, "10 x 5")
+    expect_equal(ls_matrix$dataset.rank, 2)
+    ls_vector <- ls_res[ls_res$name == "test_vector",]
+    expect_equal(ls_vector$dataset.dims, "10")
+    expect_equal(ls_vector$dataset.rank, 1)
+    
     ## test that we can open the group by name and by index
     test1_opened <- file.h5$open("test1")
     test1_opened_idx <- file.h5$open_by_idx(0)
@@ -67,7 +78,8 @@ test_that("File creation", {
     expect_equal(test1_info, root_info_by_idx)
 
     ## retrieve the filesize and info and name
-    expect_equal(file.h5$get_file_name(), test_file)
+    ## in order not to get an error on OSx, need to replace // in filename
+    expect_equal(normalizePath(file.h5$get_filename(), mustWork = FALSE), normalizePath(test_file, mustWork=FALSE))
     expect_true(nrow(file.h5$file_info()) == 1)
     expect_true(file.h5$get_filesize() > 0)
         

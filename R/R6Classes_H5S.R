@@ -32,10 +32,9 @@
 ##'
 ##' @docType class
 ##' @importFrom R6 R6Class
-##' @return Object of class \code{\link{H5Group}}. 
+##' @return Object of class \code{\link{H5S}}. 
 ##' @export
 ##' @author Holger Hoefling
-##' @seealso H5Class_overview
 H5S <- R6Class("H5S",
                inherit=H5RefClass,
                public=list(
@@ -136,15 +135,7 @@ H5S <- R6Class("H5S",
                    get_simple_extent_dims=function() {
                        "This function implements the HDF5-API function H5Sget_simple_extent_dims. Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-GetSimpleExtentDims} for details."
 
-                       rank <- self$get_simple_extent_ndims()
-                       res <- suppressWarnings(.Call("R_H5Sget_simple_extent_dims", self$id, request_empty(rank), request_empty(rank), PACKAGE = "hdf5r"))
-                       if(res$return_val < 0) {
-                           stop("Error when retrieving extent of simple dataspace")
-                       }
-                       names(res) <- c("rank", "dims", "maxdims")
-                       res$dims <- rev(res$dims)
-                       res$maxdims <- rev(res$maxdims)
-                       return(res)                           
+                       return(standalone_H5S_get_simple_extent_dims(self$id))
                    },
                    get_simple_extent_npoints=function() {
                        "This function implements the HDF5-API function H5Sget_simple_extent_npoints. Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-GetSimpleExtentNpoints} for details."
@@ -258,6 +249,7 @@ H5S <- R6Class("H5S",
                        }
                        ## correct for first element 0
                        buffer <- t(buffer) + 1
+                       rownames(buffer) <- paste("block", rep(seq_len(numblocks), each=2), rep(c("start", "end"), times=numblocks), sep="_")
                        return(buffer)
                    },
                    get_select_elem_npoints=function() {
@@ -338,86 +330,77 @@ H5S <- R6Class("H5S",
                    select_elements=function(coord, op=h5const$H5S_SELECT_SET, byrow=TRUE) {
                        "This function implements the HDF5-API function H5Sselect_elements. Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements} for details."
 
-                       rank <- self$get_simple_extent_ndims()
-                       
-                       ## check that coord is an array; is rank=1, also allowed to be a vector
-                       if(rank==0) {
-                           stop("Dataspace has no extent; rank 0")
-                       }
-                       if(rank==1) {
-                           num_elem <- length(coord)
-                       }
-                       else if(rank==length(coord)) {
-                           coord <- matrix(coord, ncol=1)
-                           num_elem <- 1
-                       }
-                       else {
-                           if(byrow) {
-                               if(!is.matrix(coord)) {
-                                   stop("coord has to be a matrix")
-                               }
-                               if(ncol(coord) != rank) {
-                                   stop(paste("Number of columns of coord has to be equal to rank (for byrow=TRUE)", rank))
-                               }
-                               num_elem <- nrow(coord)
-                               coord <- t(coord)
-                           }
-                           else {
-                               if(!is.matrix(coord)) {
-                                   stop("coord has to be a matrix")
-                               }
-                               if(nrow(coord) != rank) {
-                                   stop(paste("Number of rows of coord has to be equal to rank (for byrow=FALSE)", rank))
-                               }
-                               num_elem <- nrow(coord)
-                           }
-                       }
-                       ## correct for first element 0
-                       coord <- coord - 1
-                       ## reverse all the coordinates
-                       coord_rev <- coord
-                       for(i in seq_len(rank)) {
-                           coord_rev[i,] <- coord[rank + 1 - i,]
-                       }
-                       coord <- coord_rev
-                       herr <- .Call("R_H5Sselect_elements", self$id, op, num_elem, coord, PACKAGE = "hdf5r")
-                       if(herr < 0) {
-                           stop("Error when selecting elements")
-                       }
+                       standalone_H5S_select_elements(self$id, coord=coord, op=op, byrow=byrow)
                        return(invisible(self))
+
                    },
                    select_hyperslab=function(start, count, stride=NULL, block=NULL, op=h5const$H5S_SELECT_SET) {
                        "This function implements the HDF5-API function H5Sselect_hyperslab. Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab} for details."
 
-                       rank <- self$get_simple_extent_ndims()
-                       if(is.null(stride)) {
-                           stride <- rep(1, rank)
+                       standalone_H5S_select_hyperslab(id=self$id, start=start, count=count, stride=stride, block=block, op=op)
+                       return(invisible(self))
+                   },
+                   subset=function(args, op=h5const$H5S_SELECT_SET, envir=parent.frame()) {
+                       "Subsetting the space. This is mainly intended as a helper function for the '[' function, but"
+                       "can also be used on its own."
+                       "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
+                       "For interactive use we recomment the use of the \\code{[} operator."
+                       "@param op The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in"
+                       "\\code{h5const$H5S_seloper_t}"
+                       "@param envir The environment in which to evaluate \\code{args}"
+                       if(!self$is_simple()) {
+                           stop("Dataspace has to be simple for a selection to occur")
                        }
-                       if(is.null(block)) {
-                           block <- rep(1, rank)
+                       simple_extent <- self$get_simple_extent_dims()    
+                       ## distinguish between scalar and non-scalar
+                       if(simple_extent$rank == 0 && self$get_select_npoint() == 1) {
+                           ## is a scalar
+                           if(!are_args_scalar(args)) {
+                               stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
+                           }
+                           ## nothing needs to be done; just fall through to the end
                        }
-                       if(length(start) != rank) {
-                           stop(paste("start has to be of the same length as the rank of the dataspace,", rank))
-                       }
-                       if(length(stride) != rank) {
-                           stop(paste("stride has to be of the same length as the rank of the dataspace,", rank))
-                       }
-                       if(length(count) != rank) {
-                           stop(paste("count has to be of the same length as the rank of the dataspace,", rank))
-                       }
-                       if(length(block) != rank) {
-                           stop(paste("block has to be of the same length as the rank of the dataspace,", rank))
-                       }
-                       ## correct for first element 0
-                       start <- start - 1
-                       herr <- .Call("R_H5Sselect_hyperslab", self$id, op, rev(start), rev(stride), rev(count), rev(block),
-                                     PACKAGE = "hdf5r")$return_val
-                       if(herr < 0) {
-                           stop("Error when selecting hyperslab")
+                       else {
+                           reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir)
+                           ## need to check if maximum dimension in indices are larger than dataset dimensions
+                           ## if yes need to throw an error
+                           if(any(reg_eval_res$max_dims > simple_extent$dims)) {
+                               stop("The following coordinates are outside the dataset dimensions: ",
+                                    paste(which(reg_eval_res$max_dims > simple_extent$dims), sep=", "))
+                           }
+                           selection <- regularity_eval_to_selection(reg_eval_res=reg_eval_res) 
+                           apply_selection(space_id=self$id, selection=selection)
                        }
                        return(invisible(self))
-                   }                       
-                   ),
+                   },
+                   print=function(...){
+                       "Prints information for the group"
+                       "@param ... ignored"
+                       
+                       is_valid <- self$is_valid
+                       
+                       print_class_id(self, is_valid)
+
+                       if(is_valid) {
+                           if(!self$is_simple()) {
+                               ## has to be a NULL space
+                               cat("Type: NULL\n")
+                           }
+                           else {
+                               extent_res <- self$get_simple_extent_dims()
+                               if(extent_res$rank == 0) {
+                                   cat("Type: Scalar\n")
+                               }
+                               else {
+                                   cat("Type: Simple\n")
+                                   cat("Dims: ", paste(extent_res$dims, collapse=" x "), "\n", sep="")
+                                   cat("Maxdims: ", paste(extent_res$maxdims, collapse=" x "), "\n", sep="")
+                               }
+                           }
+                       }
+                       return(invisible(self))
+                   }
+               ),
                active=list(
                    dims=function() {
                        "Get the dimensions of the space. Return NULL if the space is not simple (i.e. NULL-space) or a length-0 integer if it is a scalar"
@@ -456,7 +439,7 @@ H5S$set("active", "rank", H5S$public_methods$get_simple_extent_ndims, overwrite=
 #' @return Object of class \code{\link[=H5S_DEFAULT-class]{H5S_DEFAULT}}. 
 #' @author Holger Hoefling
 #' @export
-#' @seealso H5Class_overview, \code{\link[=H5S-class]{H5S}}
+#' @seealso \code{\link[=H5S-class]{H5S}}
 H5S_DEFAULT <- R6Class("H5S_DEFAULT",
                        inherit=H5S,
                        public=list(
@@ -470,3 +453,156 @@ H5S_DEFAULT <- R6Class("H5S_DEFAULT",
                            ),
                        cloneable=FALSE
                        )
+
+
+## some additional functions that either duplicate functionality of the R6 object, but without requiring the
+## R6 object. This is intended as a speed improvement
+
+standalone_H5S_get_simple_extent_ndims <- function(id) {
+    ndims <- .Call("R_H5Sget_simple_extent_ndims", id, PACKAGE = "hdf5r")$return_val
+    if(ndims < 0) {
+        stop("Error when retrieving rank of dataspace")
+    }
+    return(ndims)
+}
+
+
+standalone_H5S_select_elements <- function(id, coord, op=h5const$H5S_SELECT_SET, byrow=TRUE) {
+    rank <- standalone_H5S_get_simple_extent_ndims(id)
+    
+    ## check that coord is an array; is rank=1, also allowed to be a vector
+    if(rank==0) {
+        stop("Dataspace has no extent; rank 0")
+    }
+    if(rank==1) {
+        num_elem <- length(coord)
+    }
+    else if(rank==length(coord)) {
+        coord <- matrix(coord, ncol=1)
+        num_elem <- 1
+    }
+    else {
+        if(byrow) {
+            if(!is.matrix(coord)) {
+                stop("coord has to be a matrix")
+            }
+            if(ncol(coord) != rank) {
+                stop(paste("Number of columns of coord has to be equal to rank (for byrow=TRUE)", rank))
+            }
+            num_elem <- nrow(coord)
+            coord <- t(coord)
+        }
+        else {
+            if(!is.matrix(coord)) {
+                stop("coord has to be a matrix")
+            }
+            if(nrow(coord) != rank) {
+                stop(paste("Number of rows of coord has to be equal to rank (for byrow=FALSE)", rank))
+            }
+            num_elem <- nrow(coord)
+        }
+    }
+    ## correct for first element 0
+    coord <- coord - 1
+    ## reverse all the coordinates
+    coord_rev <- coord
+    for(i in seq_len(rank)) {
+        coord_rev[i,] <- coord[rank + 1 - i,]
+    }
+    coord <- coord_rev
+    herr <- .Call("R_H5Sselect_elements", id, op, num_elem, coord, PACKAGE = "hdf5r")
+    if(herr < 0) {
+        stop("Error when selecting elements")
+    }
+    return(NULL)
+}
+
+standalone_H5S_select_hyperslab <- function(id, start, count, stride=NULL, block=NULL, op=h5const$H5S_SELECT_SET) {
+
+    rank <- standalone_H5S_get_simple_extent_ndims(id=id)
+    if(is.null(stride)) {
+        stride <- rep(1, rank)
+    }
+    if(is.null(block)) {
+        block <- rep(1, rank)
+    }
+    if(length(start) != rank) {
+        stop(paste("start has to be of the same length as the rank of the dataspace,", rank))
+    }
+    if(length(stride) != rank) {
+        stop(paste("stride has to be of the same length as the rank of the dataspace,", rank))
+    }
+    if(length(count) != rank) {
+        stop(paste("count has to be of the same length as the rank of the dataspace,", rank))
+    }
+    if(length(block) != rank) {
+        stop(paste("block has to be of the same length as the rank of the dataspace,", rank))
+    }
+    ## correct for first element 0
+    start <- start - 1
+    herr <- .Call("R_H5Sselect_hyperslab", id, op, rev(start), rev(stride), rev(count), rev(block),
+                  PACKAGE = "hdf5r")$return_val
+    if(herr < 0) {
+        stop("Error when selecting hyperslab")
+    }
+    return(NULL)
+}
+
+
+
+##' Select multiple hyperslabs in a space
+##'
+##' Selects multiple hyperslabs in a space. Before the selection, the space selection will be cleared.
+##' @title Select multiple hyperslabs in a space
+##' @param id The id of the space
+##' @param hyperslab_array The array with the hyperslabs. Is of dimension num_dim x num_hyperslabs x 4. With teh elements
+##' being start, count, stride and block
+##' @return \code{NULL}. The space has been manipulated as a side effect
+##' @author Holger Hoefling
+##' @keywords internal
+standalone_H5S_select_multiple_hyperslab <- function(id, hyperslab_array) {
+    num_hyperslabs <- dim(hyperslab_array)[[2]]
+
+    stopifnot(num_hyperslabs > 0)
+    
+    ## select the first hyperslab
+    start <- hyperslab_array[, 1, 1] - 1
+    stride <- hyperslab_array[, 1, 3]
+    count <- hyperslab_array[, 1, 2]
+    block <- hyperslab_array[, 1, 4]
+    herr <- .Call("R_H5Sselect_hyperslab", id, h5const$H5S_SELECT_SET, rev(start), rev(stride), rev(count), rev(block),
+                  PACKAGE = "hdf5r")$return_val
+    if(herr < 0) {
+        stop("Error when selecting hyperslab")
+    }
+    
+    
+    if(num_hyperslabs > 1) {
+        for(i in 2:num_hyperslabs) {
+            start <- hyperslab_array[, i, 1] - 1
+            stride <- hyperslab_array[, i, 3]
+            count <- hyperslab_array[, i, 2]
+            block <- hyperslab_array[, i, 4]
+            herr <- .Call("R_H5Sselect_hyperslab", id, h5const$H5S_SELECT_OR, rev(start), rev(stride), rev(count), rev(block),
+                          PACKAGE = "hdf5r")$return_val
+            if(herr < 0) {
+                stop("Error when selecting hyperslab")
+            }
+        }
+    }
+    return(NULL)
+}
+
+
+
+standalone_H5S_get_simple_extent_dims=function(id) {
+    rank <- standalone_H5S_get_simple_extent_ndims(id)
+    res <- suppressWarnings(.Call("R_H5Sget_simple_extent_dims", id, request_empty(rank), request_empty(rank), PACKAGE = "hdf5r"))
+    if(res$return_val < 0) {
+        stop("Error when retrieving extent of simple dataspace")
+    }
+    names(res) <- c("rank", "dims", "maxdims")
+    res$dims <- rev(res$dims)
+    res$maxdims <- rev(res$maxdims)
+    return(res)                           
+}

@@ -4,3 +4,12 @@
 *#
 .Rhistory
 .Rprofile
+.Rproj
+.Rproj.user
+hdf5r.Rproj
+autom4te.cache
+config.log
+config.status
+test.h5
+*.Rcheck
+.tar.gz

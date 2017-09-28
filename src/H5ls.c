@@ -74,20 +74,20 @@ herr_t H5Dget_info(hid_t d_id, H5D_info_t * dataset_info) {
       else {
 	int dims_char_written = 0;
 	int maxdims_char_written = 0;
-	for(int i = 0; i < rank; ++i) {
-	  dims_char_written += sprintf(dataset_info->dims + dims_char_written, "%lld", dims[i]);
-	  if(i < rank - 1) {
+	for(int i = rank - 1; i >= 0; --i) {
+	  dims_char_written += sprintf(dataset_info->dims + dims_char_written, "%llu", dims[i]);
+	  if(i > 0) {
 	    dims_char_written += sprintf(dataset_info->dims + dims_char_written, " x ");
 	  }
 
 	  // now the maxdims; need to check for inf
-	  if(maxdims[i] == H5S_UNLIMITED) {
+	  if (maxdims[i] == H5S_UNLIMITED) {
 	    maxdims_char_written += sprintf(dataset_info->maxdims + maxdims_char_written, "Inf");
 	  }
 	  else {
-	    maxdims_char_written += sprintf(dataset_info->maxdims + maxdims_char_written, "%lld", maxdims[i]);
+	    maxdims_char_written += sprintf(dataset_info->maxdims + maxdims_char_written, "%llu", maxdims[i]);
 	  }
-	  if(i < rank - 1) {
+	  if(i > 0) {
 	    maxdims_char_written += sprintf(dataset_info->maxdims + maxdims_char_written, " x ");
 	  }
 	}
@@ -284,5 +284,14 @@ SEXP R_H5ls(SEXP _g_id, SEXP _recursive, SEXP _index_type, SEXP _order, SEXP _la
 
   UNPROTECT(4);
   return(__ret_list);
+}
+
+herr_t attr_info(hid_t loc_id, const char *name, const H5A_info_t *ainfo, void *opdata) {
+  if( strcmp(name, "NA") == 0) {
+    SET_STRING_ELT(opdata, ainfo->corder, NA_STRING);
+  } else {
+    SET_STRING_ELT(opdata, ainfo->corder, mkChar(name));
+  }
+  return 0;
 }
 

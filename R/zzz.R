@@ -16,10 +16,6 @@
 ##
 #############################################################################
 
-.onAttach <- function(libname, pkgname) {
-  packageStartupMessage("Welcome to the hdf5r package\nFirst, please note that this package is provided AS IS - WITH NO WARRANTIES OR CONDITIONS OF ANY KIND.\nPlease see the license for more details.\n\nFurthermore, please note that for 64-bit signed integers, the bit64 package is used. For technical reasons, it is possible for a function that is not bit64-aware to misrepresent 64bit values from the bit64 package as 'doubles' of a completely different value. Therefore, please be advised to ensure that the functions you are using are bit64-aware or cast the values to regular numeric values (but be aware - this may result in a loss of precision). For illustration of this issue see the difference between 'print(as.integer64(1))' and 'cat(as.integer64(1), \"\\n\")'. Another possible source of issues can be 'matrix(as.integer64(1))' or 'min(as.integer64(1), as.integer64(2))', among possibly others. By default, hdf5r tries to return regular R objects (integer or double) wherever this is possible without loss of precision. If you need 64bit integers, proceed with care keeping these issues in mind.\n")
-}
-
 .onLoad <- function(libname, pkgname) {
 #    .Call("R_H5dont_atexit", PACKAGE="hdf5r")
     .Call("R_H5open", PACKAGE="hdf5r")
@@ -34,7 +30,9 @@
         hdf5r.chunk_size = 2^13,
         hdf5r.default_string_len = Inf,
         hdf5r.flush_on_write=TRUE,
-        hdf5r.h5tor_default=h5const$H5TOR_CONV_INT64_NOLOSS
+        hdf5r.h5tor_default=h5const$H5TOR_CONV_INT64_NOLOSS,
+        hdf5r.point_to_hyperslabs_ratio=4,
+        hdf5r.print_id=FALSE
         )
     toset <- !(names(op.hdf5r) %in% names(op))
     if(any(toset)) options(op.hdf5r[toset])

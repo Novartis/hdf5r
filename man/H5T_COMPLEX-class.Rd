@@ -2,8 +2,8 @@
 % Please edit documentation in R/R6Classes_H5T.R
 \docType{class}
 \name{H5T_COMPLEX-class}
-\alias{H5T_COMPLEX}
 \alias{H5T_COMPLEX-class}
+\alias{H5T_COMPLEX}
 \title{Class for HDF5 complex datatypes}
 \value{
 Object of class \code{\link[=H5T_COMPLEX-class]{H5T_COMPLEX}}.
@@ -16,21 +16,19 @@ Inherits from class \code{\link[=H5T_COMPOUND-class]{H5T_COMPOUND}}.
 \section{Methods}{
 
 \describe{
-\item{\code{new}}{
+\item{\code{new(id = NULL)}}{
 
-\strong{Usage:}
-\preformatted{new(id = NULL)}
 Create a new complex datatype
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{id}{Internal use only}
 }}
 }}
+
+\seealso{
+\code{\link[=H5T-class]{H5T}}, \code{\link[=H5T_COMPOUND-class]{H5T_COMPOUND}}
+}
 \author{
 Holger Hoefling
 }
-\seealso{
-H5Class_overview, \code{\link[=H5T-class]{H5T}}, \code{\link[=H5T_COMPOUND-class]{H5T_COMPOUND}}
-}
-

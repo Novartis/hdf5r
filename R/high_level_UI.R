@@ -36,7 +36,7 @@
 ##' The items are then accessed, again similar to a list, using \code{[[}.
 ##' @title Get the names of the items in the group or at the \code{/} root of the file
 ##' @param x An object of class \code{\link{H5File}} or \code{\link{H5Group}}
-##' @return A character vector with the names of the items in the group/file. 
+##' @return A character vector with the names of the items in the group/file.
 ##' @author Holger Hoefling
 ##' @export
 names.H5Group <- function(x) {
@@ -61,13 +61,13 @@ names.H5File <- names.H5Group
 ##' HDF5-File or group \code{x}.
 ##'
 ##' One can also assign objects under a not yet existing name. For Either a  \code{\link{H5Group-class}} or \code{\link{H5D-class}},
-##' a hard link is created. If it is a datatype, \code{\link{H5T-class}}, this is committed under the chosen name \code{name}. 
+##' a hard link is created. If it is a datatype, \code{\link{H5T-class}}, this is committed under the chosen name \code{name}.
 ##' @title Retrieve object from a group of file
 ##' @param x An object of class \code{\link{H5File}} or \code{\link{H5Group}}
 ##' @param name Name of the object to retrieve. Has to be a character vector of length one. No integer values allowed/
 ##' @param ... Currently ignored
-##' @param link_access_pl An object of class \code{\link{H5P_LINK_ACCESS-class}}. 
-##' @param dataset_access_pl An object of class \code{\link{H5P_DATASET_ACCESS-class}}. 
+##' @param link_access_pl An object of class \code{\link{H5P_LINK_ACCESS-class}}.
+##' @param dataset_access_pl An object of class \code{\link{H5P_DATASET_ACCESS-class}}.
 ##' @param type_access_pl Currently always \code{h5const$H5P_DEFAULT}
 ##' @param value What to assign. Has to be one of \code{\link{H5Group-class}},  \code{\link{H5D-class}} or  \code{\link{H5T-class}}
 ##' @return A \code{\link{H5Group-class}},  \code{\link{H5D-class}} or  \code{\link{H5T-class}}, depending on the object saved in the group under
@@ -108,7 +108,7 @@ names.H5File <- names.H5Group
                 return(invisible(x))
             }
         }
-        
+
         stop("Cannot assign - already exists. Please use the 'link_delete' to delete the object before assigning a new one")
     }
     if(inherits(value, "H5Group")) {
@@ -137,10 +137,10 @@ names.H5File <- names.H5Group
 ##' Interface for HDF5 attributes
 ##'
 ##' Implements high-level functions that allows interactions with HDF5-attributes in a way very similar to regular R-object attributes
-##' in R are handled. 
+##' in R are handled.
 ##' @title Interface for HDF5 attributes
 ##' @param x The object to which to attach the attribute to or retrieve it from. Can be one of \code{\link{H5Group-class}},  \code{\link{H5D-class}},
-##' \code{\link{H5T-class}} or  \code{\link{H5File-class}} 
+##' \code{\link{H5T-class}} or  \code{\link{H5File-class}}
 ##' @param which The name of the attribute to assign it to
 ##' @param value The value to assign to the attribute.
 ##' @return For \code{h5attributes}, a named list with the content of the attributes read out. FOr \code{h5attr_names},
@@ -166,7 +166,7 @@ h5attributes <- function(x) {
 h5attr_names <- function(x) {
     ## get the number of attributes
     obj_info <- x$obj_info()
-    attr_names <- character(obj_info$num_attrs);
+    attr_names <- character(obj_info$num_attrs)
     for(i in seq_along(attr_names)) {
         attr_names[i] <- x$attr_name_by_idx(i - 1, ".")
     }
@@ -217,7 +217,7 @@ h5attr <- function(x, which) {
 ##' @param op Operation to perform on the \code{\link{H5S-class}}. Look into the HDF5 online help
 ##' \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements} and
 ##' \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab}
-##' @param dataset_xfer_pl An object of class \code{\link{H5P_DATASET_XFER-class}}. 
+##' @param dataset_xfer_pl An object of class \code{\link{H5P_DATASET_XFER-class}}.
 ##' @param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
 ##' the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
 ##' (even using add-on packages). The constants governing this are part of \code{\link{h5const}}. The relevant ones start with the term
@@ -236,31 +236,7 @@ h5attr <- function(x, which) {
 subset_h5.H5S <- function(x,d1,  ..., op=h5const$H5S_SELECT_SET, envir=parent.frame()) {
     args <- eval(substitute(alist(d1, ...)))
 
-    if(!x$is_simple()) {
-        stop("Dataspace has to be simple for a selection to occur")
-    }
-    simple_extent <- x$get_simple_extent_dims()    
-    ## distinguish between scalar and non-scalar
-    if(simple_extent$rank == 0 && x$get_select_npoint() == 1) {
-        ## is a scalar
-        if(are_args_scalar(args)) {
-            return(invisible(x))
-        }
-        else {
-            stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
-        }
-    }
-    else {
-        ## is a simple dataspace; treat regularly
-        args_eval <- evaluate_arguments(args, ds_dims=simple_extent$dims, ds_maxdims=simple_extent$maxdims, allow_expand=FALSE, envir=envir)
-        file_mem_spaces <- space_selection(file_space=x, args_eval=args_eval, ds_dims=args_eval$ds_dims, op=op)
-        ## if H5S_ALL is returned, this was not set on x itself; so set it
-        if(file_mem_spaces$file_space$id == h5const$H5S_ALL$id) {
-            x$select_all()
-        }
-        ## remember - on spaces everythign is done in as reference, so we can just return x
-        return(invisible(x))
-    }
+    return(x$subset(args=args, op=op, envir=envir))
 }
 
 
@@ -273,43 +249,8 @@ subset_h5.H5S <- function(x,d1,  ..., op=h5const$H5S_SELECT_SET, envir=parent.fr
 ##' @export
 subset_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT,
                           flags=getOption("hdf5r.h5tor_default"), drop=TRUE, envir=parent.frame()) {
-    op <- h5const$H5S_SELECT_SET
     args <- eval(substitute(alist(d1, ...)))
-    x_space <- x$get_space()
-    if(!x_space$is_simple()) {
-        stop("Dataspace has to be simple for a selection to occur")
-    }
-    simple_extent <- x_space$get_simple_extent_dims()    
-    ## distinguish between scalar and non-scalar
-    if(simple_extent$rank == 0 && x_space$get_select_npoint() == 1) {
-        ## is a scalar
-        if(are_args_scalar(args)) {
-            res <- x$read(file_space=x_space, mem_space=x_space, dataset_xfer_pl=dataset_xfer_pl)
-            return(res)
-        }
-        else {
-            stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
-        }
-    }
-    else {
-        ## is a simple dataspace; treat regularly
-        args_eval <- evaluate_arguments(args, ds_dims=simple_extent$dims, ds_maxdims=simple_extent$maxdims, allow_expand=FALSE, envir=envir)
-        file_mem_spaces <- space_selection(file_space=x_space, args_eval=args_eval, ds_dims=args_eval$ds_dims, op=op)
-        robj_dim <- get_robj_dim(args_eval=args_eval, dtype=x$get_type(), simple_extent=simple_extent)
-
-        ## check if we have a compound, where we don't have to set 
-        if(!is.null(robj_dim)) {
-            dim_to_set <- robj_dim
-            set_dim <- TRUE
-        }
-        else {
-            set_dim <- FALSE
-            dim_to_set <- "auto"
-        }
-        res <- x$read(file_space=file_mem_spaces$file_space, mem_space=file_mem_spaces$mem_space,
-                      dataset_xfer_pl=dataset_xfer_pl, set_dim=set_dim, dim_to_set=dim_to_set, drop=drop)
-        return(res)
-    }
+    return(x$read(args=args, dataset_xfer_pl=dataset_xfer_pl, flags=flags, drop=drop, envir=envir))
 }
 
 ##' @rdname subset_h5.H5S
@@ -320,40 +261,8 @@ subset_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT,
 ##' @rdname subset_h5.H5S
 ##' @export
 subset_assign_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT, envir=parent.frame(), value) {
-
-
-    op <- h5const$H5S_SELECT_SET
     args <- eval(substitute(alist(d1, ...)))
-
-    x_space <- x$get_space()
-    if(!x_space$is_simple()) {
-        stop("Dataspace has to be simple for a selection to occur")
-    }
-    simple_extent <- x_space$get_simple_extent_dims()    
-    ## distinguish between scalar and non-scalar
-    if(simple_extent$rank == 0 && x_space$get_select_npoint() == 1) {
-        ## is a scalar
-        if(are_args_scalar(args)) {
-            return(x$write(value, file_space=x_space, mem_space=x_space, dataset_xfer_pl=dataset_xfer_pl))
-        }
-        else {
-            stop("Scalar dataspace; arguments have to be of length 1 and empty or equal to 1")
-        }
-    }
-    else {
-        ## is a simple dataspace; treat regularly
-        args_eval <- evaluate_arguments(args, ds_dims=simple_extent$dims, ds_maxdims=simple_extent$maxdims, allow_expand=TRUE, envir=envir)
-        ## need to check if we have to expand the dataset
-        if(args_eval$ds_dims_updated) {
-            ## need to set new dataset dimensions
-            x$set_extent(args_eval$ds_dims)
-            ## the dataset space has changed; need the new one
-            x_space <- x$get_space()
-        }
-        file_mem_spaces <- space_selection(file_space=x_space, args_eval=args_eval, ds_dims=args_eval$ds_dims, op=op)
-        return(x$write(value, file_space=file_mem_spaces$file_space, mem_space=file_mem_spaces$mem_space,
-                       dataset_xfer_pl=dataset_xfer_pl))
-    }
+    return(x$write(args=args, value=value, dataset_xfer_pl=dataset_xfer_pl, envir=envir))
 }
 
 ##' @rdname subset_h5.H5S
@@ -365,27 +274,41 @@ subset_assign_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT
 # Helper functions for evaluating arguments
 ###############################################################
 
-space_selection <- function(file_space, args_eval, ds_dims, op) {
-    if(args_eval$all_null) {
-        file_space <- h5const$H5S_ALL
-        mem_space <- file_space
-        return(list(file_space=file_space, mem_space=mem_space))
+##' Apply a selection to a space
+##'
+##' Calls the respective stand-alone functions for point-selection or multiple hyperslab selection. The reason for not
+##' calling a method of an R6 object is to make it more efficient and make it useable without creating a full R6 object.
+##' @title Apply a selection to a space
+##' @param space_id The space_id of the space to which to apply the selection to
+##' @param selection The selection object of class \code{point_selection} or \code{hyperslab_selection}
+##' @return NULL
+##' @author Holger Hoefling
+##' @keywords internal
+apply_selection <- function(space_id, selection) {
+    op <- h5const$H5S_SELECT_SET
+    if(inherits(selection, "point_selection")) {
+        standalone_H5S_select_elements(id=space_id, coord=selection, op=h5const$H5S_SELECT_SET, byrow=TRUE)
     }
-    ## not all null; see if it is points or a hyperslab
-    if(inherits(args_eval$args_eval, "hyperslab")) {
-        do.call(file_space$select_hyperslab, c(as.list(args_eval$args_eval, list(op=op))))
+    else if(inherits(selection, "hyperslab_selection")) {
+        standalone_H5S_select_multiple_hyperslab(id=space_id, hyperslab_array=selection)
     }
     else {
-        point_mat <- expand_point_grid(args_eval$args_eval, ds_dims)
-        file_space$select_elements(point_mat, op=op, byrow=TRUE)
+        stop("Unknown selection type; needs to be of class point_selection of hyperslab_selection")
     }
-    ## create the mem_space according tho the dimensions of the arguments
-    dim_args_eval <- get_dim_args_eval(args_eval=args_eval, ds_dims=ds_dims)
-    mem_space <- H5S$new(type="simple", dims=dim_args_eval, maxdims=dim_args_eval)
-    return(list(file_space=file_space, mem_space=mem_space))
+    return(invisible(NULL))
 }
 
 
+
+##' Can arguments be interpreted as a scalar?
+##'
+##' Check if there is only one argument and if it is either empty
+##' of of length 1 with value 1, i.e. can be interpreted as a scalar.
+##' @title Can arguments be interpreted as a scalar?
+##' @param args The arguments to check
+##' @return Logical if the arguments can be interpreted as a scalar
+##' @author Holger Hoefling
+##' @keywords internal
 are_args_scalar <- function(args) {
     if(length(args) != 1) {
         return(FALSE)
@@ -398,196 +321,18 @@ are_args_scalar <- function(args) {
     }
 }
 
-evaluate_arguments <- function(args, ds_dims, ds_maxdims, allow_expand=FALSE, envir) {
-    if(length(args) != length(ds_dims)) {
-         stop(paste("The dataspace has rank", length(ds_dims), ". Given were", length(args), "dimensions"))
-    }
-    ## check which of the arguments are missing and if all are null
-    all_null <- TRUE
-    for(i in seq_along(args)) {
-        if(class(args[[i]])=="name" && args[[i]]==bquote(expr=)) {
-            args[i] <- list(NULL)
-        }
-        if(!is.null(args[[i]])) {
-            all_null <- FALSE
-        }
-    }
 
-    ## if all are null, return that; will later be used to set selection to "all" on the dataspace
-    ## we do this as it is very general, easy, and also works for scalars
-    if(all_null) {
-        return(list(args_eval=NULL, ds_dims=ds_dims, ds_dims_updated=FALSE, all_null=TRUE))
-    }
-
-    ## not all null, so evaluate them separately
-    args_eval <- do.call("rbind", lapply(args, dim_hyperslab, envir=envir))
-    if(any(is.na(args_eval$start))) {
-        args_eval <-  lapply(args, eval, envir=envir)
-        ## check here if any of them is null; if yes, replace with the respective dimension
-        for(i in seq_along(args_eval)) {
-            if(is.null(args_eval[[i]])) {
-                args_eval[[i]] <- seq_len(ds_dims[i])
-            }
-        }
-    }
-
-    ## now see what the maximum coordinate is
-    max_coord <- get_maxcoord_args_eval(args_eval)
-    violate_dims <- max_coord > ds_dims
-    ds_dims_updated <- FALSE
-    if(allow_expand) {
-        ## check
-        violate_maxdims <- max_coord > ds_maxdims
-        if(any(violate_maxdims)) {
-            stop(paste("The following coordinates are outside the maximum dataset dimensions:\n",
-                       paste(paste0("Dim ", which(violate_maxdims), ": Dataset-max:", ds_dims[violate_maxdims], " Requested-max: ",
-                                    max_coord[violate_maxdims])),
-                       collapse="\n"))
-        }
-        ## get the dimension to which it will be expanded
-        ds_dims <- pmax(ds_dims, max_coord)
-        ds_dims_updated  <- TRUE
-        args_eval <- set_maxcoord_args_eval(args_eval, ds_dims)
-    }
-    else {
-        if(any(violate_dims)) {
-            stop(paste("The following coordinates are outside the dataset dimensions:\n",
-                       paste(paste0("Dim", which(violate_dims), ": Dataset", ds_dims[violate_dims], " Max-request ", max_coord[violate_dims])),
-                       collapse="\n"))
-        }
-        args_eval <- set_maxcoord_args_eval(args_eval, ds_dims)
-    }
-    
-    return(list(args_eval=args_eval, ds_dims=ds_dims, ds_dims_updated=ds_dims_updated, all_null=FALSE))    
-}
-
-
-get_maxcoord_args_eval <- function(x) {
-    if(inherits(x, "hyperslab")) {
-        res <- as.numeric(x$start + x$stride * (x$count - 1) + (x$block - 1))
-        res[res==Inf] <- -1  # if it is inf, set it to -1 as it is arbitrary
-    }
-    else {
-        res <- lapply(x, function(x) { if(is.null(x)) { return(-1) } else {return(max(x))}})
-    }
-    return(res)                                       
-}
-
-set_maxcoord_args_eval <- function(x, ds_dims) {
-    if(inherits(x, "hyperslab")) {
-        x$block <- pmin(x$block, ds_dims)
-    }
-    else {
-        for(i in seq_along(x)) {
-            if(is.null(x)) {
-                x <- seq_len(ds_dims[i])
-            }
-        }
-    }
-    return(x)
-}
-
-get_dim_args_eval <- function(args_eval, ds_dims) {
-    if(args_eval$all_null) {
-        return(ds_dims)
-    }
-    if(inherits(args_eval$args_eval, "hyperslab")) {
-        ## it is a hyperslab
-        ## there is by contruction one row per dimension in the correct order
-        args_eval_dim <- args_eval$args_eval$count * args_eval$args_eval$block
-    }
-    else {
-        ## not a hyperslab; get the size of each selected dimension
-        args_eval_dim <- unlist(lapply(args_eval$args_eval, length))
-    }
-    return(args_eval_dim)
-}
-
-get_robj_dim <- function(args_eval, dtype, simple_extent) {
-    ## need to see if we have to add array dimensions
-    add_array_dims <- NULL
-    if(dtype$get_class() == h5const$H5T_ARRAY) {
-        add_array_dims <- dtype$get_array_dims()
-    }
-
-    if(dtype$get_class() == h5const$H5T_COMPOUND) {
-        return(NULL)
-    }
-    if(args_eval$all_null) {
-        if(simple_extent$rank == 1 && is.null(add_array_dims)) {
-            return(NULL)
-        }
-        else {
-            return(c(simple_extent$dims, add_array_dims))
-        }
-    }
-    if(inherits(args_eval$args_eval, "hyperslab")) {
-        ## it is a hyperslab
-        ## there is by contruction one row per dimension in the correct order
-        args_eval_dim <- args_eval$args_eval$count * args_eval$args_eval$block
-    }
-    else {
-        ## not a hyperslab; get the size of each selected dimension
-        args_eval_dim <- unlist(lapply(args_eval$args_eval, length))
-    }
-    if(length(args_eval_dim) == 1 && is.null(add_array_dims)) {
-        return(NULL)
-    }
-    else {
-        return(c(args_eval_dim, add_array_dims))
-    }
-}
-
-expand_point_grid <- function(point_list, ds_dims) {
-    point_list_size <- unlist(lapply(point_list, length))
-    cum_prod_std <- c(1, cumprod(point_list_size))
-    cum_prod_rev <- rev(c(1, cumprod(rev(point_list_size))))
-    num_points <- prod(point_list_size)
-    point_mat <- matrix(numeric(num_points * length(point_list)), nrow=num_points)
-    for(i in seq_along(point_list)) {
-        point_mat[, i] <- rep(point_list[[i]], each=cum_prod_std[i], times=cum_prod_rev[i+1])
-    }
-    return(point_mat)
-}
-
-##' Create a hyperslab object for simpler internal processing
+##' Check argument for known functions that encode a hyperslab
 ##'
-##' Simple wrapper around a data.frame with a specific pattern.
-##' @title Create a hyperslab object for simpler internal processing
-##' @param start The start value for an HDF5 hyperslab
-##' @param count The count value for an HDF5 hyperslab
-##' @param stride The stride value for an HDF5 hyperslab
-##' @param block The block value for an HDF5 hyperslab
-##' @return A structure of class \code{hyperslab} that wraps a data.frame with columns  \code{start}, \code{count},
-##' \code{stride} and \code{block}. 
+##' Checks for the functions \code{:}, \code{seq} and \code{seq_len}
+##' @title Check argument for known functions that encode a hyperslab
+##' @param cur_arg The argument to check
+##' @param envir The environment in which to evaluate the argument
+##' @return A vector of length 4 describing start, count, stride and block if appropriate
 ##' @author Holger Hoefling
 ##' @keywords internal
-hyperslab <- function(start, count, stride, block) {
-    return(structure(data.frame(start=start, count=count, stride=stride, block=block), class=c("hyperslab", "data.frame")))
-}
-
-##' Analyze arguments passed to '[' function for hyperslab
-##'
-##' It takes as argument \code{x} an index as is usually pased for a dimension to '['. Instead of just calculating
-##' the index values itself, non-standard evaluation is used to capture the functions \code{:}, \code{seq} and \code{seq_len}
-##' and convert these into the appropriate values as needed by HDF5 to describe a hyperslab, i.e. \code{start}, \code{count},
-##' \code{stride} and \code{block}.
-##'
-##' If none of these functions are present, the index vector is checked if it has constant differences between consecutive
-##' values - then this will also be converted to a hyperslab. Otherwise, a hyperslab object \code{\link{hyperslab}} will be returned
-##' with all values set to NA. 
-##' @title Analyze arguments passed to '[' function for hyperslab
-##' @param x The dimension arguments (as passed to a '[' function)
-##' @param envir The environment in which the arguments are to be evaluated
-##' @return return an object of class \code{hyperslab} by function \link{hyperslab} that overloads a dataframe and
-##' describes one dimension of a hyperslab
-##' @author Holger Hoeflng
-##' @importFrom bit64 is.integer64
-##' @keywords internal
-dim_hyperslab <- function(x, envir) {
-    if(is.null(x)) {
-        return(structure(data.frame(start=1, count=1, stride=1, block=Inf), class=c("hyperslab", "data.frame")))
-    }
+check_arg_for_hyperslab_func <- function(x, envir) {
+    res <- c(NA, NA, NA, NA)
     if(is.call(x)) {
         if(length(x) > 1) {
             for(i in 2:length(x)) {
@@ -599,56 +344,317 @@ dim_hyperslab <- function(x, envir) {
                 if(x[[3]] < x[[2]]) {
                     stop("Retrieving hyperslabs in reverse order not supported")
                 }
-                start <- x[[2]]
-                block <- x[[3]] - start + 1
-                return(structure(data.frame(start=start, count=1, stride=1, block=block), class=c("hyperslab", "data.frame")))
+                start <- as.numeric(x[[2]])
+                block <- as.numeric(x[[3]]) - start + 1
+                res <- c(start, 1, 1, block)
             }
         }
         else if(x[[1]] == "seq_len") {
-                return(structure(data.frame(start=1, count=1, stride=1, block=x[[2]]), class=c("hyperslab", "data.frame")))
+            res <- c(1, 1, 1, as.numeric(x[[2]]))
         }
         else if(x[[1]] == "seq") {
             if(length(x) >= 2 && (is.integer(x[[2]]) || is.numeric(x[[2]]))) {
                 ## in both cases use a matching to seq.default, as the signatures are the same
                 matched_call <- match.call.withDef(seq.default, x)
                 if(is.null(matched_call$length.out)) {
-                    length.out <- floor(((matched_call$to - matched_call$from) / matched_call$by) + 1)
+                    length.out <- floor(((as.numeric(matched_call$to) - as.numeric(matched_call$from)) / as.numeric(matched_call$by)) + 1)
                 }
                 else {
-                    length.out <- matched_call$length.out
+                    length.out <- as.numeric(matched_call$length.out)
                 }
-                stride <- matched_call$by
-                start <- matched_call$from
+                stride <- as.numeric(matched_call$by)
+                start <- as.numeric(matched_call$from)
                 if(stride==1) {
-                    return(structure(data.frame(start=start, count=1, stride=1, block=length.out), class=c("hyperslab", "data.frame")))
+                    ## it is one block
+                    res <- c(start, 1, stride, length.out)
                 }
                 else {
-                    return(structure(data.frame(start=start, count=length.out, stride=stride, block=1), class=c("hyperslab", "data.frame")))
+                    ## it is length.out blocks, each of length 1
+                    res <- c(start, length.out, stride, 1)
                 }
             }
         }
-    }   
-    else {
-        x <- eval(x, envir=envir)
     }
-    if(is.numeric(x) || is.integer(x) || is.integer64(x)) {
-        x <- as.numeric(x)
-        x_diff <- diff(x)
-        if(length(x_diff) == 0) {
-            return(structure(data.frame(start=x, count=1, stride=1, block=1), class=c("hyperslab", "data.frame")))
+    if(!is.na(res[[1]]) && res[[1]] <= 0) {
+        res <- c(NA, NA, NA, NA)
+    }
+    return(res)
+}
+
+
+##' Evalute if the arguments are regular for hyperslab use
+##'
+##' For each argument check if it can be used as a hyperslab, potentially after sorting and making unique.
+##' @title Evalute if the arguments are regular for hyperslab use
+##' @param args The arguments input; if it was empty, then set to NULL
+##' @param ds_dims The dimensions of the input dataset
+##' @param envir The environment in which to evaluate the arguments
+##' @param post_read Should the reshuffle be computed for post-read (then \code{TRUE}) or pre-write (then \code{FALSE})
+##' @return A list with 2 parts; Evaluated arguments, regularity report and reshuffle indicators. Will be returned as a list
+##' with components \code{args_in}, \code{args_point}, \code{is_hyperslab}, \code{hyperslab},
+##' \code{needs_reshuffle}, code{reshuffle}, \code{result_dims_pre_shuffle}, \code{result_dims_post_shuffle}, \code{max_dims}
+##' @author Holger Hoefling
+##' @keywords internal
+args_regularity_evaluation <- function(args, ds_dims, envir, post_read=TRUE) {
+    ## check that the number of arguments is the same as the dataset dimension
+    if(length(args) != length(ds_dims)) {
+        stop("Number of arguments not equal to number of dimensions: ", length(args), " vs. ", length(ds_dims))
+    }
+
+    ## create the skeleton for the regularity report
+    ## has columns: start, count, stride, block
+    hyperslab <- matrix(rep(NA, length(args) * 4), ncol=4)
+    colnames(hyperslab) <- c("start", "count", "stride", "block")
+
+    is_hyperslab <- rep(FALSE, length(args))
+    needs_reshuffle <- is_hyperslab
+    args_in <- args
+    args_point <- vector("list", length(args))
+    result_dims_pre_shuffle <- numeric(length(args))
+    result_dims_post_shuffle <- numeric(length(args))
+    max_dims <- result_dims_pre_shuffle
+    reshuffle <- args_point
+
+    for(i in seq_along(args)) {
+        cur_arg <- args[[i]]
+        if(length(args[[i]]) == 1 && args[[i]]==quote(expr=)) {
+            ## set to maximal hyperslab for this dimension
+            res_hyper <- c(1, 1, 1, ds_dims[[i]])
         }
-        x_diff_unique <- unique(x_diff)
-        if(length(x_diff_unique) == 1) {
-            if(x_diff_unique == 1) {
-                return(structure(data.frame(start=min(x), count=1, stride=1, block=length(x)), class=c("hyperslab", "data.frame")))
+        else if(is.call(cur_arg)) {
+            res_hyper <- check_arg_for_hyperslab_func(cur_arg, envir)
+        }
+        else {
+            res_hyper <- c(NA, NA, NA, NA)
+        }
+        ## res_hyper contains the information if the argument can be interpreted as a hyperslab
+
+        if(!any(is.na(res_hyper))) { ## is a hyperslab made from a function
+            is_hyperslab[i] <- TRUE
+            hyperslab[i,] <- res_hyper
+            needs_reshuffle[i] <- FALSE
+            result_dims_pre_shuffle[i] <- res_hyper[2] * res_hyper[4] # count * block
+            result_dims_post_shuffle[i] <- res_hyper[2] * res_hyper[4] # count * block
+            max_dims[i] <- res_hyper[1] + (res_hyper[2] - 1) * res_hyper[3] + res_hyper[4] - 1 # start + (count - 1) * stride + block - 1
+        }
+        else {
+            cur_arg <- eval(cur_arg, envir=envir)
+            if(is.logical(cur_arg)) {
+                ## expand it as necessary and convert to an integer vector
+                cur_arg <- seq_len(ds_dims[[i]])[cur_arg]
+            }
+            if(is.numeric(cur_arg) || is.integer(cur_arg) || is.integer64(cur_arg)) {
+                cur_arg <- as.numeric(cur_arg)
+                ## check if it has length 0 or 1; these are special cases
+                if(length(cur_arg) == 0) {
+                    is_hyperslab[i] <- FALSE
+                    needs_reshuffle[i] <- FALSE
+                    args_point[i] <- cur_arg
+                    result_dims_pre_shuffle[i] <- 0
+                    result_dims_post_shuffle[i] <- 0
+                    max_dims[i] <- -Inf
+                }
+                else if(length(cur_arg) == 1) {
+                    is_hyperslab[i] <- TRUE
+                    needs_reshuffle[i] <- FALSE
+                    result_dims_pre_shuffle[i] <- 1
+                    result_dims_post_shuffle[i] <- 1
+                    hyperslab[i, ] <- c(cur_arg, 1, 1, 1)
+                    max_dims[i] <- cur_arg
+                }
+                else {
+                    ## check it is all positive, negative or a mixture of both
+                    if(all(cur_arg < 0)) {
+                        cur_arg <- seq_len(ds_dims[[i]])[cur_arg]
+                    }
+                    else if(!all(cur_arg > 0)) {
+                        stop("In index ", i, " not all subscripts are either positive or negative")
+                    }
+                    ## then check if it can be written as a hyperslab
+                    cur_arg_diff_unique <- unique(diff(cur_arg))
+                    if(all(cur_arg_diff_unique > 0)) { ## strictly increasing
+                        needs_reshuffle[i] <- FALSE
+                        max_dims[i] <- cur_arg[length(cur_arg)]
+                        result_dims_pre_shuffle[i] <- length(cur_arg)
+                        result_dims_post_shuffle[i] <- length(cur_arg)
+                        if(length(cur_arg_diff_unique) == 1) {
+                            is_hyperslab[i] <- TRUE
+
+                            if(cur_arg_diff_unique == 1) {
+                                hyperslab[i, ] <- c(cur_arg[[1]], 1, 1, length(cur_arg))
+                            }
+                            else {
+                                hyperslab[i, ] <- c(cur_arg[[1]], length(cur_arg), cur_arg_diff_unique, 1)
+                            }
+                        }
+                        else {
+                            ## can only be done as points, not as a hyperslab
+                            is_hyperslab[i] <- FALSE
+                            args_point[[i]] <- cur_arg
+                        }
+                    }
+                    else { ## not strictly increasing, so sort and make unique
+                        ## see if a sorting and making unique could make it into a hyperslab
+                        sort_arg <- sort(unique.default(cur_arg))
+                        needs_reshuffle[i] <- TRUE
+                        if(post_read) {
+                            reshuffle[[i]] <- match(cur_arg, sort_arg)
+                            result_dims_pre_shuffle[i] <- length(sort_arg)
+                            result_dims_post_shuffle[i] <- length(cur_arg)
+                        }
+                        else {
+                            ## need to invalidate the first instance of anything that is duplicated
+                            reshuffle[[i]] <- order(cur_arg)[!duplicated(cur_arg, fromLast=TRUE)]
+                            ## length of pre and post are reversed here
+                            result_dims_post_shuffle[i] <- length(sort_arg)
+                            result_dims_pre_shuffle[i] <- length(cur_arg)
+
+                        }
+
+                        sort_arg_diff <- diff(sort_arg)
+                        sort_arg_diff_unique <- unique(sort_arg_diff)
+                        ## now same as before for the unsorted one
+                        ## but as is sorted and unique, know already that it is non-decreasing
+                        max_dims[i] <- sort_arg[length(sort_arg)]
+                        if(length(sort_arg_diff_unique) == 1) {
+                            is_hyperslab[i] <- TRUE
+
+                            if(sort_arg_diff_unique == 1) {
+                                hyperslab[i, ] <- c(sort_arg[[1]], 1, 1, length(sort_arg))
+                            }
+                            else {
+                                hyperslab[i, ] <- c(sort_arg[[1]], length(sort_arg), sort_arg_diff_unique, 1)
+                            }
+                        }
+                        else {
+                            ## can only be done as points, not as a hyperslab
+                            is_hyperslab[i] <- FALSE
+                            args_point[[i]] <- sort_arg
+                        }
+                    }
+                }
             }
             else {
-                return(structure(data.frame(start=min(x), count=length(x), stride=x_diff_unique, block=1), class=c("hyperslab", "data.frame")))
+                stop("Can't evaluate argument ", i)
             }
         }
+
     }
-    return(structure(data.frame(start=NA, count=NA, stride=NA, block=NA), class=c("hyperslab", "data.frame")))
+    return(list(args_in=args_in, args_point=args_point, is_hyperslab=is_hyperslab, hyperslab=hyperslab,
+                result_dims_pre_shuffle=result_dims_pre_shuffle, result_dims_post_shuffle=result_dims_post_shuffle,
+                max_dims=max_dims, needs_reshuffle=needs_reshuffle, reshuffle=reshuffle))
 }
+
+##' Single hyperslab dimension to explicit vector
+##'
+##' Uses the information of a hyperslab and turns it into an explicit vector.
+##' @title Single hyperslab dimension to explicit vector
+##' @param hyperslab a length 4 vector describing the start, count, stride and block component of a single dimension of a hyperslab
+##' @return An explicit vector describing the points in the hyperslab dimension
+##' @author Holger Hoefling
+##' @keywords internal
+hyperslab_to_points <- function(hyperslab) {
+    stopifnot(length(hyperslab)==4 && is.numeric(hyperslab))
+    ## c("start", "count", "stride", "block")
+    if(hyperslab[[2]] == 1) { # only one block
+        res <- seq_len(hyperslab[[4]]) + hyperslab[[1]] - 1
+    }
+    else if(hyperslab[[4]] == 1) { # only blocks of size 1
+        res <- ((seq_len(hyperslab[[2]]) - 1) * hyperslab[[3]]) + hyperslab[[1]] - 1
+    }
+    else { # mixed; should not occur for us but will write function to handle this anyway
+        ## doesn't need to be overly efficient
+        res <- rep(seq_len(hyperslab[[4]]), times=hyperslab[[2]])
+        ## now add it the stride component
+        res <- res + rep((seq_len(hyperslab[[2]]) - 1) * hyperslab[[3]], each=hyperslab[[4]])
+        res <- res + hyperslab[[1]] - 1
+    }
+    return(res)
+}
+
+##' Turn regulation evaluation into a selection for a space object
+##'
+##' Analyzes the results of the regularity evaluation of each dimension and checks if
+##' it needs to be into a hyperslab-selection or a point-selection. A hyperslab selection will be chosen
+##' whenever there are significantly less of it than the number of selected points. The ratio is determined
+##' by the option \code{hdf5r.point_to_hyperslab_ratio}. If this is 1, then always hyperslabs will be used.
+##' @title Turn regulation evaluation into a selection for a space object
+##' @param reg_eval_res The result of the \code{args_regularity_evaluation} function
+##' @return Returns an object with either the point-matrix or the hyperslab-selection array. The resulting object is
+##' of class \code{point_selection} or \code{hyperslab_selection}.
+##' @author Holger Hoefling
+##' @keywords internal
+regularity_eval_to_selection <- function(reg_eval_res) {
+    ## first calculate how many points need to be selected and how many hyperslabs would need to be necesary
+    num_points <- prod(reg_eval_res$result_dims_pre_shuffle)
+    num_hyperslabs <- prod(reg_eval_res$result_dims_pre_shuffle[!reg_eval_res$is_hyperslab])
+
+    ## trivially any selection can always be written as a concatenation of hyperslabs; so should be ever do a pointlist?
+    ## likely pointlist more efficient in selection. Use hyperslabs only if we have X-fold fewer hyperslabs than datapoints
+    ## here choose X as >= 4 for now
+    if(num_points / num_hyperslabs >= getOption("hdf5r.point_to_hyperslabs_ratio")) {
+        ## use a hyperslab
+        sel_type <- "hyperslab_selection"
+        ## make a 3-dimensional array, each 2 dimensional sub-array (in the third dimension) is a complete hyperslab description
+        if(any(!reg_eval_res$is_hyperslab)) {
+            ## not just 1 hyperslab
+            point_grid <- expand_point_grid(reg_eval_res$args_point[!reg_eval_res$is_hyperslab])
+            hyperslab_array <- array(0, dim=c(nrow(reg_eval_res$hyperslab), nrow(point_grid), 4))
+            for(i in 1:4) {
+                hyperslab_array[,,i] <- reg_eval_res$hyperslab[,i]
+            }
+            ## c("start", "count", "stride", "block")
+            ## set the dimensions that are the point grid; those currently have NA in them
+            hyperslab_array[!reg_eval_res$is_hyperslab, , 1] <- t(point_grid)
+            hyperslab_array[!reg_eval_res$is_hyperslab, , 2] <- 1
+            hyperslab_array[!reg_eval_res$is_hyperslab, , 3] <- 1
+            hyperslab_array[!reg_eval_res$is_hyperslab, , 4] <- 1
+        }
+        else {
+            hyperslab_array <- array(reg_eval_res$hyperslab, dim=c(nrow(reg_eval_res$hyperslab), 1, 4))
+        }
+        sel <- hyperslab_array
+    }
+    else {
+        sel_type <- "point_selection"
+        ## if there are any hyperslab dimensions, expand them to a point list
+        args_point <- reg_eval_res$args_point
+        if(any(reg_eval_res$is_hyperslab)) {
+            for(i in which(reg_eval_res$is_hyperslab)) {
+                args_point[[i]] <- hyperslab_to_points(reg_eval_res$hyperslab[i,])
+            }
+        }
+
+        sel <- expand_point_grid(args_point)
+    }
+    return(structure(.Data=sel, class=sel_type))
+}
+
+
+
+
+
+##' Expand list of points for each dimension into a matrix of all combinations
+##'
+##' The function is similar to the \code{expand.grid} function
+##' @title Expand list of points for each dimension into a matrix of all combinations
+##' @param point_list A list of the points in each dimension to include
+##' @return A matrix with every combination of points for each dimension
+##' @author Holger Hoefling
+##' @keywords internal
+expand_point_grid <- function(point_list) {
+    point_list_size <- unlist(lapply(point_list, length))
+    cum_prod_std <- c(1, cumprod(point_list_size))
+    cum_prod_rev <- rev(c(1, cumprod(rev(point_list_size))))
+    num_points <- prod(point_list_size)
+    point_mat <- matrix(numeric(num_points * length(point_list)), nrow=num_points)
+    for(i in seq_along(point_list)) {
+        point_mat[, i] <- rep(point_list[[i]], each=cum_prod_std[i], times=cum_prod_rev[i+1])
+    }
+    return(point_mat)
+}
+
+
 
 
 
@@ -679,4 +685,34 @@ match.call.withDef <- function(definition, call) {
     return(foo)
 }
 
+##' Reshuffle the input as needed - see \code{args_regularity_evaluation}
+##'
+##' When necessary, this function performs the reshuffle as defined by \code{args_regularity_evaluation}.
+##' @title Reshuffle the input as needed - see \code{args_regularity_evaluation}
+##' @param x The array to reshuffle
+##' @param reg_eval_res The result of the regularity evaluation
+##' @return The reshuffled input
+##' @author Holger Hoefling
+##' @keywords internal
+do_reshuffle <- function (x, reg_eval_res) {
+    ## for the post read shuffle, we just have to use the order as noted in reg_eval_res
+    ## however, data.frames have an additional dimension the evaluator currently
+    ## does not know about, so have to add it
+    if(inherits(x, "data.frame")) {
+        if(length(reg_eval_res$needs_reshuffle) != 1) {
+            stop("For data.frame, the selection can only have 1 dimension")
+        }
+        reorder_params <- rep(list(quote(expr=)), 2)
+        if(reg_eval_res$needs_reshuffle) {
+            reorder_params[1] <- reg_eval_res$reshuffle[1]
+        }
+    }
+    else {
+        reorder_params <- rep(list(quote(expr=)), length(reg_eval_res$reshuffle))
+
+        reorder_params[reg_eval_res$needs_reshuffle] <- reg_eval_res$reshuffle[reg_eval_res$needs_reshuffle]
+    }
+    res <- do.call("[", c(list(x), reorder_params))
+    return(res)
+}
 

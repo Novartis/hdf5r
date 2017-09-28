@@ -27,8 +27,8 @@
 #include <math.h>
 #include "global.h"
 
-#define MAX_INT_DOUBLE_PREC (1LL << 53)
-#define MIN_INT_DOUBLE_PREC (-1LL << 53)
+#define MAX_INT_DOUBLE_PREC (9007199254740992)   // (1LL << 53)
+#define MIN_INT_DOUBLE_PREC -(9007199254740992) // (-1LL << 53)
 #define NA_INTEGER64 LLONG_MIN
 
 #define STRING2(x) #x
@@ -141,7 +141,7 @@ SEXP convert_uint64_using_flags(SEXP val, int flags);
 SEXP set_dim_attribute(SEXP x, SEXP dim);
 
 // convert to a hex character string
-SEXP as_hex(SEXP x);
+SEXP R_as_hex(SEXP x);
 
 // conversion between double, int64 and int
 SEXP convert_double_to_int64(SEXP dbl_vec);
