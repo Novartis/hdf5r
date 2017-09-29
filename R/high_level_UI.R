@@ -143,7 +143,7 @@ names.H5File <- names.H5Group
 ##' \code{\link{H5T-class}} or  \code{\link{H5File-class}}
 ##' @param which The name of the attribute to assign it to
 ##' @param value The value to assign to the attribute.
-##' @return For \code{h5attributes}, a named list with the content of the attributes read out. FOr \code{h5attr_names},
+##' @return For \code{h5attributes}, a named list with the content of the attributes read out. For \code{h5attr_names},
 ##' a vector of names of the attributes attached to the object \code{x}. For \code{h5attr}, the content of the attribute and
 ##' for \code{h5attr<-}, the assignment, the original object to which the attributes are attached (so that chaining is possible).
 ##' @author Holger Hoefling

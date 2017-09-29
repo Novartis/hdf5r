@@ -2,7 +2,7 @@
 % Please edit documentation in R/factor_ext.R
 \name{factor_ext}
 \alias{factor_ext}
-\title{Create and extended factor}
+\title{Create an extended factor}
 \usage{
 factor_ext(x, values, levels, drop = FALSE)
 }
@@ -20,7 +20,7 @@ factor_ext(x, values, levels, drop = FALSE)
 An object of S3 class \code{factor_ext}
 }
 \description{
-Create and extended factor
+Create an extended factor
 }
 \details{
 An extended version of a regular \code{factor} variable. Instead of the levels having values from

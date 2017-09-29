@@ -30,14 +30,14 @@ INT_MIN <- as.integer64(-2^31)
 INT_MAX <- as.integer64(2^31 - 1)
 
 
-##' Create and extended factor
+##' Create an extended factor
 ##'
 ##' An extended version of a regular \code{factor} variable. Instead of the levels having values from
 ##' 1 to n where n is the number of levels, any integer value can be used for any level (including 64bit integers). If
 ##' all values are in the range of a regular 32-bit integer, it is coerced to int. Automatic coercion of extended factors
 ##' to factors in \code{\link{H5ToR_Post}} for enums only works for 32-bit integer base types.
 ##' In this page this is heavily used, as constants in HDF5 can be arbitrary integer values.
-##' @title Create and extended factor
+##' @title Create an extended factor
 ##' @param x The object to convert to an \code{factor_ext}
 ##' @param values The values used for the levels; This is were \code{factor_ext} is different from a
 ##' \code{factor}, as values for levels do not have to be consequitive or start at 1.

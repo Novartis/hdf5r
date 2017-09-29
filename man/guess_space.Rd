@@ -7,7 +7,7 @@
 guess_space(x, dtype, chunked = TRUE)
 }
 \arguments{
-\item{x}{The object for which to guess the space}
+\item{x}{The R object for which to guess the space}
 
 \item{dtype}{Object of type \code{\link{H5T-class}}, that represents that datatype to use.}
 
@@ -21,7 +21,8 @@ An object of type \code{\link{H5S-class}}
 Guess the dataspace of an object
 }
 \details{
-Creates a dataspace that fits an object so that it can be written into a dataset
+Creates a dataspace that fits an R object so that it can be written into a dataset. This is used
+for example in dataset creation based on an R-object, not a specifically defined dimensions.
 }
 \author{
 Holger Hoefling
