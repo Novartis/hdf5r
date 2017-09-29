@@ -1,17 +1,23 @@
-#' h5 wrapper functions
-#'
-#' Wrapper functions to provide h5 compatible interface.
-#' @param object H5RefClass; H5 Reference Class to be used
-#' @param name character; Group/Filename to be created
-#' @param path character; Path named to be used for iteration.
-#' @param recursive logical; Specify if object should be traversed recursively.
-#' @param ... Additional Parameters passed to \code{file$create_group}, \code{file$create_dataset} or ignored for \code{cbind} and \code{rbind}.
-#'
+#' Wrapper functions to provide a \strong{h5} compatible interface.
+#' 
+#' Since it has been decided to join forces on the hdf5r package and deprecate
+#' h5 we wanted to make the transition for users as smooth as possible.
+#' Additionally, we could transfer almost all testcases to hdf5r and improve
+#' test coverage even more.
+#' 
+#' Below you can find a list of all \strong{h5} function including \strong{hdf5r} mappings.
+#' 
+#' 
 #' @rdname h5-wrapper
+NULL
+
+#' @rdname H5File-class
 #' @export
 h5file <- H5File$new
 
-#' @rdname h5-wrapper
+#' @rdname H5Group-class
+#' @param object \code{CommonFG}; Object implementing the CommonFG Interface (e.g. \code{\link{H5File}}, \code{\link{H5Group}}).
+#' @param ... Additional parameters passed to \code{create_group}.
 #' @export
 createGroup <- function(object, name, ...) {
   paths <- strsplit(name, "/")[[1]]
@@ -77,7 +83,18 @@ function(name) {
   res
 }
 
-#' @rdname h5-wrapper
+#' List Groups and Datasets in object
+#' 
+#' List all Group (\code{\link{H5Group}}) and Dataset (\code{\link{H5D}}) 
+#' names in the current object. This function is part of the \strong{h5} wrapper classes and
+#' uses \code{$ls()} to retrieve group names.
+#' 
+#' @param object \code{CommonFG}; Object implementing the CommonFG Interface (e.g. \code{\link{H5File}}, \code{\link{H5Group}}).
+#' @param path character; Path named to be used for iteration.
+#' @param recursive logical; Specify if object should be traversed recursively.
+#' @param ... Additional Parameters passed to \code{$ls()}
+#' @return \code{\link{character}}
+#' @rdname list-groups-datasets
 #' @export
 list.groups <- function(object, path = "/", recursive = TRUE, ...) {
   obj <- object
@@ -86,7 +103,7 @@ list.groups <- function(object, path = "/", recursive = TRUE, ...) {
   df[df$object.type == "H5O_TYPE_GROUP", 1]
 }
 
-#' @rdname h5-wrapper
+#' @rdname list-groups-datasets
 #' @export
 list.datasets <- function(object, path = "/", recursive = TRUE, ...) {
   obj <- object
