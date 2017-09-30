@@ -58,13 +58,13 @@ names.H5File <- names.H5Group
 ##' Retrieve object from a group of file
 ##'
 ##' Works similar to retrieving objects in a list. \code{x[["my_name"]]} retrieves object \code{my_name} from the
-##' HDF5-File or group \code{x}.
+##' HDF5-File or HDF5-Group \code{x}.
 ##'
-##' One can also assign objects under a not yet existing name. For Either a  \code{\link{H5Group-class}} or \code{\link{H5D-class}},
+##' One can also assign objects under a not yet existing name. For either a  \code{\link{H5Group-class}} or \code{\link{H5D-class}},
 ##' a hard link is created. If it is a datatype, \code{\link{H5T-class}}, this is committed under the chosen name \code{name}.
 ##' @title Retrieve object from a group of file
 ##' @param x An object of class \code{\link{H5File}} or \code{\link{H5Group}}
-##' @param name Name of the object to retrieve. Has to be a character vector of length one. No integer values allowed/
+##' @param name Name of the object to retrieve. Has to be a character vector of length one. No integer values allowed.
 ##' @param ... Currently ignored
 ##' @param link_access_pl An object of class \code{\link{H5P_LINK_ACCESS-class}}.
 ##' @param dataset_access_pl An object of class \code{\link{H5P_DATASET_ACCESS-class}}.
