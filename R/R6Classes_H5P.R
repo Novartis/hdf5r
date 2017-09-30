@@ -191,7 +191,7 @@ H5P_DEFAULT <- R6Class("H5P_DEFAULT",
 #' Class for HDF5 property list classes (not HDF5 property lists)
 #'
 #' It inherits all functions of the \code{\link{H5RefClass-class}}. The intent of this class is to
-#' provide a mechanism to compare the class of HDf5 property classes. This is mainly intended for internal use
+#' provide a mechanism to compare the class of HDF5 property classes. This is mainly intended for internal use
 #' to get the class type of an HDF5 identifier that is known to be a property list, but not of which type.
 #' @docType class
 #' @importFrom R6 R6Class
