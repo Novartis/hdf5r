@@ -9,10 +9,23 @@
 Object of class \code{\link{H5P}}.
 }
 \description{
-This class represents default values for H5P property lists. As with H5S_DEFAULT, the current choice is not optimal
+This class represents default values for H5P property lists. As with \code{\link{H5S_ALL}}, the current choice is not optimal
 for the same reasons and likely to be changed
 }
+\section{Methods}{
+
+\describe{
+\item{\code{print(...)}}{
+
+Just prints that it is the default class
+
+\strong{Parameters}
+\describe{
+\item{...}{ignored}
+}}
+}}
 
 \author{
 Holger Hoefling
 }
+\keyword{internal}

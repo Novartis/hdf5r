@@ -58,13 +58,13 @@ names.H5File <- names.H5Group
 ##' Retrieve object from a group of file
 ##'
 ##' Works similar to retrieving objects in a list. \code{x[["my_name"]]} retrieves object \code{my_name} from the
-##' HDF5-File or group \code{x}.
+##' HDF5-File or HDF5-Group \code{x}.
 ##'
-##' One can also assign objects under a not yet existing name. For Either a  \code{\link{H5Group-class}} or \code{\link{H5D-class}},
+##' One can also assign objects under a not yet existing name. For either a  \code{\link{H5Group-class}} or \code{\link{H5D-class}},
 ##' a hard link is created. If it is a datatype, \code{\link{H5T-class}}, this is committed under the chosen name \code{name}.
 ##' @title Retrieve object from a group of file
 ##' @param x An object of class \code{\link{H5File}} or \code{\link{H5Group}}
-##' @param name Name of the object to retrieve. Has to be a character vector of length one. No integer values allowed/
+##' @param name Name of the object to retrieve. Has to be a character vector of length one. No integer values allowed.
 ##' @param ... Currently ignored
 ##' @param link_access_pl An object of class \code{\link{H5P_LINK_ACCESS-class}}.
 ##' @param dataset_access_pl An object of class \code{\link{H5P_DATASET_ACCESS-class}}.
@@ -203,27 +203,31 @@ h5attr <- function(x, which) {
 
 ##' Selecting and assigning subsets of HDF5-Spaces and HDF5-Datasets
 ##'
-##' Used for subsetting HDF5-Datasets or HDF5-Spaces or for assigning data into HDF5-Datasets. Here are some differences to
-##' consider with R itself. Most importantly HDF5-COMPOUND objects only have single dimension, but they correspond to R-data.frames,
-##' which are 2 dimensional. For an HDF5 COMPOUND object, it is currently not possible to only subselect a specific columns.
-##' All columns have to be extracted and can then be subset in R itself. The same is true for writing a COMPOUND object
-##' (\code{\link{H5T_ARRAY-class}}). A complete data-frame
-##' is needed, not just a subset of the columns. Another important differences is for datasets of HDF5-ARRAY type \code{\link{H5T_ARRAY-class}}
+##' Used for subsetting HDF5-Datasets or HDF5-Spaces or for assigning data into HDF5-Datasets. There are some differences to
+##' consider with R itself.
+##'
+##' Most importantly HDF5-COMPOUND objects only have a single dimension internally to HDF5 (a vector), but they correspond to R-data.frames,
+##' which are 2 dimensional. For an HDF5 COMPOUND object, it is currently not possible to only sub-select a specific column.
+##' All columns have to be extracted (using 1-dimensional access with \code{[} and can then be subset in R itself.
+##' The same is true for writing a COMPOUND object (\code{\link{H5T_COMPOUND-class}}). A complete data-frame
+##' is needed, not just a subset of the columns.
+##'
+##' Another important differences is for datasets of HDF5-ARRAY type \code{\link{H5T_ARRAY-class}}
 ##' where the access to the object is only for the dimension of the object itself, not including the dimensions of the underlying array type.
 ##' @title Selecting and assigning subsets of HDF5-Spaces and HDF5-Datasets
 ##' @param x The  \code{\link{H5S-class}} or \code{\link{H5D-class}} to subset or assign values to
 ##' @param d1 First dimension of the object
 ##' @param ... Used for other dimension of the object
 ##' @param op Operation to perform on the \code{\link{H5S-class}}. Look into the HDF5 online help
-##' \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements} and
-##' \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab}
+##' \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements} and
+##' \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab}
 ##' @param dataset_xfer_pl An object of class \code{\link{H5P_DATASET_XFER-class}}.
 ##' @param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
 ##' the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
 ##' (even using add-on packages). The constants governing this are part of \code{\link{h5const}}. The relevant ones start with the term
 ##' \code{H5TOR} and are documented there. The default set here returns a regular 32bit integer if it doesn't lead to an overflow
 ##' and returns a 64bit integer from the \code{bit64} package otherwise. For 64bit unsigned int that are larger than 64bit signed int,
-##' it return a \code{double}. This looses precision, however.
+##' it return a \code{double}. This looses precision, however. See also documentatio for \code{\link{h5const}}.
 ##' @param value The value to assign to the dataset
 ##' @param drop Logical. When reading data, should dimensions of size 1 be dropped.
 ##' @param envir The environment in which the dimension indices \code{d1, ...} are to be evaluated. Usually the environment from
@@ -232,8 +236,12 @@ h5attr <- function(x, which) {
 ##' \code{\link{H5D-class}} it retrieves the subset of data requested or sets the subset of data assigned, as for any n-dimensional array
 ##' in R.
 ##' @author Holger Hoefling
-##' @export
-subset_h5.H5S <- function(x,d1,  ..., op=h5const$H5S_SELECT_SET, envir=parent.frame()) {
+##' @name H5S_H5D_subset_assign
+NULL
+
+#' @rdname H5S_H5D_subset_assign
+#' @export
+subset_h5.H5S <- function(x,d1, ..., op=h5const$H5S_SELECT_SET, envir=parent.frame()) {
     args <- eval(substitute(alist(d1, ...)))
 
     return(x$subset(args=args, op=op, envir=envir))
@@ -241,32 +249,32 @@ subset_h5.H5S <- function(x,d1,  ..., op=h5const$H5S_SELECT_SET, envir=parent.fr
 
 
 
-##' @rdname subset_h5.H5S
-##' @export
+#' @rdname H5S_H5D_subset_assign
+#' @export
 '[.H5S' <- subset_h5.H5S
 
-##' @rdname subset_h5.H5S
-##' @export
+#' @rdname H5S_H5D_subset_assign
+#' @export
 subset_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT,
                           flags=getOption("hdf5r.h5tor_default"), drop=TRUE, envir=parent.frame()) {
     args <- eval(substitute(alist(d1, ...)))
     return(x$read(args=args, dataset_xfer_pl=dataset_xfer_pl, flags=flags, drop=drop, envir=envir))
 }
 
-##' @rdname subset_h5.H5S
-##' @export
+#' @rdname H5S_H5D_subset_assign
+#' @export
 "[.H5D" <- subset_h5.H5D
 
 
-##' @rdname subset_h5.H5S
-##' @export
+#' @rdname H5S_H5D_subset_assign
+#' @export
 subset_assign_h5.H5D <- function(x, d1, ..., dataset_xfer_pl=h5const$H5P_DEFAULT, envir=parent.frame(), value) {
     args <- eval(substitute(alist(d1, ...)))
     return(x$write(args=args, value=value, dataset_xfer_pl=dataset_xfer_pl, envir=envir))
 }
 
-##' @rdname subset_h5.H5S
-##' @export
+#' @rdname H5S_H5D_subset_assign
+#' @export
 "[<-.H5D" <- subset_assign_h5.H5D
 
 

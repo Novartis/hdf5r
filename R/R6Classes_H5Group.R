@@ -77,6 +77,7 @@ R6_set_list_of_items(H5Group, "public", commonFGDTA, overwrite=TRUE)
 ##' @param id The id to wrap in an R6-class object
 ##' @return An R6-class object corresponding to the HDF5 internal class of the ID
 ##' @author Holger Hoefling
+##' @keywords internal
 H5GTD_factory <- function(id) {
     ## find out the type, then stick it into the correct R6-class (or send to the next factory)
     res <- .Call("R_H5Iget_type", id, PACKAGE = "hdf5r")$return_val

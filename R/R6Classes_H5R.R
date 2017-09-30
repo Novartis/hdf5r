@@ -31,8 +31,9 @@ ref_obj_size <- new.env()
 
 #' Class for HDF5 Reference datatypes. 
 #'
-#' \code{H5R} is only the common, class, and is never used. User should not create objects of this
-#' class by themselves and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group}, \code{H5File} classes.
+#' \code{H5R} is only the common base class and is never used. User should not create objects of this
+#' class by themselves and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
+#' Subclassses are \code{\link{H5R_OBJECT-class}} and \code{\link{H5R_DATASET_REGION-class}}
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5R-class]{H5R}}.
@@ -341,8 +342,15 @@ R6_set_list_of_items(H5R, "public", ref_func_clone_public, overwrite=TRUE)
 
 
 
-##' @rdname H5R-class
-##' @export
+#' Class for HDF5 Object-references. 
+#'
+#' \code{H5R_OBJECT} is the reference class for objects. Users should not create this class by themselves, but use the appropriate 
+#' and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
+#' @docType class
+#' @importFrom R6 R6Class
+#' @return Object of class \code{\link[=H5R_OBJECT-class]{H5R_OBJECT}}.
+#' @export
+#' @author Holger Hoefling
 H5R_OBJECT <- R6Class("H5R_OBJECT",
                       inherit=H5R,
                       public=list(
@@ -402,8 +410,15 @@ H5R_OBJECT <- R6Class("H5R_OBJECT",
                       )
 
 
-##' @rdname H5R-class
-##' @export
+#' Class for HDF5 dataset-region references. 
+#'
+#' \code{H5R_DATASET_REGION} is the reference class for dataset regions. Users should not create this class by themselves, but use the appropriate 
+#' and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
+#' @docType class
+#' @importFrom R6 R6Class
+#' @return Object of class \code{\link[=H5R_DATASET_REGION-class]{H5R_DATASET_REGION}}.
+#' @export
+#' @author Holger Hoefling
 H5R_DATASET_REGION <- R6Class("H5R_DATASET_REGION",
                       inherit=H5R,
                       public=list(

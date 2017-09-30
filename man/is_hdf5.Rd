@@ -7,7 +7,7 @@
 is_hdf5(name)
 }
 \arguments{
-\item{name}{The name of the file to check; doesn't check for existence}
+\item{name}{The name of the file to check}
 }
 \value{
 Logical, TRUE if file is of type HDF5
