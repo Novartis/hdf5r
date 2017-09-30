@@ -31,6 +31,7 @@
 ##' @param file_access_pl File access property list
 ##' @return The file id (64bit-integer)
 ##' @author Holger Hoefling
+##' @keywords internal
 H5File.open <-  function(name, mode=c("a", "r", "r+", "w", "w-", "x"), file_create_pl=h5const$H5P_DEFAULT, file_access_pl=h5const$H5P_DEFAULT) {
     check_pl(file_create_pl, "H5P_FILE_CREATE")
     check_pl(file_access_pl, "H5P_FILE_ACCESS")
@@ -82,7 +83,7 @@ H5File.open <-  function(name, mode=c("a", "r", "r+", "w", "w-", "x"), file_crea
 ##'
 ##' Uses the HDF5 function \code{H5Fis_hdf5} to check if a file is of type HDF5.
 ##' @title Check if a file is an HDF5 file
-##' @param name The name of the file to check; doesn't check for existence
+##' @param name The name of the file to check
 ##' @return Logical, TRUE if file is of type HDF5
 ##' @author Holger Hoefling
 ##' @export
@@ -333,6 +334,7 @@ R6_set_list_of_items(H5File, "public", commonFGDTA, overwrite=TRUE)
 ##' @param id The id to closes
 ##' @return NULL, invisibly
 ##' @author Holger Hoefling
+##' @keywords internal
 H5_close_any <- function(id) {
     if(!is.na(id)) {
         type <-  as.character(.Call("R_H5Iget_type", id, PACKAGE="hdf5r")$return_val)

@@ -17,7 +17,7 @@ so that the label instead of the value is printed.}
 The object to print itself, invisibly
 }
 \description{
-Print a data frame with extended factor objects
+Print a data frame that includes extended factor objects
 }
 \details{
 The regular print function for data-frames has special methods built-in for factors so that

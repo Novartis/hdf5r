@@ -4,17 +4,14 @@
 \name{H5R-class}
 \alias{H5R-class}
 \alias{H5R}
-\alias{H5R_OBJECT-class}
-\alias{H5R_OBJECT}
-\alias{H5R_DATASET_REGION-class}
-\alias{H5R_DATASET_REGION}
 \title{Class for HDF5 Reference datatypes.}
 \value{
 Object of class \code{\link[=H5R-class]{H5R}}.
 }
 \description{
-\code{H5R} is only the common, class, and is never used. User should not create objects of this
-class by themselves and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group}, \code{H5File} classes.
+\code{H5R} is only the common base class and is never used. User should not create objects of this
+class by themselves and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
+Subclassses are \code{\link{H5R_OBJECT-class}} and \code{\link{H5R_DATASET_REGION-class}}
 }
 \section{Methods}{
 
@@ -23,7 +20,7 @@ class by themselves and instead use the \code{create_reference} methods of \code
 
 Method that returns a subset of the data in the H5R-object
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{dim_index}{A list of dimension indices as usually pasted into \code{[}}
 \item{drop}{Logical. Should dimensions of size 1 be dropped.}
@@ -33,7 +30,7 @@ Method that returns a subset of the data in the H5R-object
 
 Method to read a single item
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{i}{The single item to read}
 \item{exact}{Is the item name exact or should partial matching be allowed?}
@@ -43,7 +40,7 @@ Method to read a single item
 
 Assign values into a subset of the H5R-vector
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{dim_index}{A list of dimension indices as usually pased into \code{[}}
 \item{value}{The value to assign}
@@ -53,7 +50,7 @@ Assign values into a subset of the H5R-vector
 
 Assign a value to a single value in the array
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{i}{the index where to assign the value}
 \item{value}{The value to assign}
@@ -86,44 +83,6 @@ Get or assign the names of the object}
 \item{\code{rank()}}{
 
 Get the rank of the object}
-
-\item{\code{new(num = 0, id = NULL)}}{
-
-Create a new reference for object; Usually, users shouldn't have to call this, but use the \code{create_reference}
-method of a dataset, group of commited datatype}
-
-\item{\code{dereference(object_access_pl = h5const$H5P_DEFAULT, obj = NULL)}}{
-
-Dereference an H5R reference. The file the reference is pointing to is assigned automatically
-This function implements the HDF5-API function H5Rdereference.
-Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Dereference} for details.
-
-\strong{Parameters:}
-\describe{
-\item{obj}{Overriding the default file the reference is referring to}
-\item{object_access_pl}{The object-access property list. Currently always the default}
-}}
-
-\item{\code{new(num = 0, id = NULL)}}{
-
-Create a new reference for dataset regions; Usually, users shouldn't have to call this, but use the 
-\code{create_reference} method of a dataset.}
-
-\item{\code{dereference(object_access_pl = h5const$H5P_DEFAULT, obj = NULL,
-  get_value = FALSE)}}{
-
-Dereference an H5R reference for a dataset region. The file the reference is pointing to is assigned automatically.
-It returns a list where each item is a list with components \code{dataset}, being an \code{H5D-class} object and
-\code{space} being a \code{H5S-class} object. When setting \code{get_value=TRUE}, then instead of these objects
-The data itself is returned
-This function implements the HDF5-API function H5Rdereference.
-Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Dereference} for details.
-
-\strong{Parameters:}
-\describe{
-\item{obj}{Overriding the default file the reference is referring to}
-\item{object_access_pl}{The object-access property list. Currently always the default}
-}}
 }}
 
 \author{

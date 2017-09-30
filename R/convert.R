@@ -22,8 +22,9 @@
 
 ##' Low-level conversion functions from R to HDF5 and vice versa
 ##'
-##' These are the low-level function that dispatch the R object to HDf5 object conversion to the underlying C code.
-##' None of these should be accessed by the end-user under normal circumstances.
+##' These are the low-level function that dispatch the R object to HDF5 object conversion to the underlying C code.
+##' None of these should be accessed by the end-user under normal circumstances. See also \code{\link{convertRoundTrip}}
+##' for an example of how to use them.
 ##' @title Low-level conversion functions from R to HDF5 and vice versa
 ##' @param Robj The R-object to transfer to HDF5
 ##' @param dtype Datatype of the HDF5 object. Of class \code{\link{H5T-class}}
@@ -38,6 +39,7 @@
 ##' with everything except references.
 ##' @return The converted object or the buffer into which the object is written. 
 ##' @author Holger Hoefling
+##' @keywords internal
 RToH5 <- function(Robj, dtype, nelem) {
     return(.Call("R_RToH5", Robj, dtype$id, nelem, PACKAGE="hdf5r"))
 }
@@ -279,9 +281,10 @@ guess_dtype <- function(x, ds_dim=NULL, scalar=FALSE, string_len=getOption("hdf5
 
 ##' Guess the dataspace of an object
 ##'
-##' Creates a dataspace that fits an object so that it can be written into a dataset
+##' Creates a dataspace that fits an R object so that it can be written into a dataset. This is used
+##' for example in dataset creation based on an R-object, not a specifically defined dimensions.
 ##' @title Guess the dataspace of an object
-##' @param x The object for which to guess the space
+##' @param x The R object for which to guess the space
 ##' @param dtype Object of type \code{\link{H5T-class}}, that represents that datatype to use.
 ##' @param chunked Is the datatype chunked? If yes, \code{maxdims} of the space will be set to infinity,
 ##' otherwise \code{maxdims} will be set to the original extent of the space.

@@ -20,7 +20,7 @@ This class represents an HDF5 group-id. It inherits all functions of the
 Intializes a new dataset-object. Only for internal use. Use the \code{create_dataset} function for \code{\link{H5Group}}
 and \code{\link{H5File}} objects
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{id}{For internal use only}
 }}
@@ -65,7 +65,8 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D
 This function implements the HDF5-API function H5Dvlen_get_buf_size.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-VlenGetBufSize} for details.}
 
-\item{\code{vlen_reclaim(buffer, type, space, dataset_xfer_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{vlen_reclaim(buffer, type, space,
+  dataset_xfer_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Dvlen_reclaim.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-VlenReclaim} for details.}
@@ -80,7 +81,7 @@ This function implements the HDF5-API function H5Dread, with minor changes to th
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details.
 It reads the data in the dataset as specified by \code{mem_space} and return it as an R-obj
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{file_space}{An HDF5-space, represented as class \code{\link{H5S-class}} that determines which part
 of the dataset is being read. Can also be given as an id}
@@ -105,7 +106,7 @@ correct dimension is already set.}
 Main interface for reading data from the dataset. It is the function that is used by \code{[}, where
 all indices are being passed in the parameter \code{args}.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
 For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
@@ -120,15 +121,16 @@ it return a \code{double}. This looses precision, however.}
 \item{drop}{Logical. When reading data, should dimensions of size 1 be dropped.}
 }
 
-\strong{Return:}
+\strong{Return}
 
 The data that was read as an R object
 
 
 }
 
-\item{\code{write_low_level(robj, file_space = h5const$H5S_ALL, mem_space = NULL,
-  mem_type = NULL, dataset_xfer_pl = h5const$H5P_DEFAULT,
+\item{\code{write_low_level(robj, file_space = h5const$H5S_ALL,
+  mem_space = NULL, mem_type = NULL,
+  dataset_xfer_pl = h5const$H5P_DEFAULT,
   flush = getOption("hdf5r.flush_on_write"))}}{
 
 This function is for advanced users. It is recommended to use \code{read} instead or the \code{[<-} interface
@@ -137,7 +139,7 @@ This function implements the HDF5-API function H5Dwrite, with some changes to ac
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write} for details.
 It writes that data from the \code{robj} into the dataset.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{robj}{The object to write into the dataset}
 \item{mem_space}{The space as it is represented in memory; advanced feature; may be removed in the future}
@@ -154,7 +156,7 @@ of the dataset is being written.}
 Main interface for writing data to the dataset. It is the function that is used by \code{[<-}, where
 all indices are being passed in the parameter \code{args}.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
 For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
@@ -163,7 +165,7 @@ For interactive use we recomment the use of the \code{[} operator. If set to \co
 \item{dataset_xfer_pl}{An object of class \code{\link{H5P_DATASET_XFER-class}}.}
 }
 
-\strong{Return:}
+\strong{Return}
 
 The HDF5 dataset object, returned invisibly
 
@@ -187,7 +189,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P
 Reorder a subset of an HDF5 dataset along a specific dimension. It is mostly intended as a function to be
 used by a sorting algorithm and is not checked for correct inputs. Incorrect use can corrupt a dataset
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{reorder_dim}{The number of the dimension along which the reordering should occur.}
 \item{start,end}{The start and end index where the reordering should occur (can be vectors of equal length)}
@@ -208,7 +210,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R
 
 Prints information for the dataset
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{...}{ignored}
 \item{max.attributes}{Maximum number of attribute names to print}
@@ -234,24 +236,28 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A
 This function implements the HDF5-API function H5Aopen.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-Open} for details.}
 
-\item{\code{create_attr_by_name(attr_name, obj_name, robj = NULL, dtype = NULL,
-  space = NULL, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{create_attr_by_name(attr_name, obj_name, robj = NULL,
+  dtype = NULL, space = NULL,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Acreate_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-CreateByName} for details.}
 
-\item{\code{attr_open_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_open_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aopen_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-OpenByName} for details.}
 
 \item{\code{attr_open_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aopen_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-OpenByIdx} for details.}
 
-\item{\code{attr_exists_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_exists_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aexists_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-ExistsByName} for details.}
@@ -277,30 +283,35 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A
 This function implements the HDF5-API function H5Adelete.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-Delete} for details.}
 
-\item{\code{attr_delete_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_delete_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Adelete_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-DeleteByName} for details.}
 
 \item{\code{attr_delete_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Adelete_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-DeleteByIdx} for details.}
 
-\item{\code{attr_info_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_info_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_info_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetInfoByName} for details.}
 
 \item{\code{attr_info_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_info_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetInfoByIdx} for details.}
 
 \item{\code{attr_name_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_name_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetNameByIdx} for details.}

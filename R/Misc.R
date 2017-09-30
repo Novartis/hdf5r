@@ -41,7 +41,7 @@ h5version <- function(verbose=TRUE) {
 ##' Trigger the HDF5 garbage collection
 ##'
 ##' This function triggers the HDF5 internal garbage collection. It is independent of the
-##' R garbage collection and currenctly has to be triggered by hand.
+##' R garbage collection and currently has to be triggered by hand.
 ##' @title Trigger the HDF5 garbage collection
 ##' @return Invisible  \code{NULL} 
 ##' @author  Holger Hoefling

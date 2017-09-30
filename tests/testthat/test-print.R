@@ -8,6 +8,10 @@ test_that("Print functions work as expected", {
     ## create a file and call print
     test_file <- tempfile(fileext=".h5")
 
+    ## H5S default class
+    expect_output(h5const$H5S_ALL$print(), "H5S_ALL class")
+    expect_output(h5const$H5P_DEFAULT$print(), "H5P_DEFAULT class")
+    
     ## open a new one, truncate if it exists
     file.h5 <- H5File$new(test_file, mode="w")
     h5group <- file.h5$create_group("test")

@@ -14,19 +14,19 @@ the issue of R not being able to natively represent 64bit integers and not at al
 (even using add-on packages).
 The constants all start with the term \code{H5TOR}. There are currently possible values
 \describe{
-  \item{\code{H5TOR_CONV_NONE}}{Doesn't do any conversion. Every integer datatype with more than 32 bit is returned as 64bit integers. For
+  \item{H5TOR_CONV_NONE}{Doesn't do any conversion. Every integer datatype with more than 32 bit is returned as 64bit integers. For
   usigned 64bit integers, the conversion to signed 64bit integers is done by truncation}
-  \item{\code{H5TOR_CONV_INT64_INT_NOLOSS}}{Under this setting, whenever a 64 bit integer would be returend, it is checked if it would also
+  \item{H5TOR_CONV_INT64_INT_NOLOSS}{Under this setting, whenever a 64 bit integer would be returend, it is checked if it would also
   fit into a 32 bit integer without data loss and returned as such if posible}
-  \item{\code{H5TOR_CONV_INT64_FLOAT_NOLOSS}}{Under this setting, whenever a 64 bit integer would be returend, it is checked if it would also
+  \item{H5TOR_CONV_INT64_FLOAT_NOLOSS}{Under this setting, whenever a 64 bit integer would be returend, it is checked if it would also
   fit into a 64 bit floating point value without data loss and returned as such if posible}
-  \item{\code{H5TOR_CONV_INT64_NOLOSS}}{Combines \code{H5TOR_CONV_INT64_INT_NOLOSS} and \code{H5TOR_CONV_INT64_FLOAT_NOLOSS} and is set
+  \item{H5TOR_CONV_INT64_NOLOSS}{Combines \code{H5TOR_CONV_INT64_INT_NOLOSS} and \code{H5TOR_CONV_INT64_FLOAT_NOLOSS} and is set
   as the default in the \code{hdf5r.h5tor_default} option.}
-  \item{\code{H5TOR_CONV_INT64_FLOAT_FORCE}}{Under this setting, whenever a 64 bit integer would be returend, it is coerced to a double
+  \item{H5TOR_CONV_INT64_FLOAT_FORCE}{Under this setting, whenever a 64 bit integer would be returend, it is coerced to a double
   even if this results in a loss of precision. If a loss of precision occurs, a warning is issued. Please note that this also overrides
   the use of \code{H5TOR_CONV_UNIT64_NA}. As loss of precision is already accepted, UINT64-values that are larger than LLONG_MAX will be represented
   as their next possible floating point value.}
-  \item{\code{H5TOR_CONV_UINT64_NA}}{When converting an unsigned 64bit integer, any values that don't fit into a signed 64bit integer are
+  \item{H5TOR_CONV_UINT64_NA}{When converting an unsigned 64bit integer, any values that don't fit into a signed 64bit integer are
   set to NA. If this flag is not set, then the values will be truncated to \code{LLONG_MAX}, the largerst 64bit signed integer.}
   \item{H5TOR_CONV_DEFAULT}{Is both \code{H5TOR_CONV_INT64_INT} and \code{H5TOR_CONV_UNIT64_FLOAT}}
 }

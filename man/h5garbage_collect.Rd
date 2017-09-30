@@ -14,7 +14,7 @@ Trigger the HDF5 garbage collection
 }
 \details{
 This function triggers the HDF5 internal garbage collection. It is independent of the
-R garbage collection and currenctly has to be triggered by hand.
+R garbage collection and currently has to be triggered by hand.
 }
 \author{
 Holger Hoefling

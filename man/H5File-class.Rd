@@ -46,7 +46,7 @@ Groups and Datasets, see also \code{\link{H5A-class}}}
 
 Opens or creates a new HDF5 File
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{filename}{Name of the file}
 \item{mode}{How to open it. \code{a} creates a new file or opens an existing one for read/write. \code{r} opens an
@@ -89,7 +89,7 @@ closing any file. If not all objects in a file are closed, the file remains open
 
 Prints information for the file
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{max.attributes}{Maximum number of attribute names to print}
 \item{max.listing}{Maximum number of ls-items to print}
@@ -105,14 +105,17 @@ Opens groups, datasets or types using the appropriate HDF5-API functions. Please
 \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5O.html#Object-Open} for types and 
 \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5O.html#Object-Open} for general objects.}
 
-\item{\code{open_by_idx(n, group_name = ".", index_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{open_by_idx(n, group_name = ".",
+  index_type = h5const$H5_INDEX_NAME,
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Oopen_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5O.html#Object-OpenByIdx} for details.}
 
 \item{\code{ls(recursive = FALSE, detailed = FALSE,
-  index_type = h5const$H5_INDEX_NAME, order = h5const$H5_ITER_NATIVE,
+  index_type = h5const$H5_INDEX_NAME,
+  order = h5const$H5_ITER_NATIVE,
   link_access_pl = h5const$H5P_DEFAULT,
   dataset_access_pl = h5const$H5P_DEFAULT,
   type_access_pl = h5const$H5P_DEFAULT)}}{
@@ -135,7 +138,8 @@ Please see the documentation at \url{https://support.hdfgroup.org/HDF5/doc/HL/RM
 This function implements the HDF5-API function H5Olink.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5O.html#Object-Link} for details.}
 
-\item{\code{obj_copy_to(dst_loc, dst_name, src_name, object_copy_pl = h5const$H5P_DEFAULT,
+\item{\code{obj_copy_to(dst_loc, dst_name, src_name,
+  object_copy_pl = h5const$H5P_DEFAULT,
   link_create_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Ocopy.
@@ -148,7 +152,8 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5O
 This function implements the HDF5-API function H5Ocopy.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5O.html#Object-Copy} for details.}
 
-\item{\code{obj_info_by_idx(n, group_name = ".", index_field = h5const$H5_INDEX_NAME,
+\item{\code{obj_info_by_idx(n, group_name = ".",
+  index_field = h5const$H5_INDEX_NAME,
   order = h5const$H5_ITER_NATIVE, remove_internal_use_only = TRUE)}}{
 
 This function implements the HDF5-API function H5Oget_info_by_idx.
@@ -169,8 +174,10 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5G
 This function implements the HDF5-API function H5Gget_info_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5G.html#Group-GetInfoByName} for details.}
 
-\item{\code{group_info_by_idx(n, group_name = ".", index_field = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{group_info_by_idx(n, group_name = ".",
+  index_field = h5const$H5_INDEX_NAME,
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Gget_info_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5G.html#Group-GetInfoByIdx} for details.}
@@ -195,7 +202,7 @@ Also note that this function implements the HDF5-API function H5Dcreate2 and H5D
 \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Create2} for regular groups and
 \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-CreateAnon} for anonymous groups for details.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{name}{The name of the new dataset. If missing, an anonymous dataset is created}
 \item{robj}{An R-object to take as a template for creating the dataset. Either \code{robj} or both \code{dtype} and {space}
@@ -229,7 +236,8 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T
 This function implements the HDF5-API function H5Lcreate_hard.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-CreateHard} for details.}
 
-\item{\code{link_create_soft(target_path, link_name, link_create_pl = h5const$H5P_DEFAULT,
+\item{\code{link_create_soft(target_path, link_name,
+  link_create_pl = h5const$H5P_DEFAULT,
   link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Lcreate_soft.
@@ -280,8 +288,10 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L
 This function implements the HDF5-API function H5Ldelete.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-Delete} for details.}
 
-\item{\code{link_delete_by_idx(n, group_name = ".", index_field = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{link_delete_by_idx(n, group_name = ".",
+  index_field = h5const$H5_INDEX_NAME,
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Ldelete_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-DeleteByIdx} for details.}
@@ -291,8 +301,10 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L
 This function implements the HDF5-API function H5Lget_info.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-GetInfo} for details.}
 
-\item{\code{link_info_by_idx(n, group_name = ".", index_field = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{link_info_by_idx(n, group_name = ".",
+  index_field = h5const$H5_INDEX_NAME,
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Lget_info_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-GetInfoByIdx} for details.}
@@ -302,14 +314,17 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L
 This function implements the HDF5-API function H5Lget_val.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-GetVal} for details.}
 
-\item{\code{link_value_by_idx(n, group_name = ".", index_field = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{link_value_by_idx(n, group_name = ".",
+  index_field = h5const$H5_INDEX_NAME,
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Lget_val_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-GetValByIdx} for details.}
 
 \item{\code{link_name_by_idx(n, group_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Lget_name_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5L.html#Link-GetNameByIdx} for details.}
@@ -350,24 +365,28 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A
 This function implements the HDF5-API function H5Aopen.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-Open} for details.}
 
-\item{\code{create_attr_by_name(attr_name, obj_name, robj = NULL, dtype = NULL,
-  space = NULL, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{create_attr_by_name(attr_name, obj_name, robj = NULL,
+  dtype = NULL, space = NULL,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Acreate_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-CreateByName} for details.}
 
-\item{\code{attr_open_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_open_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aopen_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-OpenByName} for details.}
 
 \item{\code{attr_open_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aopen_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-OpenByIdx} for details.}
 
-\item{\code{attr_exists_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_exists_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aexists_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-ExistsByName} for details.}
@@ -393,30 +412,35 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A
 This function implements the HDF5-API function H5Adelete.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-Delete} for details.}
 
-\item{\code{attr_delete_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_delete_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Adelete_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-DeleteByName} for details.}
 
 \item{\code{attr_delete_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Adelete_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-DeleteByIdx} for details.}
 
-\item{\code{attr_info_by_name(attr_name, obj_name, link_access_pl = h5const$H5P_DEFAULT)}}{
+\item{\code{attr_info_by_name(attr_name, obj_name,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_info_by_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetInfoByName} for details.}
 
 \item{\code{attr_info_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_info_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetInfoByIdx} for details.}
 
 \item{\code{attr_name_by_idx(n, obj_name, idx_type = h5const$H5_INDEX_NAME,
-  order = h5const$H5_ITER_NATIVE, link_access_pl = h5const$H5P_DEFAULT)}}{
+  order = h5const$H5_ITER_NATIVE,
+  link_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function implements the HDF5-API function H5Aget_name_by_idx.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-GetNameByIdx} for details.}
@@ -435,7 +459,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5F
 
 Returns the names of the items in the group or at the root of the file
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{link_access_pl}{The link-access property list. See \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html} for more detail.}
 }}

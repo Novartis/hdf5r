@@ -14,7 +14,8 @@ It inherits all functions of the \code{\link{H5P-class}}.
 \section{Methods}{
 
 \describe{
-\item{\code{set_chunk_cache(rdcc_nslots = -1, rdcc_nbytes = -1, rdcc_w0 = -1)}}{
+\item{\code{set_chunk_cache(rdcc_nslots = -1, rdcc_nbytes = -1,
+  rdcc_w0 = -1)}}{
 
 This function implements the HDF5-API function H5Pset_chunk_cache.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-SetChunkCache} for details.}

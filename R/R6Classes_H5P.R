@@ -25,7 +25,7 @@
 ##' @param id The id to wrap inside an object
 ##' @return An object of class \\code{\\link{H5P}}
 ##' @author Holger Hoefling
-##' @export
+##' @keywords internal
 H5P_factory <- function(id) {
     if(inherits(id, "H5P_CLASS")) {
         cls_id <- id$id
@@ -91,7 +91,7 @@ H5P_factory <- function(id) {
 #'
 #' This is the base class for all property lists, but most have a specialised class.
 #' It inherits all functions of the
-#' \code{\link{H5RefClass-class}}. It is also the base class for many other classes well, specifically
+#' \code{\link{H5RefClass-class}}. It is also the base class for many other classes, specifically
 #' \describe{
 #' \item{Dataset Creation}{\code{\link{H5P_DATASET_CREATE-class}}}
 #' \item{Dataset Access}{\code{\link{H5P_DATASET_ACCESS-class}}}
@@ -102,6 +102,7 @@ H5P_factory <- function(id) {
 #' \item{Object Copy}{\code{\link{H5P_OBJECT_COPY-class}}}
 #' \item{Attribute Creation}{\code{\link{H5P_ATTRIBUTE_CREATE-class}}}
 #' }
+#' The base class is unlikely to be needed by users - they should use the appropriate subclass required.
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5P}}.
@@ -165,19 +166,25 @@ H5P <- R6Class("H5P",
 
 #' Class for default values for HDF5 property lists.
 #'
-#' This class represents default values for H5P property lists. As with H5S_DEFAULT, the current choice is not optimal
+#' This class represents default values for H5P property lists. As with \code{\link{H5S_ALL}}, the current choice is not optimal
 #' for the same reasons and likely to be changed
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5P}}.
-#' @export
 #' @author Holger Hoefling
+#' @keywords internal
 H5P_DEFAULT <- R6Class("H5P_DEFAULT",
                        inherit=H5P,
                        public=list(
                            initialize=function(id=NULL) {
                                private$pid <- new_id_obj(id)
                                return(self)
+                           },
+                           print=function(...) {
+                               "Just prints that it is the default class"
+                               "@param ... ignored"
+                               cat("H5P_DEFAULT class\n")
+                               return(invisible(self))
                            }
                            ),
                        private=list(
@@ -190,7 +197,7 @@ H5P_DEFAULT <- R6Class("H5P_DEFAULT",
 #' Class for HDF5 property list classes (not HDF5 property lists)
 #'
 #' It inherits all functions of the \code{\link{H5RefClass-class}}. The intent of this class is to
-#' provide a mechanism to compare the class of HDf5 property classes. This is mainly intended for internal use
+#' provide a mechanism to compare the class of HDF5 property classes. This is mainly intended for internal use
 #' to get the class type of an HDF5 identifier that is known to be a property list, but not of which type.
 #' @docType class
 #' @importFrom R6 R6Class

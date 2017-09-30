@@ -108,11 +108,11 @@ flatten_df <- function(df, factor_ext_to_char=FALSE) {
 ##' Cleaning result of internal \code{_H5ls} function
 ##'
 ##' For every \code{*_success} item that is \code{FALSE}, the correspoding row of the data.frame will be set to NA.
-##' @title Cleaning result of internal \code{_H5ls} function
-##' @param df The result of the C-function \code{_H5ls}
+##' @title Cleaning result of internal \code{R_H5ls} function
+##' @param df The result of the C-function \code{R_H5ls}
 ##' @return A data frame with content that was not successfully gathered set to \code{NA} and \code{*_success} columns removed
 ##' @author Holger Hoefling
-##' @export
+##' @keywords internal
 clean_ls_df <- function(df) {
     if(is.null(df) || nrow(df) == 0) {
         return(df)
@@ -142,7 +142,7 @@ clean_ls_df <- function(df) {
 }
 
 
-##' Print a data frame with extended factor objects
+##' Print a data frame that includes extended factor objects
 ##'
 ##' The regular print function for data-frames has special methods built-in for factors so that
 ##' the label is printed instead of the constant. This function is intended to provide the same functionality

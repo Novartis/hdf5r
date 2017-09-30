@@ -2,12 +2,12 @@
 % Please edit documentation in R/Helper_functions.R
 \name{clean_ls_df}
 \alias{clean_ls_df}
-\title{Cleaning result of internal \code{_H5ls} function}
+\title{Cleaning result of internal \code{R_H5ls} function}
 \usage{
 clean_ls_df(df)
 }
 \arguments{
-\item{df}{The result of the C-function \code{_H5ls}}
+\item{df}{The result of the C-function \code{R_H5ls}}
 }
 \value{
 A data frame with content that was not successfully gathered set to \code{NA} and \code{*_success} columns removed
@@ -21,3 +21,4 @@ For every \code{*_success} item that is \code{FALSE}, the correspoding row of th
 \author{
 Holger Hoefling
 }
+\keyword{internal}

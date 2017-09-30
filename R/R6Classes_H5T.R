@@ -26,6 +26,7 @@
 ##' @return The ids as a integer64-vector
 ##' @author Holger Hoefling
 ##' @importFrom bit64 as.integer64
+##' @keywords internal
 H5T_extractID <- function(dtype_ids) {
     if(inherits(dtype_ids, "H5T")) {
         dtype_ids_out <- dtype_ids$id
@@ -53,17 +54,17 @@ H5T_extractID <- function(dtype_ids) {
 }
 
 
-##' Turn ids into  \\code{\\link{H5T-class}} objects
+##' Turn ids into  \code{\link{H5T-class}} objects
 ##'
 ##' Gets the HDF5 internal class for an id and dispactches them so that the correct
 ##' R6-classes are being created.
-##' @title Turn ids into  \\code{\\link{H5T-class}} objects
+##' @title Turn ids into  \code{\link{H5T-class}} objects
 ##' @param ids The ids to return as objects
 ##' @param do_copy Should the ids be copied using HDF5s internal copy mechanism
-##' @return An object of type R6 class \\code{\\link{H5T-class}}
+##' @return An object of type R6 class \code{\link{H5T-class}}
 ##' @author Holger Hoefling
 ##' @importFrom bit64 as.integer64
-##' @export
+##' @keywords internal
 H5T_factory <- function(ids, do_copy=FALSE) {
     if(!missing(ids)) {
         ids <- H5T_extractID(ids)
@@ -132,7 +133,8 @@ H5T_factory <- function(ids, do_copy=FALSE) {
 ##' @param text The text to convert to the datatype
 ##' @param lang_type The type of language to use; currently only \code{H5LT_DDL} is supported.
 ##' @return A datatype corresponding to the text with the appropriate class inheriting from \code{\link{H5T-class}}.
-##' @author Holger Hoefling 
+##' @author Holger Hoefling
+##' @export
 text_to_dtype <- function(text, lang_type=h5const$H5LT_DDL) {
     id <- .Call("R_H5LTtext_to_dtype", paste(as.character(text), collapse = "\n"), h5const$H5LT_DDL, PACKAGE = "hdf5r")$return_val
     if(id < 0) {

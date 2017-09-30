@@ -18,7 +18,7 @@ Inherits from class \code{\link[=H5T-class]{H5T}}.
 
 Create at compound type that is the HDF5 equivalent of a table
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{labels}{The labels of the columns of the compound object}
 \item{dtypes}{The datatypes of the columns of the object; this is usually a list of objects

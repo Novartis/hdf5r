@@ -18,7 +18,7 @@ Inherits from class \code{\link[=H5T-class]{H5T}}.
 
 Create a string datatype
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{A}{C or fortran type string}
 \item{size}{Size of the string object. Set to \code{Inf} for variable size strings}

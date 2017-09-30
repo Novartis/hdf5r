@@ -431,21 +431,25 @@ H5S$set("active", "rank", H5S$public_methods$get_simple_extent_ndims, overwrite=
 
 #' Class for HDF5 default space
 #'
-#' It inherits all functions of the \code{\link{H5S-class}}. As this is implemented, this is likely not the best choice as almost
-#' all functions that work for H5S-class objects will fail. It is likely better to implement this as a separate default class,
-#' avoid the id-tracking associated with it (which doesn't make sense anyway). Should find a better way to handle this.
+#' It inherits all functions of the \code{\link{H5S-class}}. As this is implemented, closing the id is overriden as this is a special id.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5S_DEFAULT-class]{H5S_DEFAULT}}. 
+#' @return Object of class \code{\link[=H5S_ALL-class]{H5S_ALL}}. 
 #' @author Holger Hoefling
-#' @export
+#' @keywords internal
 #' @seealso \code{\link[=H5S-class]{H5S}}
-H5S_DEFAULT <- R6Class("H5S_DEFAULT",
+H5S_ALL <- R6Class("H5S_ALL",
                        inherit=H5S,
                        public=list(
                            initialize=function(id) {
                                private$pid <- new_id_obj(id)
                                return(self)
+                           },
+                           print=function(...) {
+                               "Just prints that it is the default class"
+                               "@param ... ignored"
+                               cat("H5S_ALL class\n")
+                               return(invisible(self))
                            }
                            ),
                        private=list(
