@@ -91,7 +91,7 @@ H5P_factory <- function(id) {
 #'
 #' This is the base class for all property lists, but most have a specialised class.
 #' It inherits all functions of the
-#' \code{\link{H5RefClass-class}}. It is also the base class for many other classes well, specifically
+#' \code{\link{H5RefClass-class}}. It is also the base class for many other classes, specifically
 #' \describe{
 #' \item{Dataset Creation}{\code{\link{H5P_DATASET_CREATE-class}}}
 #' \item{Dataset Access}{\code{\link{H5P_DATASET_ACCESS-class}}}
@@ -102,6 +102,7 @@ H5P_factory <- function(id) {
 #' \item{Object Copy}{\code{\link{H5P_OBJECT_COPY-class}}}
 #' \item{Attribute Creation}{\code{\link{H5P_ATTRIBUTE_CREATE-class}}}
 #' }
+#' The base class is unlikely to be needed by users - they should use the appropriate subclass required.
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5P}}.
