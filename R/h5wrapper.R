@@ -8,16 +8,17 @@
 #' Below you can find a list of all \strong{h5} function including \strong{hdf5r} mappings.
 #' 
 #' 
-#' @rdname h5-wrapper
+#' @name h5-wrapper
 NULL
 
-#' @rdname H5File-class
+#' @rdname h5-wrapper
 #' @export
 h5file <- H5File$new
 
-#' @rdname H5Group-class
+#' @rdname h5-wrapper
 #' @param object \code{CommonFG}; Object implementing the CommonFG Interface (e.g. \code{\link{H5File}}, \code{\link{H5Group}}).
-#' @param ... Additional parameters passed to \code{create_group}.
+#' @param name Name of the group to create.
+#' @param ... Additional parameters passed to \code{create_group} or \code{h5file}.
 #' @export
 createGroup <- function(object, name, ...) {
   paths <- strsplit(name, "/")[[1]]

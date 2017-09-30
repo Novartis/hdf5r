@@ -156,7 +156,7 @@ is_hdf5 <- function(name) {
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5File}}.
-#' @aliases h5file
+#' @seealso \code{\link{h5file}}
 #' @export
 H5File <- R6Class("H5File",
                   inherit=H5RefClass,
