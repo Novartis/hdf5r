@@ -281,6 +281,7 @@ R6_set_list_of_items(H5File, "public", commonFGDTA, overwrite=TRUE)
 ##' @param id The id to closes
 ##' @return NULL, invisibly
 ##' @author Holger Hoefling
+##' @keywords internal
 H5_close_any <- function(id) {
     if(!is.na(id)) {
         type <-  as.character(.Call("R_H5Iget_type", id, PACKAGE="hdf5r")$return_val)
