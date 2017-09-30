@@ -23,7 +23,7 @@ class by themselves and instead use the \code{create_reference} methods of \code
 
 Method that returns a subset of the data in the H5R-object
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{dim_index}{A list of dimension indices as usually pasted into \code{[}}
 \item{drop}{Logical. Should dimensions of size 1 be dropped.}
@@ -33,7 +33,7 @@ Method that returns a subset of the data in the H5R-object
 
 Method to read a single item
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{i}{The single item to read}
 \item{exact}{Is the item name exact or should partial matching be allowed?}
@@ -43,7 +43,7 @@ Method to read a single item
 
 Assign values into a subset of the H5R-vector
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{dim_index}{A list of dimension indices as usually pased into \code{[}}
 \item{value}{The value to assign}
@@ -53,7 +53,7 @@ Assign values into a subset of the H5R-vector
 
 Assign a value to a single value in the array
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{i}{the index where to assign the value}
 \item{value}{The value to assign}
@@ -98,7 +98,7 @@ Dereference an H5R reference. The file the reference is pointing to is assigned 
 This function implements the HDF5-API function H5Rdereference.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Dereference} for details.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{obj}{Overriding the default file the reference is referring to}
 \item{object_access_pl}{The object-access property list. Currently always the default}
@@ -119,7 +119,7 @@ The data itself is returned
 This function implements the HDF5-API function H5Rdereference.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Dereference} for details.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{obj}{Overriding the default file the reference is referring to}
 \item{object_access_pl}{The object-access property list. Currently always the default}

@@ -31,7 +31,7 @@ It inherits all functions of the
 Create a new property list; this function itself is unlikely to be needed by users. Users should
 use the classes of the type they actually require
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{id}{Internal use only}
 }}

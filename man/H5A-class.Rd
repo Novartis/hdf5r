@@ -50,7 +50,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A
 
 Reads the data of the attribute and returns it as an R-object
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{flags}{Conversion rules for integer values. See also \code{\link{h5const}}}
 \item{drop}{Logical. Should dimensions of length 1 be dropped (R-default for arrays)}
@@ -62,11 +62,12 @@ Only for advanced users. See documentation for \code{write} instead.
 This function implements the HDF5-API function H5Awrite.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5A.html#Annot-Write} for details.}
 
-\item{\code{write(robj, mem_type = NULL, flush = getOption("hdf5r.flush_on_write"))}}{
+\item{\code{write(robj, mem_type = NULL,
+  flush = getOption("hdf5r.flush_on_write"))}}{
 
 Writes the data of \code{robj} to the attribute
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{robj}{The object to write into the attribute}
 \item{mem_type}{The memory data type to use when transferring from HDF5 to intermediate storage. This is an 
@@ -77,7 +78,7 @@ advanced development feature and may be removed in the future.}
 
 Prints information for the dataset
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{...}{ignored}
 }}

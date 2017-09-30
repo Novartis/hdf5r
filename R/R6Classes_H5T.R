@@ -26,6 +26,7 @@
 ##' @return The ids as a integer64-vector
 ##' @author Holger Hoefling
 ##' @importFrom bit64 as.integer64
+##' @keywords internal
 H5T_extractID <- function(dtype_ids) {
     if(inherits(dtype_ids, "H5T")) {
         dtype_ids_out <- dtype_ids$id

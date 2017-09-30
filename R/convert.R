@@ -279,9 +279,10 @@ guess_dtype <- function(x, ds_dim=NULL, scalar=FALSE, string_len=getOption("hdf5
 
 ##' Guess the dataspace of an object
 ##'
-##' Creates a dataspace that fits an object so that it can be written into a dataset
+##' Creates a dataspace that fits an R object so that it can be written into a dataset. This is used
+##' for example in dataset creation based on an R-object, not a specifically defined dimensions.
 ##' @title Guess the dataspace of an object
-##' @param x The object for which to guess the space
+##' @param x The R object for which to guess the space
 ##' @param dtype Object of type \code{\link{H5T-class}}, that represents that datatype to use.
 ##' @param chunked Is the datatype chunked? If yes, \code{maxdims} of the space will be set to infinity,
 ##' otherwise \code{maxdims} will be set to the original extent of the space.

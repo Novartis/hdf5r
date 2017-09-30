@@ -31,6 +31,7 @@
 ##' @param file_access_pl File access property list
 ##' @return The file id (64bit-integer)
 ##' @author Holger Hoefling
+##' @keywords internal
 H5File.open <-  function(name, mode=c("a", "r", "r+", "w", "w-", "x"), file_create_pl=h5const$H5P_DEFAULT, file_access_pl=h5const$H5P_DEFAULT) {
     check_pl(file_create_pl, "H5P_FILE_CREATE")
     check_pl(file_access_pl, "H5P_FILE_ACCESS")

@@ -15,13 +15,13 @@ This class represents an HDF5 space-id. It inherits all functions of the
 \section{Methods}{
 
 \describe{
-\item{\code{new(type = c("simple", "scalar", "null"), dims = NULL, maxdims = dims,
-  decode_buf = NULL, id = NULL)}}{
+\item{\code{new(type = c("simple", "scalar", "null"), dims = NULL,
+  maxdims = dims, decode_buf = NULL, id = NULL)}}{
 
 Create a new HDF5-space. This can be done by either specifying a space with appropriate dimensions or by
 decoding a character string that represents an encoded space
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{type}{Either a \code{simple} space, for which \code{dims} and \code{maxdims} have to be given
 or a \code{scalar} or \code{null} space. See the HDF5 user guide on spaces to explain the differences.}
@@ -135,7 +135,7 @@ This function implements the HDF5-API function H5Sselect_hyperslab. Please see t
 Subsetting the space. This is mainly intended as a helper function for the '[' function, but
 can also be used on its own.
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
 For interactive use we recomment the use of the \code{[} operator.}
@@ -148,7 +148,7 @@ For interactive use we recomment the use of the \code{[} operator.}
 
 Prints information for the group
 
-\strong{Parameters:}
+\strong{Parameters}
 \describe{
 \item{...}{ignored}
 }}

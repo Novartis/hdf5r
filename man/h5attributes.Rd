@@ -24,7 +24,7 @@ h5attr(x, which) <- value
 \item{value}{The value to assign to the attribute.}
 }
 \value{
-For \code{h5attributes}, a named list with the content of the attributes read out. FOr \code{h5attr_names},
+For \code{h5attributes}, a named list with the content of the attributes read out. For \code{h5attr_names},
 a vector of names of the attributes attached to the object \code{x}. For \code{h5attr}, the content of the attribute and
 for \code{h5attr<-}, the assignment, the original object to which the attributes are attached (so that chaining is possible).
 }
