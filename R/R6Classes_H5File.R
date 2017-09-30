@@ -83,7 +83,7 @@ H5File.open <-  function(name, mode=c("a", "r", "r+", "w", "w-", "x"), file_crea
 ##'
 ##' Uses the HDF5 function \code{H5Fis_hdf5} to check if a file is of type HDF5.
 ##' @title Check if a file is an HDF5 file
-##' @param name The name of the file to check; doesn't check for existence
+##' @param name The name of the file to check
 ##' @return Logical, TRUE if file is of type HDF5
 ##' @author Holger Hoefling
 ##' @export
