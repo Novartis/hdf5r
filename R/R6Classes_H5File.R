@@ -97,14 +97,67 @@ is_hdf5 <- function(name) {
 
 
 #' Class for interacting with HDF5 files.
+#' 
+#' \code{H5File} objects are are the main entry point to access HDF5 data from binary 
+#' files. This class represents an open HDF5 File-id. It inherits all functions 
+#' of the \code{\link{H5RefClass-class}}.
+#' 
+#' HDF5 files can be opened or generated using the \code{H5File$new()} function and
+#' a specified file access mode. \code{H5File$new()} returns a \code{H5File} object
+#' which can be used to access \code{\link{H5Group}}s and Datasets (see \code{\link{H5D}})
+#' using subsetting parameters or according class methods.
+#' 
+#' HDF5 files which have been created or opened through \code{H5File$new()} need 
+#' to be closed afterwards using \code{$close_all()}. \code{$flush()} can be used 
+#' to flush unwritten data to an HDF5 file. 
+#' 
+#' HDF5 Files typically contain the following objects:
+#' \describe{
+#'   \item{Groups}{Similar to a file system folder, used to organize HDF5 
+#' objects in a hierarchical way, see also \code{\link{H5Group-class}}}
+#'   \item{Datasets}{Objects to store actual data, see also \code{\link{H5D-class}}}
+#'   \item{Attributes}{Meta data objects to store extra informatino about Files, 
+#' Groups and Datasets, see also \code{\link{H5A-class}}}
+#' }
+#' 
+#' @section Extract/List File Contents:
+#' The following functions are defined to extract HDF5 file contents:
+#' \describe{
+#'   \item{\code{\link{list.groups}}}{List HDF5 groups in file.}
+#'   \item{\code{\link{list.datasets}}}{List HDF5 datasets in file.}
+#'   \item{\code{\link{list.attributes}}}{List Attributes of HDF5 object (file, group or dataset).}
+#' }
 #'
-#' This class represents an open HDF5 File-id. It inherits all functions of the
-#' \code{\link{H5RefClass-class}}. #'
+#' @examples
+#' # The following examples generates a HDF5 file with the different HDF5 
+#' # Objects and shows its contents:
+#' fname <- tempfile(fileext = ".h5")
+#' file <- H5File$new(fname, mode = "a")
+#' file[["testdataset"]] <- 1:10
+#' h5attr(file, "testattrib") <- LETTERS[1:10]
+#' file$create_group("testgroup")
+#' file[["testgroup/testdataset2"]] <- 1:10
+#' # Show contents of file
+#' file
+#' # Close file and delete
+#' file$close_all()
+#' 
+#' # The following example shows hdf5 file contents and how to use them to iterate over HDF5 elements:
+#' file <- h5file(fname, mode = "a")
+#' sapply(c("testgroup1", "testgroup2", "testgroup3"), file$create_group)
+#' file[["testgroup1/testset1"]] <- 1:10
+#' file[["testgroup2/testset2"]] <- 11:20
+#' file[["testgroup3/testset3"]] <- 21:30
+#' 
+#' # Extract first 3 elements from each dataset and combine result to matrix
+#' sapply(list.datasets(file, recursive = TRUE), function(x) file[[x]][1:3])
+#' # Close file
+#' file$close_all()
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5File}}.
+#' @seealso \code{\link{h5file}}
 #' @export
-#' @author Holger Hoefling
 H5File <- R6Class("H5File",
                   inherit=H5RefClass,
                   public=list(
