@@ -166,19 +166,25 @@ H5P <- R6Class("H5P",
 
 #' Class for default values for HDF5 property lists.
 #'
-#' This class represents default values for H5P property lists. As with H5S_DEFAULT, the current choice is not optimal
+#' This class represents default values for H5P property lists. As with \code{\link{H5S_ALL}}, the current choice is not optimal
 #' for the same reasons and likely to be changed
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5P}}.
-#' @export
 #' @author Holger Hoefling
+#' @keywords internal
 H5P_DEFAULT <- R6Class("H5P_DEFAULT",
                        inherit=H5P,
                        public=list(
                            initialize=function(id=NULL) {
                                private$pid <- new_id_obj(id)
                                return(self)
+                           },
+                           print=function(...) {
+                               "Just prints that it is the default class"
+                               "@param ... ignored"
+                               cat("H5P_DEFAULT class\n")
+                               return(invisible(self))
                            }
                            ),
                        private=list(

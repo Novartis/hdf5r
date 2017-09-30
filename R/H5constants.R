@@ -183,7 +183,7 @@ install_types_const <- function(h5types, h5const) {
     ## same for H5S_ALL, make it into a H5S object
     h5s_all_val <- all_const_frame$Constant[all_const_frame$Name=="H5S_ALL"]
     all_const_frame <- subset(all_const_frame, Name!="H5S_ALL")
-    h5const$H5S_ALL <- H5S_DEFAULT$new(id=h5s_all_val)
+    h5const$H5S_ALL <- H5S_ALL$new(id=h5s_all_val)
     lockBinding("H5S_ALL", h5const)
         
     ## each constant category as a named vector
