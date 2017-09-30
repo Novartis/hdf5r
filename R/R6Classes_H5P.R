@@ -25,7 +25,7 @@
 ##' @param id The id to wrap inside an object
 ##' @return An object of class \\code{\\link{H5P}}
 ##' @author Holger Hoefling
-##' @export
+##' @keywords internal
 H5P_factory <- function(id) {
     if(inherits(id, "H5P_CLASS")) {
         cls_id <- id$id
