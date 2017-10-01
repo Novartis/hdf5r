@@ -25,9 +25,9 @@
 
 ##' Class for representing HDF5 groups
 ##' 
-##' This class represents an HDF5 group-id. It inherits all functions of the
-##' \code{\link{H5RefClass-class}}. 
-##'
+##' HDF5-Groups are essentially equivalent to directories in a file system. Inside the groups, other groups or datasets can
+##' be created. For the most parts, groups behave like files, so please also look at the documentation of \code{H5File-class}.
+##' 
 ##' @docType class
 ##' @importFrom R6 R6Class
 ##' @return Object of class \code{\link{H5Group}}. 

@@ -9,6 +9,7 @@ inst/CWrappers_1.8.12
 inst/manual
 inst/function_overview
 inst/speed_check
+inst/test_implementations
 .Rprofile
 .Rhistory
 Makevars^

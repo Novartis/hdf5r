@@ -6,11 +6,43 @@
 \alias{H5D}
 \title{Class for representing HDF5 datasets}
 \value{
-Object of class \code{\link{H5D}}.
+Object of class \code{\link{H5D-class}}.
 }
 \description{
-This class represents an HDF5 group-id. It inherits all functions of the
-\code{\link{H5RefClass-class}}.
+In HDF5, datasets can be located in a group (see \code{\link{H5Group-class}}) or at the
+root of a file (see \code{\link{H5File-class}}). They can be created either with a pre-existing R-object
+(arrays as well as data.frames are supported, but not lists or other complex objects), or by specifiying
+an explicit datatype (for available datatypes see \code{h5types$overview} as well as the dimension.
+In addition, other features are supported such as transparent compression (for which a chunk-size can be selected).
+}
+\details{
+In order to create a dataset, the \code{create_dataset} methods of either \code{\link{H5Group-class}} or
+\code{\link{H5File-class}} should be used. Please see the documentation there for how to create them.
+
+The most important parts of a dataset are the 
+\describe{
+  \item{Space}{The space of the dataset. It describes the dimension of the dataset as well as the maximum dimensions.
+               Can be obtained using the \code{get_space} of the \code{\link{H5S-class}} object.}
+  \item{Datatype}{The datatypes that is being used in the dataset. Can be obtained using the \code{get_type} method.
+                  See \code{\link{H5T-class}} to get more information about using datatypes.}
+}
+
+In order to read and write datasets, the \code{read} and \code{write} methods are available. In addition, the standard way of using
+\code{[} to access arrays is supported as well (see \code{\link{H5S_H5D_subset_assign}} for more help).
+
+Other information/action of possible interest are
+\describe{
+  \item{Storage size}{The size of the dataset can be extracted using \code{get_storage_size}}
+  \item{Size change}{The size of the dataset can be changed using the \code{set_extent} method}
+}
+
+Please also note the active methods
+\describe{
+  \item{dims}{Dimension of the dataset}
+  \item{maxdims}{Maximum dimensions of the dataset}
+  \item{chunk_dims}{Dimension of the chunks}
+  \item{key_info}{Returns the space, type, property-list and dimensions}
+}
 }
 \section{Methods}{
 
@@ -183,23 +215,6 @@ This function implements the HDF5-API function H5Pget_fill_value, automatically
 supplying the datatype of the dataset for convenience.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-GetFillValue} for details.}
 
-\item{\code{reorder(reorder_dim, start, end, new_order, max_mem,
-  dataset_xfer_pl = h5const$H5P_DEFAULT, key_info = NULL)}}{
-
-Reorder a subset of an HDF5 dataset along a specific dimension. It is mostly intended as a function to be
-used by a sorting algorithm and is not checked for correct inputs. Incorrect use can corrupt a dataset
-
-\strong{Parameters}
-\describe{
-\item{reorder_dim}{The number of the dimension along which the reordering should occur.}
-\item{start,end}{The start and end index where the reordering should occur (can be vectors of equal length)}
-\item{new_order}{The new ordering of the items to re-order. The ith item gives the index in the source for the i-th item in
-the destination (for the \code{reorder_dim})}
-\item{max_mem}{Memory usage of the function in bytes (a rough guide, can be somewhat exceeded)}
-\item{dataset_xfer_pl}{The dataset transfer propery list}
-\item{key_info}{The key_info returned by the \code{key_info} method of the dataset}
-}}
-
 \item{\code{create_reference(...)}}{
 
 This function implements the HDF5-API function H5Rcreate. The parameters are interpreted as in '['.
@@ -346,6 +361,38 @@ type_size_raw versus variable differs for variable length types, which return \c
 for type_size_variable and the underlying size for type_size_raw}
 }}
 
+\examples{
+# First create a file to create datasets in it
+fname <- tempfile(fileext = ".h5")
+file <- H5File$new(fname, mode = "a")
+
+# Show the 3 different ways how to create a dataset
+file[["directly"]] <- matrix(1:10, ncol=2)
+file$create_dataset("from_robj", matrix(1:10, ncol=2))
+dset <- file$create_dataset("basic", dtype=h5types$H5T_NATIVE_INT,
+             space=H5S$new("simple", dims=c(5, 2), maxdims=c(10,2)), chunk_dims=c(5,2))
+
+# Different ways of reading the dataset
+dset$read(args=list(1:5, 1))
+dset$read(args=list(1:5, quote(expr=)))
+dset$read(args=list(1:5, NULL))
+dset[1:5, 1]
+dset[1:5, ]
+dset[1:5, NULL]
+
+# Writing to the dataset
+dset$write(args=list(1:3, 1:2), value=11:16)
+dset[4:5, 1:2] <- -(1:4)
+dset[,]
+
+# Extract key information
+dset$dims
+dset$maxdims
+dset$chunk_dims
+dset$key_info
+dset
+
+}
 \author{
 Holger Hoefling
 }
