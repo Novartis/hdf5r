@@ -1,0 +1,64 @@
+url: http://hhoeflin.github.io/hdf5r
+
+template:
+  params:
+    bootswatch: cerulean
+
+reference:
+  - title: Files and Groups
+    desc:  Objects representing HDF5 Files and Groups
+    contents:
+    - H5File-class
+    - is_hdf5
+    - H5Group-class
+    - H5Group_access
+    - names.H5Group
+  - title: Spaces and Datasets
+    desc: Objects representing HDF5 Datasets and Spaces
+    contents:
+    - H5D-class
+    - H5S-class
+    - H5S_H5D_subset_assign
+    - create_empty
+    - guess_chunks
+    - guess_nelem
+    - guess_space
+    - list-groups-datasets
+  - title: HDF5 Datatypes
+    desc: Objects representing HDF5 Datatypes
+    contents:
+    - h5types
+    - H5T-class
+    - starts_with("H5T_")
+    - text_to_dtype
+  - title: HDF5 Attributes
+    contents: 
+    - h5attributes
+    - H5A-class
+  - title: HDF5 Reference objects
+    contents: 
+    - H5R-class
+    - starts_with("H5R_")
+  - title: HDF5 Property lists
+    contents: 
+    - H5P-class
+    - starts_with("H5P_")
+  - title: Helpers
+    contents:
+    - h5const
+    - $.types_env
+    - h5-wrapper
+    - h5version 
+    - h5garbage_collect   
+    - H5RefClass-class
+    - as_hex
+    - flatten_df 
+    - print.data.frame_ext
+  - title: Extended factors
+    contents:
+    - factor_ext
+    - factor_ext_functions
+  - title: Package description
+    contents: 
+    - hdf5r
+    

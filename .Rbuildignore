@@ -24,3 +24,5 @@ Makefile
 ^.*\.tar.gz
 configure.win.temp
 wercker.yml
+^docs$
+^_pkgdown\.yml$

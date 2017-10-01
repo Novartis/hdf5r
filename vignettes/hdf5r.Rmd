@@ -52,11 +52,6 @@ make this package here -- **hdf5r** -- stand out:
   with the same variable names as in the structs (usually used by the various "-info" functions).
 - Tracking and closing of unused HDF5 resources is done completely automatically using the R garbage collector.
 
-If you want to follow along with the code without having to copy/paste, the R-code can be found using the command
-```{r, eval=FALSE}
-system.file("../doc/hdf5r.R", package="hdf5r")
-```
-
 In the following sections of this vignette, first a simple example will be given that shows how standard operations 
 are being performed. Next, more advanced features will be discussed such as the creation of complex datatypes,
 datasets with special datatypes, the setting of the various available filters when reading/writing a package etc. We will
