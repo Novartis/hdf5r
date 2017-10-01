@@ -100,7 +100,8 @@ test_that("args_regularity_evaluation to selection", {
                             index_decreasing,
                             index_negative_all,
                             index_large,
-                            quote(expr=))
+                            quote(expr=),
+                            NULL)
     ## now do the argument regularity evaluation
     ds_dims <- rep(10, length(example_indices))
     example_indices_regularity <- hdf5r:::args_regularity_evaluation(example_indices, ds_dims, envir=sys.frame())
@@ -109,17 +110,17 @@ test_that("args_regularity_evaluation to selection", {
     example_indices_intended_output <- list(
         args_in=example_indices,
         args_point=list(c(1, 3, 4, 6, 10), NULL, NULL, index_positive, unique(index_ident), NULL, sort(index_decreasing),
-            seq_len(10)[index_negative_all], NULL, NULL),
-        is_hyperslab=c(FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE),
+            seq_len(10)[index_negative_all], NULL, NULL, numeric(0)),
+        is_hyperslab=c(FALSE, TRUE, TRUE, FALSE, FALSE, TRUE, FALSE, FALSE, TRUE, TRUE, FALSE),
         ## hyperslab components: c("start", "count", "stride", "block")
         hyperslab=matrix(c(NA_hyperslab_row, c(3, 1, 1, 4), c(3, 4, 2, 1), NA_hyperslab_row, NA_hyperslab_row, c(1, 3, 2, 1),
-            NA_hyperslab_row, NA_hyperslab_row, c(1, 2, 19, 1), c(1, 1, 1, 10)),
+            NA_hyperslab_row, NA_hyperslab_row, c(1, 2, 19, 1), c(1, 1, 1, 10), NA_hyperslab_row),
             byrow=TRUE, ncol=4, dimnames=list(NULL, c("start", "count", "stride", "block"))),
-        result_dims_pre_shuffle=c(5, 4, 4, 5, 3, 3, 4, 6, 2, 10),
-        result_dims_post_shuffle=c(5, 4, 4, 5, 4, 4, 4, 6, 2, 10),
-        max_dims=c(10, 6, 9, 15, 6, 5, 5, 10, 20, 10),
-        needs_reshuffle=c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE),
-        reshuffle=list(NULL, NULL, NULL, NULL, c(1, 2, 2, 3), c(1, 2, 3, 1), c(4, 3, 2, 1), NULL, NULL, NULL)
+        result_dims_pre_shuffle=c(5, 4, 4, 5, 3, 3, 4, 6, 2, 10, 0),
+        result_dims_post_shuffle=c(5, 4, 4, 5, 4, 4, 4, 6, 2, 10, 0),
+        max_dims=c(10, 6, 9, 15, 6, 5, 5, 10, 20, 10, -Inf),
+        needs_reshuffle=c(FALSE, FALSE, FALSE, FALSE, TRUE, TRUE, TRUE, FALSE, FALSE, FALSE, FALSE),
+        reshuffle=list(NULL, NULL, NULL, NULL, c(1, 2, 2, 3), c(1, 2, 3, 1), c(4, 3, 2, 1), NULL, NULL, NULL, NULL)
         )
     expect_equal(example_indices_regularity, example_indices_intended_output)
     expect_error(hdf5r:::args_regularity_evaluation(list(index_negative_some), ds_dims=10, envir=sys.frame()))
@@ -165,6 +166,17 @@ test_that("subset_h5.H5S", {
     ## setting one that is outside the limits of the space
     expect_error(h5s_obj[16, 1, 1], "The following coordinates are outside the dataset dimensions: 1")
 
+    
+
+
+    ## test passing in a NULL value
+    foo <- h5s_obj[1:3, NULL, c(1,2,4)]
+    expect_equal(h5s_obj$get_select_type(), h5const$H5S_SEL_NONE)
+
+    foo <- h5s_obj[,,]
+    
+    subset_h5.H5S(h5s_obj, seq_len(3), NULL, c(1,2,4))
+    expect_equal(h5s_obj$get_select_type(), h5const$H5S_SEL_NONE)
 
     ## complicated subsetting in various forms
     ## using logial
@@ -220,6 +232,10 @@ test_that("subset_h5.H5S", {
 
     h5s_logical_regular <- subset_h5.H5S(h5s_obj, index_logical, , index_regular)
     expect_equal(h5s_logical_regular$get_select_type(), h5const$H5S_SEL_HYPERSLABS)
+
+    ## test passing in a NULL value
+    subset_h5.H5S(h5s_obj, seq_len(3), NULL, c(1,2,4))
+    expect_equal(h5s_obj$get_select_type(), h5const$H5S_SEL_NONE)
 })
 
 test_that("subset_h5.H5D", {
@@ -263,6 +279,9 @@ test_that("subset_h5.H5D", {
     ## need to ensure that an error is thrown when requesting a too large dimension
     expect_error(test2[11, ,], "The following coordinates are outside the dataset dimensions: 1")
 
+    ## check that selecting a dimension as NULL yields the correct result
+    expect_equal(test[, NULL], matrix(numeric(0), ncol=0, nrow=15))
+    
     file.h5$close_all()
     file.remove(test_file)
 })

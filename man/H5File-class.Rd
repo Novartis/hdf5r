@@ -20,16 +20,15 @@ which can be used to access \code{\link{H5Group}}s and Datasets (see \code{\link
 using subsetting parameters or according class methods.
 
 HDF5 files which have been created or opened through \code{H5File$new()} need 
-to be closed afterwards using \code{$close_all()}. \code{$flush()} can be used 
+to be closed afterwards using \code{$close_all()}. \code{$close_all()} not only closes the file itself,
+but also all objects that are still open inside it (such as groups or datasets). \code{$flush()} can be used 
 to flush unwritten data to an HDF5 file.
 
 HDF5 Files typically contain the following objects:
 \describe{
-  \item{Groups}{Similar to a file system folder, used to organize HDF5 
-objects in a hierarchical way, see also \code{\link{H5Group-class}}}
+  \item{Groups}{Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also \code{\link{H5Group-class}}}
   \item{Datasets}{Objects to store actual data, see also \code{\link{H5D-class}}}
-  \item{Attributes}{Meta data objects to store extra informatino about Files, 
-Groups and Datasets, see also \code{\link{H5A-class}}}
+  \item{Attributes}{Meta data objects to store extra informatino about Files, Groups and Datasets, see also \code{\link{H5A-class}}}
 }
 }
 \section{Methods}{
@@ -466,7 +465,9 @@ The following functions are defined to extract HDF5 file contents:
 \describe{
   \item{\code{\link{list.groups}}}{List HDF5 groups in file.}
   \item{\code{\link{list.datasets}}}{List HDF5 datasets in file.}
+  \item{\code{\link{names}}}{List all items in a file or group (applicable for \code{\link{H5File-class}} and \code{\link{H5Group-class}})}
   \item{\code{\link{list.attributes}}}{List Attributes of HDF5 object (file, group or dataset).}
+  \item{\code{\link{h5attr_names}}}{Attribute names of an HDF5 object; similar to list.attributes}
 }
 }
 
@@ -498,4 +499,7 @@ file$close_all()
 }
 \seealso{
 \code{\link{h5file}}
+}
+\author{
+Holger Hoefling, Mario Annau
 }

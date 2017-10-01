@@ -9,6 +9,7 @@ inst/CWrappers_1.8.12
 inst/manual
 inst/function_overview
 inst/speed_check
+inst/test_implementations
 .Rprofile
 .Rhistory
 Makevars^
@@ -23,3 +24,5 @@ Makefile
 ^.*\.tar.gz
 configure.win.temp
 wercker.yml
+^docs$
+^_pkgdown\.yml$

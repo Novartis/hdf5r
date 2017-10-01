@@ -451,13 +451,17 @@ args_regularity_evaluation <- function(args, ds_dims, envir, post_read=TRUE) {
                 ## expand it as necessary and convert to an integer vector
                 cur_arg <- seq_len(ds_dims[[i]])[cur_arg]
             }
+            if(is.null(cur_arg)) {
+                ## make it into a numeric of length 0
+                cur_arg <- numeric(0)
+            }
             if(is.numeric(cur_arg) || is.integer(cur_arg) || is.integer64(cur_arg)) {
                 cur_arg <- as.numeric(cur_arg)
                 ## check if it has length 0 or 1; these are special cases
                 if(length(cur_arg) == 0) {
                     is_hyperslab[i] <- FALSE
                     needs_reshuffle[i] <- FALSE
-                    args_point[i] <- cur_arg
+                    args_point[[i]] <- cur_arg
                     result_dims_pre_shuffle[i] <- 0
                     result_dims_post_shuffle[i] <- 0
                     max_dims[i] <- -Inf
@@ -600,7 +604,13 @@ regularity_eval_to_selection <- function(reg_eval_res) {
     ## trivially any selection can always be written as a concatenation of hyperslabs; so should be ever do a pointlist?
     ## likely pointlist more efficient in selection. Use hyperslabs only if we have X-fold fewer hyperslabs than datapoints
     ## here choose X as >= 4 for now
-    if(num_points / num_hyperslabs >= getOption("hdf5r.point_to_hyperslabs_ratio")) {
+    if(num_hyperslabs == 0) {
+        point_hyperslab_ratio <- 0
+    }
+    else {
+        point_hyperslab_ratio <- num_points / num_hyperslabs
+    }
+    if(point_hyperslab_ratio >= getOption("hdf5r.point_to_hyperslabs_ratio")) {
         ## use a hyperslab
         sel_type <- "hyperslab_selection"
         ## make a 3-dimensional array, each 2 dimensional sub-array (in the third dimension) is a complete hyperslab description
@@ -655,7 +665,7 @@ expand_point_grid <- function(point_list) {
     cum_prod_std <- c(1, cumprod(point_list_size))
     cum_prod_rev <- rev(c(1, cumprod(rev(point_list_size))))
     num_points <- prod(point_list_size)
-    point_mat <- matrix(numeric(num_points * length(point_list)), nrow=num_points)
+    point_mat <- matrix(numeric(num_points * length(point_list)), ncol=length(point_list))
     for(i in seq_along(point_list)) {
         point_mat[, i] <- rep(point_list[[i]], each=cum_prod_std[i], times=cum_prod_rev[i+1])
     }

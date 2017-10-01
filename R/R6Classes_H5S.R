@@ -506,17 +506,33 @@ standalone_H5S_select_elements <- function(id, coord, op=h5const$H5S_SELECT_SET,
             num_elem <- nrow(coord)
         }
     }
-    ## correct for first element 0
-    coord <- coord - 1
-    ## reverse all the coordinates
-    coord_rev <- coord
-    for(i in seq_len(rank)) {
-        coord_rev[i,] <- coord[rank + 1 - i,]
+    ## now capture the case when 0 elements are to be set
+    if(num_elem == 0) {
+        if(op==h5const$H5S_SELECT_SET) {
+            ## need to change the selection to None
+            herr <- .Call("R_H5Sselect_none", id, PACKAGE = "hdf5r")
+            if(herr < 0) {
+                stop("Error when setting selection to none")
+            }
+        }
+        else {
+            ## nothing to do; as either append of nothing or prepend of nothing (only set; append or prepend possible as operators)
+            return(NULL)
+        }
     }
-    coord <- coord_rev
-    herr <- .Call("R_H5Sselect_elements", id, op, num_elem, coord, PACKAGE = "hdf5r")
-    if(herr < 0) {
-        stop("Error when selecting elements")
+    else {
+        ## correct for first element 0
+        coord <- coord - 1
+        ## reverse all the coordinates
+        coord_rev <- coord
+        for(i in seq_len(rank)) {
+            coord_rev[i,] <- coord[rank + 1 - i,]
+        }
+        coord <- coord_rev
+        herr <- .Call("R_H5Sselect_elements", id, op, num_elem, coord, PACKAGE = "hdf5r")
+        if(herr < 0) {
+            stop("Error when selecting elements")
+        }
     }
     return(NULL)
 }

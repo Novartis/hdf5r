@@ -95,6 +95,9 @@ function(name) {
 #' @param recursive logical; Specify if object should be traversed recursively.
 #' @param ... Additional Parameters passed to \code{$ls()}
 #' @return \code{\link{character}}
+#' @name list-groups-datasets
+NULL
+
 #' @rdname list-groups-datasets
 #' @export
 list.groups <- function(object, path = "/", recursive = TRUE, ...) {

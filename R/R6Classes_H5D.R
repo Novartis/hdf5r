@@ -19,19 +19,81 @@
 
 
 
-setOldClass("H5R")
+setOldClass("H5D")
 
 
 ##' Class for representing HDF5 datasets
 ##'
-##' This class represents an HDF5 group-id. It inherits all functions of the
-##' \code{\link{H5RefClass-class}}.
+##' In HDF5, datasets can be located in a group (see \code{\link{H5Group-class}}) or at the
+##' root of a file (see \code{\link{H5File-class}}). They can be created either with a pre-existing R-object
+##' (arrays as well as data.frames are supported, but not lists or other complex objects), or by specifiying
+##' an explicit datatype (for available datatypes see \code{h5types$overview} as well as the dimension.
+##' In addition, other features are supported such as transparent compression (for which a chunk-size can be selected).
 ##'
+##' In order to create a dataset, the \code{create_dataset} methods of either \code{\link{H5Group-class}} or
+##' \code{\link{H5File-class}} should be used. Please see the documentation there for how to create them.
+##'
+##' The most important parts of a dataset are the 
+##' \describe{
+##'   \item{Space}{The space of the dataset. It describes the dimension of the dataset as well as the maximum dimensions.
+##'                Can be obtained using the \code{get_space} of the \code{\link{H5S-class}} object.}
+##'   \item{Datatype}{The datatypes that is being used in the dataset. Can be obtained using the \code{get_type} method.
+##'                   See \code{\link{H5T-class}} to get more information about using datatypes.}
+##' }
+##'
+##' In order to read and write datasets, the \code{read} and \code{write} methods are available. In addition, the standard way of using
+##' \code{[} to access arrays is supported as well (see \code{\link{H5S_H5D_subset_assign}} for more help).
+##'
+##' Other information/action of possible interest are
+##' \describe{
+##'   \item{Storage size}{The size of the dataset can be extracted using \code{get_storage_size}}
+##'   \item{Size change}{The size of the dataset can be changed using the \code{set_extent} method}
+##' }
+##'
+##' Please also note the active methods
+##' \describe{
+##'   \item{dims}{Dimension of the dataset}
+##'   \item{maxdims}{Maximum dimensions of the dataset}
+##'   \item{chunk_dims}{Dimension of the chunks}
+##'   \item{key_info}{Returns the space, type, property-list and dimensions}
+##' }
+##' 
 ##' @docType class
 ##' @importFrom R6 R6Class
-##' @return Object of class \code{\link{H5D}}.
+##' @return Object of class \code{\link{H5D-class}}.
 ##' @export
 ##' @author Holger Hoefling
+##' @examples
+##' # First create a file to create datasets in it
+##' fname <- tempfile(fileext = ".h5")
+##' file <- H5File$new(fname, mode = "a")
+##'
+##' # Show the 3 different ways how to create a dataset
+##' file[["directly"]] <- matrix(1:10, ncol=2)
+##' file$create_dataset("from_robj", matrix(1:10, ncol=2))
+##' dset <- file$create_dataset("basic", dtype=h5types$H5T_NATIVE_INT,
+##'              space=H5S$new("simple", dims=c(5, 2), maxdims=c(10,2)), chunk_dims=c(5,2))
+##'
+##' # Different ways of reading the dataset
+##' dset$read(args=list(1:5, 1))
+##' dset$read(args=list(1:5, quote(expr=)))
+##' dset$read(args=list(1:5, NULL))
+##' dset[1:5, 1]
+##' dset[1:5, ]
+##' dset[1:5, NULL]
+##'
+##' # Writing to the dataset
+##' dset$write(args=list(1:3, 1:2), value=11:16)
+##' dset[4:5, 1:2] <- -(1:4)
+##' dset[,]
+##' 
+##' # Extract key information
+##' dset$dims
+##' dset$maxdims
+##' dset$chunk_dims
+##' dset$key_info
+##' dset
+##' 
 H5D <- R6Class("H5D",
                inherit=H5RefClass,
                public=list(
@@ -290,9 +352,10 @@ H5D <- R6Class("H5D",
                            }
                        }
                        else {
+                           dset_rank <- simple_extent$rank
                            if(is.null(args)) {
                                ## create arguments that are missing in every dimension, i.e. represent all
-                               args <- rep(list(quote(expr=)), simple_extent$rank)
+                               args <- rep(list(quote(expr=)), dset_rank)
                            }
                            reg_eval_res <- args_regularity_evaluation(args=args, ds_dims=simple_extent$dims, envir=envir)
                            ## need to check if maximum dimension in indices are larger than dataset dimensions
@@ -532,133 +595,6 @@ H5D <- R6Class("H5D",
                            stop("Error retrieving fill value")
                        }
                        return(H5ToR_Post(value_h5, dtype, 1, -1))
-                   },
-                   reorder=function(reorder_dim, start, end, new_order, max_mem, dataset_xfer_pl=h5const$H5P_DEFAULT, key_info=NULL) {
-                       "Reorder a subset of an HDF5 dataset along a specific dimension. It is mostly intended as a function to be"
-                       "used by a sorting algorithm and is not checked for correct inputs. Incorrect use can corrupt a dataset"
-                       "@param reorder_dim The number of the dimension along which the reordering should occur."
-                       "@param start,end The start and end index where the reordering should occur (can be vectors of equal length)"
-                       "@param new_order The new ordering of the items to re-order. The ith item gives the index in the source for the i-th item in"
-                       "the destination (for the \\code{reorder_dim})"
-                       "@param max_mem Memory usage of the function in bytes (a rough guide, can be somewhat exceeded)"
-                       "@param dataset_xfer_pl The dataset transfer propery list"
-                       "@param key_info The key_info returned by the \\code{key_info} method of the dataset"
-                       
-                       check_pl(dataset_xfer_pl, "H5P_DATASET_XFER")
-
-                       if(is.null(key_info)) {
-                           key_info <- self$key_info
-                       }
-                       ## divide memory by two as at least 2 buffers will be needed
-                       max_mem <- max_mem / 2
-
-                       ds_dims <- key_info$dims
-                       chunk_dims <- key_info$chunk_dims
-                       if(any(is.na(chunk_dims))) {
-                           ## not chunked, every element separate
-                           chunk_dims <- rep(1, length(ds_dims))
-                       }
-                       chunk_dims[reorder_dim] <- sum(end - start + 1)
-
-                       ## calculate number of chunks that can be fitted into
-                       ## memory size
-                       ds_type_size <- key_info$type_size_raw
-                       chunk_size <- ds_type_size * prod(chunk_dims)
-
-                       ## check if we can then read in even one datapoint
-                       if(chunk_size > max_mem) {
-                           chunk_dims <- rep(1, length(ds_dims))
-                           chunk_dims[reorder_dim] <- sum(end - start + 1)
-                           chunk_size <- ds_type_size * prod(chunk_dims)
-                           if(chunk_size > max_mem) {
-                               stop("max_mem too small to read in necessary data for reordering")
-                           }
-                           else {
-                               warning("Cannot process data along chunk lines, reverting to smaller sizes")
-                           }
-                       }
-
-                       ## calculate the number of chunks per dimension we can read in at the same time
-                       num_chunks <- ceiling(ds_dims / chunk_dims)
-                       num_chunks[reorder_dim] <- 1
-                       ## repurposing the function that calculates the number of elements in a chunk
-                       ## to calculate the number of chunks in a hyperslab
-                       ## for s
-                       chunk_mult <- guess_chunks(space_maxdims=num_chunks, dtype_size=chunk_size, chunk_size=max_mem)
-                       metachunk_dims <- chunk_dims * chunk_mult
-                       metachunk_dims[reorder_dim] <- sum(end - start + 1)
-                       num_metachunks <- ceiling(ds_dims / metachunk_dims)
-                       num_metachunks[reorder_dim] <- 1
-
-                       ## now we have defined the optimal chunk size; now need to read it in, reorder it
-                       ## and write it back out one item at a time
-                       ## will use the lowest level read function to get optimal speed
-                       total_chunks <- prod(num_metachunks)
-                       ## need to get a buffer of sufficient size
-                       buffer_size <- ds_type_size * prod(metachunk_dims)
-                       buffer <- raw(buffer_size)
-
-                       ds_file_space <- key_info$space
-                       ds_mem_space <- H5S$new(type="simple", dims=metachunk_dims, maxdims=metachunk_dims)
-                       ds_mem_space_start <- rep(1, length(ds_dims))
-                       ds_mem_space_count <- rep(1, length(ds_dims))
-                       ds_mem_space_stride <- rep(1, length(ds_dims))
-                       # print(metachunk_dims)
-                       is_vlen_type <- key_info$type$is_vlen()
-                       for(i in seq_len(prod(num_metachunks))) {
-                           ds_file_space$select_none()
-                           ds_mem_space$select_none()
-                           chunk_indices <- array_counter(count=i-1, dims=num_metachunks)
-                           # print(chunk_indices)
-
-                           ## create a return similar to that of the evaluate_arugments function so that we can re-use the
-                           ## space_selection function
-                           slab_start <- chunk_indices * metachunk_dims + 1
-                           slab_count <-  rep(1, length(ds_dims))
-                           slab_stride <- rep(1, length(ds_dims))
-                           slab_block <- pmin(metachunk_dims, ds_dims - slab_start + 1)
-
-                           ## the memory block is simply one contiguous set
-                           ds_mem_space_block <- slab_block
-                           ds_mem_space_block[reorder_dim] <- metachunk_dims[reorder_dim] # this one is always maximal
-                           ds_mem_space$select_hyperslab(start=ds_mem_space_start, count=ds_mem_space_count, stride=ds_mem_space_stride,
-                                                         block=ds_mem_space_block, op=h5const$H5S_SELECT_SET)
-                           ## need to build a complex selection here for the file space
-                           for(i in seq_along(start)) {
-                               slab_start[reorder_dim] <- start[i]
-                               slab_block[reorder_dim] <- end[i] - start[i] + 1
-                               ds_file_space$select_hyperslab(start=slab_start, count=slab_count, stride=slab_stride, block=slab_block,
-                                                              op=h5const$H5S_SELECT_OR)                               
-                           }
-                           # print(ds_file_space$get_select_hyper_blocklist())
-                           ## now read the data into the buffer; the buffer may be larger than the data
-                           res_read <- .Call("R_H5Dread", self$id, key_info$type$id, ds_mem_space$id, ds_file_space$id, dataset_xfer_pl$id,
-                                        buffer, FALSE, PACKAGE="hdf5r")
-                           if(res_read$return_val < 0) {
-                               stop("Error reading dataset")
-                           }
-
-                           ## reorder the columns; here we set the dimensions of the dataset to the metachunk dimensions
-                           ## on the re-ordering dimension, this is exact, but it may be larger on the others.
-                           ## in this case, we may be re-ordering a part of the larger array, that contains data that is not part
-                           ## of the current selection; this is fine, as we ignore this part again later when writing the data back out
-                           buffer_reordered <- array_reorder(res_read$buf, dims=metachunk_dims, reorder_dim=reorder_dim, new_order=new_order,
-                                                             item_size = ds_type_size)
-
-                           ## write the buffer back out
-                           res_write <- .Call("R_H5Dwrite", self$id, key_info$type$id, ds_mem_space$id, ds_file_space$id, dataset_xfer_pl$id,
-                                        buffer_reordered, PACKAGE="hdf5r")
-                           
-                           ## reclaim vlen data if the mem_type is vlen
-                           if(is_vlen_type) {
-                               self$vlen_reclaim(buffer=res_read$buf, type=key_info$type, space=ds_mem_space, dataset_xfer_pl=dataset_xfer_pl)
-                           }                          
-                           
-                       }                     
-                       ## only close the memory space we created here
-                       ds_mem_space$close()
-                       
-                       return(self)
                    },
                    create_reference=function(...) {
                        "This function implements the HDF5-API function H5Rcreate. The parameters are interpreted as in '['."

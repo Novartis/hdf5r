@@ -73,9 +73,13 @@ test_that("Basic dataset function", {
     res_array <- read_write_roundtrip(ds_array, matrix(1:20, ncol=4))
     expect_equal(res_array$input, res_array$output)
 
-    ds_2_dim <- file.h5$create_dataset(name="int_2_dim", dtype=array_type, space=H5S$new(dims=c(5, 4)))
-    res_2_dim <- read_write_roundtrip(ds_array, matrix(1:20, ncol=4))
+    ds_2_dim <- file.h5$create_dataset(name="int_2_dim", dtype=h5types$H5T_NATIVE_INT, space=H5S$new(dims=c(5, 4)))
+    res_2_dim <- read_write_roundtrip(ds_2_dim, matrix(1:20, ncol=4))
     expect_equal(res_2_dim$input, res_2_dim$output)
+
+    ## do a read and a write using NULL as an argument
+    ds_2_dim$write(args=list(1:5, NULL), value=numeric(0))
+    expect_equal(ds_2_dim$read(args=list(1:5, NULL)), matrix(numeric(0), nrow=5, ncol=0))
     
     ## cleanup
     file.h5$close_all()

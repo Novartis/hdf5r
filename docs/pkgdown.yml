@@ -1,0 +1,6 @@
+urls:
+  reference: http://hhoeflin.github.io/hdf5r/reference
+  article: http://hhoeflin.github.io/hdf5r/articles
+articles:
+  hdf5r: hdf5r.html
+
