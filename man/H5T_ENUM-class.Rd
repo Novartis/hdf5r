@@ -23,8 +23,6 @@ internally represented as an ENUM-type.
 \describe{
 \item{labels}{The labels of the ENUM-type}
 \item{values}{The values corresponding to the labels}
-\item{doLogical}{Should a logical-type ENUM be created. If \code{TRUE}, then \code{labels} and \code{values}
-will be ignored. The labels will be \code{FALSE} and \code{TRUE} for values 0 and 1 respectively}
 \item{id}{Internal use only}
 }}
 
@@ -49,6 +47,13 @@ Returns \code{\link{H5T_INTEGER}} that is the base type of the enumeration}
 Print a detailed description of the datatype; this is experimental}
 }}
 
+\examples{
+nucleotide_enum <- H5T_ENUM$new(labels=c("A", "C", "G", "T"), values=0:3)
+nucleotide_enum
+# For HDF5 1.8.16 or higher, the size and precision are set optimally
+nucleotide_enum$get_size()
+nucleotide_enum$get_precision()
+}
 \seealso{
 \code{\link[=H5T-class]{H5T}}
 }

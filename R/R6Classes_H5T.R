@@ -583,6 +583,13 @@ H5T_FLOAT <- R6Class("H5T_FLOAT",
 #' @export
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' nucleotide_enum <- H5T_ENUM$new(labels=c("A", "C", "G", "T"), values=0:3)
+#' nucleotide_enum
+#' # For HDF5 1.8.16 or higher, the size and precision are set optimally
+#' nucleotide_enum$get_size()
+#' nucleotide_enum$get_precision()
 H5T_ENUM <- R6Class("H5T_ENUM",
                     inherit=H5T_INTEGER,
                     public=list(
@@ -591,8 +598,6 @@ H5T_ENUM <- R6Class("H5T_ENUM",
                             "internally represented as an ENUM-type."
                             "@param labels The labels of the ENUM-type"
                             "@param values The values corresponding to the labels"
-                            "@param doLogical Should a logical-type ENUM be created. If \\code{TRUE}, then \\code{labels} and \\code{values}"
-                            "will be ignored. The labels will be \\code{FALSE} and \\code{TRUE} for values 0 and 1 respectively"
                             "@param id Internal use only"
                             if(!is.null(id)) {
                                 super$initialize(id=id)
