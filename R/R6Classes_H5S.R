@@ -52,12 +52,12 @@
 ##' # argument evaluation has a heuristic; here it chooses point selection
 ##' h5s_variable[c(1, 3, 8), 1]
 ##' h5s_variable$get_select_type()
-##' h5s_variable$get_select_elem_points()
+##' h5s_variable$get_select_elem_pointlist()
 ##' 
 ##' # and a hyperslab (chosen by the argument heuristic)
 ##' h5s_variable[2:7, 1:2]
 ##' h5s_variable$get_select_type()
-##' h5s_variable$get_select_hyper_blocks()
+##' h5s_variable$get_select_hyper_blocklist()
 ##' 
 H5S <- R6Class("H5S",
                inherit=H5RefClass,

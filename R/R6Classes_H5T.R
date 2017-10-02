@@ -857,7 +857,7 @@ H5T_COMPOUND <- R6Class("H5T_COMPOUND",
 #' # fixed width string
 #' str_flen <- H5T_STRING$new(size=100)
 #' str_flen$is_vlen()
-#' str_vlen
+#' str_flen
 #' 
 #' # variable length string
 #' str_vlen <- H5T_STRING$new(size=Inf)
