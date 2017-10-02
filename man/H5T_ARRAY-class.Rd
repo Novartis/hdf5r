@@ -9,7 +9,11 @@
 Object of class \code{\link[=H5T_ARRAY-class]{H5T_ARRAY}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}.
+Inherits from class \code{\link[=H5T-class]{H5T}}. This class represents an array. As datasets in HDF5
+are itself already arrays, this datatype is not needed there. It is mostly useful when a column in a
+\code{H5T_COMPUND-class} object is intended to be an array. This however makes it difficult to work
+with such objects in R - as a column of the corresponding \code{data.frame} has to be an array. So please
+use with care.
 }
 \section{Methods}{
 

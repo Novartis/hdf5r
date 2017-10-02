@@ -995,7 +995,11 @@ H5T_COMPLEX <- R6Class("H5T_COMPLEX",
 
 #' Class for HDF5 array datatypes.
 #'
-#' Inherits from class \code{\link[=H5T-class]{H5T}}.
+#' Inherits from class \code{\link[=H5T-class]{H5T}}. This class represents an array. As datasets in HDF5
+#' are itself already arrays, this datatype is not needed there. It is mostly useful when a column in a
+#' \code{H5T_COMPUND-class} object is intended to be an array. This however makes it difficult to work
+#' with such objects in R - as a column of the corresponding \code{data.frame} has to be an array. So please
+#' use with care.
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_ARRAY-class]{H5T_ARRAY}}.
@@ -1069,13 +1073,18 @@ H5T_ARRAY <- R6Class("H5T_ARRAY",
 
 #' Class for HDF5 variable-length datatypes.
 #'
-#' Inherits from class \code{\link[=H5T-class]{H5T}}.
+#' Inherits from class \code{\link[=H5T-class]{H5T}}. This can make any datatype a variable length datatype.
+#' This would mostly be intended for storing ragged arrays. 
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_VLEN-class]{H5T_VLEN}}.
 #' @export
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' vlen_int <- H5T_VLEN$new(h5types$H5T_NATIVE_INT)
+#' vlen_int
 H5T_VLEN <- R6Class("H5T_VLEN",
                     inherit=H5T,
                     public=list(
