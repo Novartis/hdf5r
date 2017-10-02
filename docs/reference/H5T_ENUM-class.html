@@ -66,7 +66,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/hhoeflin/hdf5r">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -100,8 +105,6 @@ internally represented as an ENUM-type.
 <dl class='dl-horizontal'>
 <dt>labels</dt><dd><p>The labels of the ENUM-type</p></dd>
 <dt>values</dt><dd><p>The values corresponding to the labels</p></dd>
-<dt>doLogical</dt><dd><p>Should a logical-type ENUM be created. If <code>TRUE</code>, then <code>labels</code> and <code>values</code>
-will be ignored. The labels will be <code>FALSE</code> and <code>TRUE</code> for values 0 and 1 respectively</p></dd>
 <dt>id</dt><dd><p>Internal use only</p></dd>
 </dl></p></dd>
     <dt><code>get_labels()</code></dt><dd><p>Return all the labels of the enumeration type</p></dd>
@@ -116,6 +119,17 @@ will be ignored. The labels will be <code>FALSE</code> and <code>TRUE</code> for
     <p><code><a href='H5T-class.html'>H5T</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>nucleotide_enum</span> <span class='kw'>&lt;-</span> <span class='no'>H5T_ENUM</span>$<span class='fu'>new</span>(<span class='kw'>labels</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='st'>"A"</span>, <span class='st'>"C"</span>, <span class='st'>"G"</span>, <span class='st'>"T"</span>), <span class='kw'>values</span><span class='kw'>=</span><span class='fl'>0</span>:<span class='fl'>3</span>)
+<span class='no'>nucleotide_enum</span></div><div class='output co'>#&gt; Class: H5T_ENUM
+#&gt; Datatype: H5T_ENUM {
+#&gt;       undefined integer;
+#&gt;       "A"                0;
+#&gt;       "C"                1;
+#&gt;       "G"                2;
+#&gt;       "T"                3;
+#&gt;    }</div><div class='input'><span class='co'># For HDF5 1.8.16 or higher, the size and precision are set optimally</span>
+<span class='no'>nucleotide_enum</span>$<span class='fu'>get_size</span>()</div><div class='output co'>#&gt; [1] 1</div><div class='input'><span class='no'>nucleotide_enum</span>$<span class='fu'>get_precision</span>()</div><div class='output co'>#&gt; [1] 2</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -126,7 +140,9 @@ will be ignored. The labels will be <code>FALSE</code> and <code>TRUE</code> for
       <li><a href="#methods">Methods</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

@@ -60,5 +60,5 @@ reference:
     - factor_ext_functions
   - title: Package description
     contents: 
-    - hdf5r
+    - hdf5r-package
     

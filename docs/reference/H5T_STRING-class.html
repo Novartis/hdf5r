@@ -66,7 +66,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/hhoeflin/hdf5r">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -120,6 +125,25 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
     <p><code><a href='H5T-class.html'>H5T</a></code></p>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='co'># fixed width string</span>
+<span class='no'>str_flen</span> <span class='kw'>&lt;-</span> <span class='no'>H5T_STRING</span>$<span class='fu'>new</span>(<span class='kw'>size</span><span class='kw'>=</span><span class='fl'>100</span>)
+<span class='no'>str_flen</span>$<span class='fu'>is_vlen</span>()</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='no'>str_flen</span></div><div class='output co'>#&gt; Class: H5T_STRING
+#&gt; Datatype: H5T_STRING {
+#&gt;       STRSIZE 100;
+#&gt;       STRPAD H5T_STR_NULLTERM;
+#&gt;       CSET H5T_CSET_ASCII;
+#&gt;       CTYPE H5T_C_S1;
+#&gt;    }</div><div class='input'>
+<span class='co'># variable length string</span>
+<span class='no'>str_vlen</span> <span class='kw'>&lt;-</span> <span class='no'>H5T_STRING</span>$<span class='fu'>new</span>(<span class='kw'>size</span><span class='kw'>=</span><span class='fl'>Inf</span>)
+<span class='no'>str_vlen</span>$<span class='fu'>is_vlen</span>()</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'><span class='no'>str_vlen</span></div><div class='output co'>#&gt; Class: H5T_STRING
+#&gt; Datatype: H5T_STRING {
+#&gt;       STRSIZE H5T_VARIABLE;
+#&gt;       STRPAD H5T_STR_NULLTERM;
+#&gt;       CSET H5T_CSET_ASCII;
+#&gt;       CTYPE H5T_C_S1;
+#&gt;    }</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -130,7 +154,9 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
       <li><a href="#methods">Methods</a></li>
 
       <li><a href="#see-also">See also</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

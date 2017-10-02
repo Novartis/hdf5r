@@ -66,7 +66,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/hhoeflin/hdf5r">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -111,7 +116,10 @@ This class represents an HDF5 datatype. It inherits all functions of the
 Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-GetClass'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-GetClass</a> for details.</p></dd>
     <dt><code>get_size(...)</code></dt><dd><p>This function implements the HDF5-API function H5Tget_size.
 Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-GetSize'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-GetSize</a> for details.
-Parameter <code>...</code> is being ignored.</p></dd>
+    <strong>Parameters</strong>
+<dl class='dl-horizontal'>
+<dt>...</dt><dd><p>ignored</p></dd>
+</dl></p></dd>
     <dt><code>set_size(size)</code></dt><dd><p>This function implements the HDF5-API function H5Tset_size.
 Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-SetSize'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-SetSize</a> for details.</p></dd>
     <dt><code>set_precision(precision)</code></dt><dd><p>This function implements the HDF5-API function H5Tset_precision.
@@ -206,6 +214,21 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
 </dl>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>my_int</span> <span class='kw'>&lt;-</span> <span class='no'>h5types</span>$<span class='no'>H5T_NATIVE_INT</span>
+<span class='no'>my_int</span>$<span class='fu'>to_text</span>()</div><div class='output co'>#&gt; [1] "H5T_STD_I32LE"</div><div class='input'><span class='no'>my_int</span>$<span class='fu'>get_size</span>()</div><div class='output co'>#&gt; [1] 4</div><div class='input'>
+<span class='co'># Show how to commit a datatype</span>
+<span class='no'>fname</span> <span class='kw'>&lt;-</span> <span class='fu'>tempfile</span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".h5"</span>)
+<span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='no'>H5File</span>$<span class='fu'>new</span>(<span class='no'>fname</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"a"</span>)
+<span class='no'>my_int</span>$<span class='fu'>is_committed</span>()</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='no'>file</span>$<span class='fu'>commit</span>(<span class='st'>"my_int"</span>, <span class='no'>my_int</span>)
+<span class='no'>my_int</span>$<span class='fu'>is_committed</span>()</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
+<span class='co'># can now also add attributes</span>
+<span class='fu'><a href='h5attributes.html'>h5attr</a></span>(<span class='no'>my_int</span>, <span class='st'>"test"</span>) <span class='kw'>&lt;-</span> <span class='st'>"A string"</span>
+<span class='fu'><a href='h5attributes.html'>h5attributes</a></span>(<span class='no'>my_int</span>)</div><div class='output co'>#&gt; $test
+#&gt; [1] "A string"
+#&gt; </div><div class='input'>
+<span class='no'>file</span>$<span class='fu'>close_all</span>()
+<span class='fu'>file.remove</span>(<span class='no'>fname</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -214,7 +237,9 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
       <li><a href="#value">Value</a></li>
 
       <li><a href="#methods">Methods</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     

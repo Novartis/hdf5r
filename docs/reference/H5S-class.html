@@ -66,7 +66,12 @@
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
-        
+        <li>
+  <a href="https://github.com/hhoeflin/hdf5r">
+    <span class="fa fa-github fa-lg"></span>
+     
+  </a>
+</li>
       </ul>
     </div><!--/.nav-collapse -->
   </div><!--/.container -->
@@ -82,8 +87,11 @@
     </div>
 
     
-    <p>This class represents an HDF5 space-id. It inherits all functions of the
-<code><a href='H5RefClass-class.html'>H5RefClass-class</a></code>.</p>
+    <p>This class represents <code>Spaces</code> in HDF5. These are mostly useful to define the
+dimensions of a dataset as well as the maximum dimensions to which it can grow. By default, the
+maximum dimension is equal to the initial dimension. If you want the array to be able to grow arbitrarily
+large in one dimension, set the maximum dimension for this index to <code>Inf</code>. See the examples below
+for code how to do this.</p>
     
 
         
@@ -155,6 +163,42 @@ For interactive use we recomment the use of the <code>[</code> operator.</p></dd
 </dl>
     
 
+    <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
+    <pre class="examples"><div class='input'><span class='no'>h5s_fixed</span> <span class='kw'>&lt;-</span> <span class='no'>H5S</span>$<span class='fu'>new</span>(<span class='st'>"simple"</span>, <span class='kw'>dims</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>5</span>, <span class='fl'>2</span>))
+<span class='no'>h5s_fixed</span></div><div class='output co'>#&gt; Class: H5S
+#&gt; Type: Simple
+#&gt; Dims: 5 x 2
+#&gt; Maxdims: 5 x 2</div><div class='input'>
+<span class='no'>h5s_variable</span> <span class='kw'>&lt;-</span> <span class='no'>H5S</span>$<span class='fu'>new</span>(<span class='st'>"simple"</span>, <span class='kw'>dims</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>5</span>,<span class='fl'>2</span>), <span class='kw'>maxdims</span><span class='kw'>=</span><span class='fu'>c</span>(<span class='fl'>Inf</span>,<span class='fl'>2</span>))
+<span class='no'>h5s_variable</span></div><div class='output co'>#&gt; Class: H5S
+#&gt; Type: Simple
+#&gt; Dims: 5 x 2
+#&gt; Maxdims: Inf x 2</div><div class='input'><span class='no'>h5s_variable</span>$<span class='fu'>set_extent_simple</span>(<span class='fu'>c</span>(<span class='fl'>10</span>,<span class='fl'>2</span>), <span class='fu'>c</span>(<span class='fl'>Inf</span>, <span class='fl'>2</span>))
+<span class='no'>h5s_variable</span></div><div class='output co'>#&gt; Class: H5S
+#&gt; Type: Simple
+#&gt; Dims: 10 x 2
+#&gt; Maxdims: Inf x 2</div><div class='input'>
+<span class='co'># now select a subset of points</span>
+<span class='co'># argument evaluation has a heuristic; here it chooses point selection</span>
+<span class='no'>h5s_variable</span>[<span class='fu'>c</span>(<span class='fl'>1</span>, <span class='fl'>3</span>, <span class='fl'>8</span>), <span class='fl'>1</span>]</div><div class='output co'>#&gt; Class: H5S
+#&gt; Type: Simple
+#&gt; Dims: 10 x 2
+#&gt; Maxdims: Inf x 2</div><div class='input'><span class='no'>h5s_variable</span>$<span class='fu'>get_select_type</span>()</div><div class='output co'>#&gt; [1] H5S_SEL_POINTS
+#&gt; 6 Levels: H5S_SEL_ERROR H5S_SEL_NONE H5S_SEL_POINTS ... H5S_SEL_N
+#&gt; 6 Values: -1 0 1 ... 4</div><div class='input'><span class='no'>h5s_variable</span>$<span class='fu'>get_select_elem_pointlist</span>()</div><div class='output co'>#&gt;      [,1] [,2]
+#&gt; [1,]    1    1
+#&gt; [2,]    3    1
+#&gt; [3,]    8    1</div><div class='input'>
+<span class='co'># and a hyperslab (chosen by the argument heuristic)</span>
+<span class='no'>h5s_variable</span>[<span class='fl'>2</span>:<span class='fl'>7</span>, <span class='fl'>1</span>:<span class='fl'>2</span>]</div><div class='output co'>#&gt; Class: H5S
+#&gt; Type: Simple
+#&gt; Dims: 10 x 2
+#&gt; Maxdims: Inf x 2</div><div class='input'><span class='no'>h5s_variable</span>$<span class='fu'>get_select_type</span>()</div><div class='output co'>#&gt; [1] H5S_SEL_HYPERSLABS
+#&gt; 6 Levels: H5S_SEL_ERROR H5S_SEL_NONE H5S_SEL_POINTS ... H5S_SEL_N
+#&gt; 6 Values: -1 0 1 ... 4</div><div class='input'><span class='no'>h5s_variable</span>$<span class='fu'>get_select_hyper_blocklist</span>()</div><div class='output co'>#&gt;               [,1] [,2]
+#&gt; block_1_start    2    1
+#&gt; block_1_end      7    2</div><div class='input'>
+</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
     <h2>Contents</h2>
@@ -163,7 +207,9 @@ For interactive use we recomment the use of the <code>[</code> operator.</p></dd
       <li><a href="#value">Value</a></li>
 
       <li><a href="#methods">Methods</a></li>
-          </ul>
+      
+      <li><a href="#examples">Examples</a></li>
+    </ul>
 
     <h2>Author</h2>
     
