@@ -432,7 +432,8 @@ standalone_H5T_dtype_to_text <- function(h5t_id, lang_type) {
 #'
 #' Inherits from class \code{\link[=H5T-class]{H5T}}.
 #' Users should not create integer datatypes themsevels using this class. Instead, integer should be derived
-#' from one of the base-types such as \code{h5types$H5T_NATIVE_INT}. For a complete list of types see \code{h5types$overview}.
+#' from one of the base-types such as \code{h5types$H5T_NATIVE_INT} (which internally automatically creates a copy of the type).
+#' For a complete list of types see \code{h5types$overview}.
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_INTEGER-class]{H5T_INTEGER}}.
@@ -485,7 +486,10 @@ H5T_BITFIELD <- H5T_INTEGER
 
 #' Class for HDF5 floating point datatypes.
 #'
-#' Inherits from class \code{\link[=H5T-class]{H5T}}.
+#' Inherits from class \code{\link[=H5T-class]{H5T}}. Users should not create float types with this class, but instead
+#' use e.g. \code{h5types$H5T_NATIVE_DOUBLE}. Using the functions of this class, many aspects of the representation of the
+#' floating point number can then be manipulated.
+#' 
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_FLOAT-class]{H5T_FLOAT}}.
@@ -763,7 +767,10 @@ H5T_LOGICAL <-  R6Class("H5T_LOGICAL",
 #' @seealso \code{\link[=H5T-class]{H5T}}
 #'
 #' @examples
-#' 
+#' # create a H5T_COMPOUND  corresponding to a data-frame
+#' my_cpd <- H5T_COMPOUND$new(c("name", "age", "salary"),
+#'     dtypes=list(H5T_STRING$new(size=200), h5types$H5T_NATIVE_INT, h5types$H5T_NATIVE_DOUBLE))
+#' my_cpd
 H5T_COMPOUND <- R6Class("H5T_COMPOUND",
                         inherit=H5T,
                         public=list(

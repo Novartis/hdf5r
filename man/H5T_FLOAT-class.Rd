@@ -9,7 +9,9 @@
 Object of class \code{\link[=H5T_FLOAT-class]{H5T_FLOAT}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}.
+Inherits from class \code{\link[=H5T-class]{H5T}}. Users should not create float types with this class, but instead
+use e.g. \code{h5types$H5T_NATIVE_DOUBLE}. Using the functions of this class, many aspects of the representation of the
+floating point number can then be manipulated.
 }
 \section{Methods}{
 

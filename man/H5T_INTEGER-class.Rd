@@ -13,7 +13,8 @@ Object of class \code{\link[=H5T_INTEGER-class]{H5T_INTEGER}}.
 \description{
 Inherits from class \code{\link[=H5T-class]{H5T}}.
 Users should not create integer datatypes themsevels using this class. Instead, integer should be derived
-from one of the base-types such as \code{h5types$H5T_NATIVE_INT}. For a complete list of types see \code{h5types$overview}.
+from one of the base-types such as \code{h5types$H5T_NATIVE_INT} (which internally automatically creates a copy of the type).
+For a complete list of types see \code{h5types$overview}.
 }
 \section{Methods}{
 
