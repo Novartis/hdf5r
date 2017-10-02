@@ -40,7 +40,11 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T
 
 This function implements the HDF5-API function H5Tget_size.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-GetSize} for details.
-Parameter \code{...} is being ignored.}
+
+\strong{Parameters}
+\describe{
+\item{...}{ignored}
+}}
 
 \item{\code{set_size(size)}}{
 
@@ -243,6 +247,25 @@ is created, otherwise a \code{H5R_DATASET_REGION} reference
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Create} for details.}
 }}
 
+\examples{
+my_int <- h5types$H5T_NATIVE_INT
+my_int$to_text()
+my_int$get_size()
+
+# Show how to commit a datatype
+fname <- tempfile(fileext = ".h5")
+file <- H5File$new(fname, mode = "a")
+my_int$is_committed()
+file$commit("my_int", my_int)
+my_int$is_committed()
+
+# can now also add attributes
+h5attr(my_int, "test") <- "A string"
+h5attributes(my_int)
+
+file$close_all()
+file.remove(fname)
+}
 \author{
 Holger Hoefling
 }

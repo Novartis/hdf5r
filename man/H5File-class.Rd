@@ -496,6 +496,8 @@ file[["testgroup3/testset3"]] <- 21:30
 sapply(list.datasets(file, recursive = TRUE), function(x) file[[x]][1:3])
 # Close file
 file$close_all()
+file.remove(fname)
+
 }
 \seealso{
 \code{\link{h5file}}

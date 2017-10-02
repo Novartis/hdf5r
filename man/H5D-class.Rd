@@ -392,6 +392,8 @@ dset$chunk_dims
 dset$key_info
 dset
 
+file$close_all()
+file.remove(fname)
 }
 \author{
 Holger Hoefling

@@ -165,6 +165,25 @@ text_to_dtype <- function(text, lang_type=h5const$H5LT_DDL) {
 #' @return Object of class \code{\link{H5T}}.
 #' @export
 #' @author Holger Hoefling
+#'
+#' @examples
+#' my_int <- h5types$H5T_NATIVE_INT
+#' my_int$to_text()
+#' my_int$get_size()
+#'
+#' # Show how to commit a datatype
+#' fname <- tempfile(fileext = ".h5")
+#' file <- H5File$new(fname, mode = "a")
+#' my_int$is_committed()
+#' file$commit("my_int", my_int)
+#' my_int$is_committed()
+#'
+#' # can now also add attributes
+#' h5attr(my_int, "test") <- "A string"
+#' h5attributes(my_int)
+#' 
+#' file$close_all()
+#' file.remove(fname)
 H5T <- R6Class("H5T",
                inherit=H5RefClass,
                public=list(
@@ -182,7 +201,7 @@ H5T <- R6Class("H5T",
                    get_size=function(...) {
                        "This function implements the HDF5-API function H5Tget_size."
                        "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-GetSize} for details."
-                       "Parameter \\code{...} is being ignored."
+                       "@param ... ignored"
 
                        return(.Call("R_H5Tget_size", self$id, PACKAGE="hdf5r")$return_val)
                    },
