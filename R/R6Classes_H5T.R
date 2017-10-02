@@ -431,6 +431,8 @@ standalone_H5T_dtype_to_text <- function(h5t_id, lang_type) {
 #' Class for HDF5 integer-datatypes.
 #'
 #' Inherits from class \code{\link[=H5T-class]{H5T}}.
+#' Users should not create integer datatypes themsevels using this class. Instead, integer should be derived
+#' from one of the base-types such as \code{h5types$H5T_NATIVE_INT}. For a complete list of types see \code{h5types$overview}.
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_INTEGER-class]{H5T_INTEGER}}.
@@ -438,6 +440,15 @@ standalone_H5T_dtype_to_text <- function(h5t_id, lang_type) {
 #' @aliases H5T_BITFIELD H5T_BITFIELD-class
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' my_int <- h5types$H5T_NATIVE_INT
+#'
+#' # make an int with 2 bit
+#' my_int$set_sign(h5const$H5T_SGN_NONE)
+#' my_int$set_size(1)
+#' my_int$set_precision(2)
+#' my_int$describe()
 H5T_INTEGER <- R6Class("H5T_INTEGER",
                        inherit=H5T,
                        public=list(
@@ -750,6 +761,9 @@ H5T_LOGICAL <-  R6Class("H5T_LOGICAL",
 #' @export
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' 
 H5T_COMPOUND <- R6Class("H5T_COMPOUND",
                         inherit=H5T,
                         public=list(

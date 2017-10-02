@@ -56,6 +56,9 @@ Return the offsets of the datatypes}
 Print a detailed description of the datatype; this is experimental}
 }}
 
+\examples{
+
+}
 \seealso{
 \code{\link[=H5T-class]{H5T}}
 }
