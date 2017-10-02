@@ -852,6 +852,17 @@ H5T_COMPOUND <- R6Class("H5T_COMPOUND",
 #' @export
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' # fixed width string
+#' str_flen <- H5T_STRING$new(size=100)
+#' str_flen$is_vlen()
+#' str_vlen
+#' 
+#' # variable length string
+#' str_vlen <- H5T_STRING$new(size=Inf)
+#' str_vlen$is_vlen()
+#' str_vlen
 H5T_STRING <- R6Class("H5T_STRING",
                       inherit=H5T,
                       public=list(
