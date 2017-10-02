@@ -155,6 +155,8 @@ is_hdf5 <- function(name) {
 #' sapply(list.datasets(file, recursive = TRUE), function(x) file[[x]][1:3])
 #' # Close file
 #' file$close_all()
+#' file.remove(fname)
+#' 
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5File}}.

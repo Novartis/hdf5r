@@ -11,6 +11,8 @@ Description: This package provides an interface to the HDF5 API. HDF5 is a
     API is written in C. This package provides functions in R that allow access to
     the underlying C functions. Additionally, functionality is added so that HDF5-
     datasets behave very similar to native R datatypes.
+URL: https://github.com/hhoeflin/hdf5r
+BugReports: https://github.com/hhoeflin/hdf5r/issues
 License: file LICENSE
 Copyright: For the hdf5r package: Novartis Institutes for BioMedical Research
     Inc. For HDF5: see the HDF5_COPYRIGHTS file.

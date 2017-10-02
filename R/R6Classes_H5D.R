@@ -93,7 +93,9 @@ setOldClass("H5D")
 ##' dset$chunk_dims
 ##' dset$key_info
 ##' dset
-##' 
+##'
+##' file$close_all()
+##' file.remove(fname)
 H5D <- R6Class("H5D",
                inherit=H5RefClass,
                public=list(

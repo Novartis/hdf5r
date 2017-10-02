@@ -9,7 +9,8 @@
 Object of class \code{\link[=H5T_VLEN-class]{H5T_VLEN}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}.
+Inherits from class \code{\link[=H5T-class]{H5T}}. This can make any datatype a variable length datatype.
+This would mostly be intended for storing ragged arrays.
 }
 \section{Methods}{
 
@@ -34,6 +35,10 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T
 Print a detailed description of the datatype; this is experimental}
 }}
 
+\examples{
+vlen_int <- H5T_VLEN$new(h5types$H5T_NATIVE_INT)
+vlen_int
+}
 \seealso{
 \code{\link[=H5T-class]{H5T}}
 }

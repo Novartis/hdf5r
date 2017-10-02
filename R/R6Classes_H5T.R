@@ -165,6 +165,25 @@ text_to_dtype <- function(text, lang_type=h5const$H5LT_DDL) {
 #' @return Object of class \code{\link{H5T}}.
 #' @export
 #' @author Holger Hoefling
+#'
+#' @examples
+#' my_int <- h5types$H5T_NATIVE_INT
+#' my_int$to_text()
+#' my_int$get_size()
+#'
+#' # Show how to commit a datatype
+#' fname <- tempfile(fileext = ".h5")
+#' file <- H5File$new(fname, mode = "a")
+#' my_int$is_committed()
+#' file$commit("my_int", my_int)
+#' my_int$is_committed()
+#'
+#' # can now also add attributes
+#' h5attr(my_int, "test") <- "A string"
+#' h5attributes(my_int)
+#' 
+#' file$close_all()
+#' file.remove(fname)
 H5T <- R6Class("H5T",
                inherit=H5RefClass,
                public=list(
@@ -182,7 +201,7 @@ H5T <- R6Class("H5T",
                    get_size=function(...) {
                        "This function implements the HDF5-API function H5Tget_size."
                        "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T.html#Datatype-GetSize} for details."
-                       "Parameter \\code{...} is being ignored."
+                       "@param ... ignored"
 
                        return(.Call("R_H5Tget_size", self$id, PACKAGE="hdf5r")$return_val)
                    },
@@ -412,6 +431,9 @@ standalone_H5T_dtype_to_text <- function(h5t_id, lang_type) {
 #' Class for HDF5 integer-datatypes.
 #'
 #' Inherits from class \code{\link[=H5T-class]{H5T}}.
+#' Users should not create integer datatypes themsevels using this class. Instead, integer should be derived
+#' from one of the base-types such as \code{h5types$H5T_NATIVE_INT} (which internally automatically creates a copy of the type).
+#' For a complete list of types see \code{h5types$overview}.
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_INTEGER-class]{H5T_INTEGER}}.
@@ -419,6 +441,15 @@ standalone_H5T_dtype_to_text <- function(h5t_id, lang_type) {
 #' @aliases H5T_BITFIELD H5T_BITFIELD-class
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' my_int <- h5types$H5T_NATIVE_INT
+#'
+#' # make an int with 2 bit
+#' my_int$set_sign(h5const$H5T_SGN_NONE)
+#' my_int$set_size(1)
+#' my_int$set_precision(2)
+#' my_int$describe()
 H5T_INTEGER <- R6Class("H5T_INTEGER",
                        inherit=H5T,
                        public=list(
@@ -455,7 +486,10 @@ H5T_BITFIELD <- H5T_INTEGER
 
 #' Class for HDF5 floating point datatypes.
 #'
-#' Inherits from class \code{\link[=H5T-class]{H5T}}.
+#' Inherits from class \code{\link[=H5T-class]{H5T}}. Users should not create float types with this class, but instead
+#' use e.g. \code{h5types$H5T_NATIVE_DOUBLE}. Using the functions of this class, many aspects of the representation of the
+#' floating point number can then be manipulated.
+#' 
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_FLOAT-class]{H5T_FLOAT}}.
@@ -564,6 +598,13 @@ H5T_FLOAT <- R6Class("H5T_FLOAT",
 #' @export
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' nucleotide_enum <- H5T_ENUM$new(labels=c("A", "C", "G", "T"), values=0:3)
+#' nucleotide_enum
+#' # For HDF5 1.8.16 or higher, the size and precision are set optimally
+#' nucleotide_enum$get_size()
+#' nucleotide_enum$get_precision()
 H5T_ENUM <- R6Class("H5T_ENUM",
                     inherit=H5T_INTEGER,
                     public=list(
@@ -572,8 +613,6 @@ H5T_ENUM <- R6Class("H5T_ENUM",
                             "internally represented as an ENUM-type."
                             "@param labels The labels of the ENUM-type"
                             "@param values The values corresponding to the labels"
-                            "@param doLogical Should a logical-type ENUM be created. If \\code{TRUE}, then \\code{labels} and \\code{values}"
-                            "will be ignored. The labels will be \\code{FALSE} and \\code{TRUE} for values 0 and 1 respectively"
                             "@param id Internal use only"
                             if(!is.null(id)) {
                                 super$initialize(id=id)
@@ -726,6 +765,12 @@ H5T_LOGICAL <-  R6Class("H5T_LOGICAL",
 #' @export
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' # create a H5T_COMPOUND  corresponding to a data-frame
+#' my_cpd <- H5T_COMPOUND$new(c("name", "age", "salary"),
+#'     dtypes=list(H5T_STRING$new(size=200), h5types$H5T_NATIVE_INT, h5types$H5T_NATIVE_DOUBLE))
+#' my_cpd
 H5T_COMPOUND <- R6Class("H5T_COMPOUND",
                         inherit=H5T,
                         public=list(
@@ -807,6 +852,17 @@ H5T_COMPOUND <- R6Class("H5T_COMPOUND",
 #' @export
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' # fixed width string
+#' str_flen <- H5T_STRING$new(size=100)
+#' str_flen$is_vlen()
+#' str_flen
+#' 
+#' # variable length string
+#' str_vlen <- H5T_STRING$new(size=Inf)
+#' str_vlen$is_vlen()
+#' str_vlen
 H5T_STRING <- R6Class("H5T_STRING",
                       inherit=H5T,
                       public=list(
@@ -939,7 +995,11 @@ H5T_COMPLEX <- R6Class("H5T_COMPLEX",
 
 #' Class for HDF5 array datatypes.
 #'
-#' Inherits from class \code{\link[=H5T-class]{H5T}}.
+#' Inherits from class \code{\link[=H5T-class]{H5T}}. This class represents an array. As datasets in HDF5
+#' are itself already arrays, this datatype is not needed there. It is mostly useful when a column in a
+#' \code{H5T_COMPUND-class} object is intended to be an array. This however makes it difficult to work
+#' with such objects in R - as a column of the corresponding \code{data.frame} has to be an array. So please
+#' use with care.
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_ARRAY-class]{H5T_ARRAY}}.
@@ -1013,13 +1073,18 @@ H5T_ARRAY <- R6Class("H5T_ARRAY",
 
 #' Class for HDF5 variable-length datatypes.
 #'
-#' Inherits from class \code{\link[=H5T-class]{H5T}}.
+#' Inherits from class \code{\link[=H5T-class]{H5T}}. This can make any datatype a variable length datatype.
+#' This would mostly be intended for storing ragged arrays. 
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5T_VLEN-class]{H5T_VLEN}}.
 #' @export
 #' @author Holger Hoefling
 #' @seealso \code{\link[=H5T-class]{H5T}}
+#'
+#' @examples
+#' vlen_int <- H5T_VLEN$new(h5types$H5T_NATIVE_INT)
+#' vlen_int
 H5T_VLEN <- R6Class("H5T_VLEN",
                     inherit=H5T,
                     public=list(

@@ -56,6 +56,17 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T
 Print a detailed description of the datatype; this is experimental}
 }}
 
+\examples{
+# fixed width string
+str_flen <- H5T_STRING$new(size=100)
+str_flen$is_vlen()
+str_flen
+
+# variable length string
+str_vlen <- H5T_STRING$new(size=Inf)
+str_vlen$is_vlen()
+str_vlen
+}
 \seealso{
 \code{\link[=H5T-class]{H5T}}
 }

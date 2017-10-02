@@ -12,6 +12,9 @@ Object of class \code{\link[=H5T_INTEGER-class]{H5T_INTEGER}}.
 }
 \description{
 Inherits from class \code{\link[=H5T-class]{H5T}}.
+Users should not create integer datatypes themsevels using this class. Instead, integer should be derived
+from one of the base-types such as \code{h5types$H5T_NATIVE_INT} (which internally automatically creates a copy of the type).
+For a complete list of types see \code{h5types$overview}.
 }
 \section{Methods}{
 
@@ -31,6 +34,15 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T
 Return a vector that describes the key features of the datatype}
 }}
 
+\examples{
+my_int <- h5types$H5T_NATIVE_INT
+
+# make an int with 2 bit
+my_int$set_sign(h5const$H5T_SGN_NONE)
+my_int$set_size(1)
+my_int$set_precision(2)
+my_int$describe()
+}
 \seealso{
 \code{\link[=H5T-class]{H5T}}
 }

@@ -22,8 +22,11 @@
 
 ##' Class for representing HDF5 attributes
 ##' 
-##' This class represents an HDF5 group-id. It inherits all functions of the
-##' \code{\link{H5RefClass-class}}. 
+##' This class represents an HDF5 attribute. Usually it is easier to read and write attributes for
+##' groups, datasets and commited datatypes using the functions documented in \code{\link{h5attributes}}.
+##'
+##' Otherwise, the functionality for attributes is very similar to that of datasets (\code{\link{H5D-class}}),
+##' however with the notable exception that attributes always have to be read and written as a whole.
 ##'
 ##' @docType class
 ##' @importFrom R6 R6Class

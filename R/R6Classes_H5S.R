@@ -27,14 +27,38 @@
 
 ##' Class for representing HDF5 spaces
 ##' 
-##' This class represents an HDF5 space-id. It inherits all functions of the
-##' \code{\link{H5RefClass-class}}. 
+##' This class represents \code{Spaces} in HDF5. These are mostly useful to define the
+##' dimensions of a dataset as well as the maximum dimensions to which it can grow. By default, the
+##' maximum dimension is equal to the initial dimension. If you want the array to be able to grow arbitrarily
+##' large in one dimension, set the maximum dimension for this index to \code{Inf}. See the examples below
+##' for code how to do this.
 ##'
 ##' @docType class
 ##' @importFrom R6 R6Class
 ##' @return Object of class \code{\link{H5S}}. 
 ##' @export
 ##' @author Holger Hoefling
+##'
+##' @examples
+##' h5s_fixed <- H5S$new("simple", dims=c(5, 2))
+##' h5s_fixed
+##' 
+##' h5s_variable <- H5S$new("simple", dims=c(5,2), maxdims=c(Inf,2))
+##' h5s_variable
+##' h5s_variable$set_extent_simple(c(10,2), c(Inf, 2))
+##' h5s_variable
+##' 
+##' # now select a subset of points
+##' # argument evaluation has a heuristic; here it chooses point selection
+##' h5s_variable[c(1, 3, 8), 1]
+##' h5s_variable$get_select_type()
+##' h5s_variable$get_select_elem_pointlist()
+##' 
+##' # and a hyperslab (chosen by the argument heuristic)
+##' h5s_variable[2:7, 1:2]
+##' h5s_variable$get_select_type()
+##' h5s_variable$get_select_hyper_blocklist()
+##' 
 H5S <- R6Class("H5S",
                inherit=H5RefClass,
                public=list(
