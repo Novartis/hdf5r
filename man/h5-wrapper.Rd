@@ -2,6 +2,7 @@
 % Please edit documentation in R/h5wrapper.R
 \name{h5-wrapper}
 \alias{h5-wrapper}
+\alias{h5}
 \alias{h5file}
 \alias{createGroup}
 \alias{openLocation}
@@ -17,7 +18,7 @@
 \alias{c.H5D}
 \alias{h5unlink}
 \alias{list.attributes}
-\title{Wrapper functions to provide a \strong{h5} compatible interface.}
+\title{Wrapper functions to provide an \pkg{h5} compatible interface.}
 \usage{
 h5file(...)
 
@@ -65,11 +66,40 @@ list.attributes(object)
 \item{deparse.level}{Set to 1; ignored otherwise; only present as required by generic}
 }
 \description{
-Since it has been decided to join forces on the hdf5r package and deprecate
-h5 we wanted to make the transition for users as smooth as possible.
-Additionally, we could transfer almost all testcases to hdf5r and improve
-test coverage even more.
+The functions listed below provide a wrapper-interface compatible to 
+functions specified in the \pkg{h5} package. The author(s)
+have decided to deprecate \pkg{h5} and join forces and still 
+make the transition for \pkg{h5} users as smooth as possible.
+Additionally, almost all testcases could be transferred to \pkg{hdf5r} 
+to improve test coverage even more.
 }
 \details{
-Below you can find a list of all \strong{h5} function including \strong{hdf5r} mappings.
+Below you can find a list of all \strong{h5} functions including \strong{hdf5r} \emph{mappings}.
+\describe{
+  \item{h5file}{Directly maps to \code{H5File$new}, see also \code{\link{H5File}}.}
+  \item{createGroup}{Maps to \code{object$create_group} where object implements \emph{CommonFG}.}
+  \item{openLocation}{Uses \code{object$open} where object implements \emph{CommonFG}.}
+  \item{createDataSet}{Maps to \code{object$create_dataset} where object implements \emph{CommonFG}.}
+  \item{readDataSet}{Maps to \code{object$read}, see also \code{\link{H5D}}.}
+  \item{h5close}{Maps to \code{object$close_all} for \code{\link{H5File}} and \code{object$close} 
+    for other.}
+  \item{h5flush}{Maps to \code{object$flush} where object implements \emph{CommonFGDTA}.}
+}
+
+The following \strong{interfaces} are defined:
+\describe{
+  \item{CommonFG}{Implemented by objects of class 
+    \code{\link{H5File}} and 
+    \code{\link{H5Group}}.}
+  \item{CommonFGDTA}{Implemented by objects of class
+    \code{\link{H5File}}, 
+    \code{\link{H5Group}}, 
+    \code{\link{H5D}}, 
+    \code{\link{H5T}} and
+    \code{\link{H5A}}.}
+}
+}
+\references{
+Mario Annau (2017). \emph{\pkg{h5}: Interface to the 'HDF5' Library}. R package version 0.9.9.
+\url{https://github.com/mannau/h5}
 }
