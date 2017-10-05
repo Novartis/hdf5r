@@ -30,7 +30,7 @@ NULL
 ##' hdf5r: A package to provide an interface to hdf5 from R
 ##'
 ##' 
-##' A package that allows to interface with the HDF5 C-library. Proivdes acces to most of its
+##' A package that allows to interface with the HDF5 C-library. Provides access to most of its
 ##' functionality from inside R using R6 classes. For more details please see the README at
 ##' the github page \url{https://github.com/hhoeflin/hdf5r}.
 ##' 
