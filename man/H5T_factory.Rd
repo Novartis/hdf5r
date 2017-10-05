@@ -2,7 +2,7 @@
 % Please edit documentation in R/R6Classes_H5T.R
 \name{H5T_factory}
 \alias{H5T_factory}
-\title{Turn ids into  \code{\link{H5T-class}} objects}
+\title{Turn ids into  \code{\link{H5T}} objects}
 \usage{
 H5T_factory(ids, do_copy = FALSE)
 }
@@ -12,14 +12,14 @@ H5T_factory(ids, do_copy = FALSE)
 \item{do_copy}{Should the ids be copied using HDF5s internal copy mechanism}
 }
 \value{
-An object of type R6 class \code{\link{H5T-class}}
+An object of type R6 class \code{\link{H5T}}
 }
 \description{
-Turn ids into  \code{\link{H5T-class}} objects
+Turn ids into  \code{\link{H5T}} objects
 }
 \details{
 Gets the HDF5 internal class for an id and dispactches them so that the correct
-R6-classes are being created.
+R6es are being created.
 }
 \author{
 Holger Hoefling

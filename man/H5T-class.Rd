@@ -11,17 +11,17 @@ Object of class \code{\link{H5T}}.
 \description{
 This is the base class for all datatypes, but most have a specialised class.
 This class represents an HDF5 datatype. It inherits all functions of the
-\code{\link{H5RefClass-class}}. It is also the base class for many other classes well, specifically
+\code{\link{H5RefClass}}. It is also the base class for many other classes well, specifically
 \describe{
-\item{Integer}{\code{\link{H5T_INTEGER-class}}}
-\item{Bitfield}{\code{\link{H5T_BITFIELD-class}} (currently identical to the integer class)}
-\item{Float}{\code{\link{H5T_FLOAT-class}}}
-\item{Enum}{\code{\link{H5T_ENUM-class}}}
-\item{Compound}{\code{\link{H5T_COMPOUND-class}}}
-\item{String}{\code{\link{H5T_STRING-class}}}
-\item{Complex}{\code{\link{H5T_COMPLEX-class}}}
-\item{Array}{\code{\link{H5T_ARRAY-class}}}
-\item{Variable Length}{\code{\link{H5T_VLEN-class}}}
+\item{Integer}{\code{\link{H5T_INTEGER}}}
+\item{Bitfield}{\code{\link{H5T_BITFIELD}} (currently identical to the integer class)}
+\item{Float}{\code{\link{H5T_FLOAT}}}
+\item{Enum}{\code{\link{H5T_ENUM}}}
+\item{Compound}{\code{\link{H5T_COMPOUND}}}
+\item{String}{\code{\link{H5T_STRING}}}
+\item{Complex}{\code{\link{H5T_COMPLEX}}}
+\item{Array}{\code{\link{H5T_ARRAY}}}
+\item{Variable Length}{\code{\link{H5T_VLEN}}}
 }
 }
 \section{Methods}{

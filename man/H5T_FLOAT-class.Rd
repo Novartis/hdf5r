@@ -6,10 +6,10 @@
 \alias{H5T_FLOAT}
 \title{Class for HDF5 floating point datatypes.}
 \value{
-Object of class \code{\link[=H5T_FLOAT-class]{H5T_FLOAT}}.
+Object of class \code{\link[=H5T_FLOAT]{H5T_FLOAT}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}. Users should not create float types with this class, but instead
+Inherits from class \code{\link[=H5T]{H5T}}. Users should not create float types with this class, but instead
 use e.g. \code{h5types$H5T_NATIVE_DOUBLE}. Using the functions of this class, many aspects of the representation of the
 floating point number can then be manipulated.
 }
@@ -62,7 +62,7 @@ Print a detailed description of the datatype; this is experimental}
 }}
 
 \seealso{
-\code{\link[=H5T-class]{H5T}}
+\code{\link[=H5T]{H5T}}
 }
 \author{
 Holger Hoefling

@@ -11,16 +11,16 @@ Object of class \code{\link{H5P}}.
 \description{
 This is the base class for all property lists, but most have a specialised class.
 It inherits all functions of the
-\code{\link{H5RefClass-class}}. It is also the base class for many other classes, specifically
+\code{\link{H5RefClass}}. It is also the base class for many other classes, specifically
 \describe{
-\item{Dataset Creation}{\code{\link{H5P_DATASET_CREATE-class}}}
-\item{Dataset Access}{\code{\link{H5P_DATASET_ACCESS-class}}}
-\item{Dataset Transfer}{\code{\link{H5P_DATASET_XFER-class}}}
-\item{Link Creation}{\code{\link{H5P_LINK_CREATE-class}}}
-\item{Link Access}{\code{\link{H5P_LINK_ACCESS-class}}}
-\item{Object Creation}{\code{\link{H5P_OBJECT_CREATE-class}}}
-\item{Object Copy}{\code{\link{H5P_OBJECT_COPY-class}}}
-\item{Attribute Creation}{\code{\link{H5P_ATTRIBUTE_CREATE-class}}}
+\item{Dataset Creation}{\code{\link{H5P_DATASET_CREATE}}}
+\item{Dataset Access}{\code{\link{H5P_DATASET_ACCESS}}}
+\item{Dataset Transfer}{\code{\link{H5P_DATASET_XFER}}}
+\item{Link Creation}{\code{\link{H5P_LINK_CREATE}}}
+\item{Link Access}{\code{\link{H5P_LINK_ACCESS}}}
+\item{Object Creation}{\code{\link{H5P_OBJECT_CREATE}}}
+\item{Object Copy}{\code{\link{H5P_OBJECT_COPY}}}
+\item{Attribute Creation}{\code{\link{H5P_ATTRIBUTE_CREATE}}}
 }
 The base class is unlikely to be needed by users - they should use the appropriate subclass required.
 }

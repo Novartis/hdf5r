@@ -7,10 +7,10 @@
 H5GTD_factory(id)
 }
 \arguments{
-\item{id}{The id to wrap in an R6-class object}
+\item{id}{The id to wrap in an R6 object}
 }
 \value{
-An R6-class object corresponding to the HDF5 internal class of the ID
+An R6 object corresponding to the HDF5 internal class of the ID
 }
 \description{
 Wrap an HDF5-id in the appropriate class

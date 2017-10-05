@@ -17,11 +17,11 @@
 #############################################################################
 
 
-##' Create an \\code{\\link{H5P-class}} out of an id
+##' Create an \\code{\\link{H5P}} out of an id
 ##'
 ##' Function that determines the property list type of an id and creates
 ##' the appropriate class for it.
-##' @title Create an \\code{\\link{H5P-class}} out of an id
+##' @title Create an \\code{\\link{H5P}} out of an id
 ##' @param id The id to wrap inside an object
 ##' @return An object of class \\code{\\link{H5P}}
 ##' @author Holger Hoefling
@@ -91,16 +91,16 @@ H5P_factory <- function(id) {
 #'
 #' This is the base class for all property lists, but most have a specialised class.
 #' It inherits all functions of the
-#' \code{\link{H5RefClass-class}}. It is also the base class for many other classes, specifically
+#' \code{\link{H5RefClass}}. It is also the base class for many other classes, specifically
 #' \describe{
-#' \item{Dataset Creation}{\code{\link{H5P_DATASET_CREATE-class}}}
-#' \item{Dataset Access}{\code{\link{H5P_DATASET_ACCESS-class}}}
-#' \item{Dataset Transfer}{\code{\link{H5P_DATASET_XFER-class}}}
-#' \item{Link Creation}{\code{\link{H5P_LINK_CREATE-class}}}
-#' \item{Link Access}{\code{\link{H5P_LINK_ACCESS-class}}}
-#' \item{Object Creation}{\code{\link{H5P_OBJECT_CREATE-class}}}
-#' \item{Object Copy}{\code{\link{H5P_OBJECT_COPY-class}}}
-#' \item{Attribute Creation}{\code{\link{H5P_ATTRIBUTE_CREATE-class}}}
+#' \item{Dataset Creation}{\code{\link{H5P_DATASET_CREATE}}}
+#' \item{Dataset Access}{\code{\link{H5P_DATASET_ACCESS}}}
+#' \item{Dataset Transfer}{\code{\link{H5P_DATASET_XFER}}}
+#' \item{Link Creation}{\code{\link{H5P_LINK_CREATE}}}
+#' \item{Link Access}{\code{\link{H5P_LINK_ACCESS}}}
+#' \item{Object Creation}{\code{\link{H5P_OBJECT_CREATE}}}
+#' \item{Object Copy}{\code{\link{H5P_OBJECT_COPY}}}
+#' \item{Attribute Creation}{\code{\link{H5P_ATTRIBUTE_CREATE}}}
 #' }
 #' The base class is unlikely to be needed by users - they should use the appropriate subclass required.
 #' @docType class
@@ -196,15 +196,15 @@ H5P_DEFAULT <- R6Class("H5P_DEFAULT",
 
 #' Class for HDF5 property list classes (not HDF5 property lists)
 #'
-#' It inherits all functions of the \code{\link{H5RefClass-class}}. The intent of this class is to
+#' It inherits all functions of the \code{\link{H5RefClass}}. The intent of this class is to
 #' provide a mechanism to compare the class of HDF5 property classes. This is mainly intended for internal use
 #' to get the class type of an HDF5 identifier that is known to be a property list, but not of which type.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_CLASS-class]{H5P_CLASS}}.
+#' @return Object of class \code{\link[=H5P_CLASS]{H5P_CLASS}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_CLASS <- R6Class("H5P_CLASS",
                      inherit=H5RefClass,
                      public=list(
@@ -239,13 +239,13 @@ H5P_CLASS <- R6Class("H5P_CLASS",
 
 #' Class for HDF5 property list for file creation
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_FILE_CREATE-class]{H5P_FILE_CREATE}}.
+#' @return Object of class \code{\link[=H5P_FILE_CREATE]{H5P_FILE_CREATE}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_FILE_CREATE <-  R6Class("H5P_FILE_CREATE",
                               inherit=H5P,
                               public=list(
@@ -386,13 +386,13 @@ H5P_FILE_CREATE <-  R6Class("H5P_FILE_CREATE",
 
 #' Class for HDF5 property list for file creation
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_FILE_ACCESS-class]{H5P_FILE_ACCESS}}.
+#' @return Object of class \code{\link[=H5P_FILE_ACCESS]{H5P_FILE_ACCESS}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_FILE_ACCESS <-  R6Class("H5P_FILE_ACCESS",
                               inherit=H5P,
                               public=list(
@@ -437,13 +437,13 @@ H5P_FILE_ACCESS <-  R6Class("H5P_FILE_ACCESS",
 
 #' Class for HDF5 property list for dataset creation
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_DATASET_CREATE-class]{H5P_DATASET_CREATE}}.
+#' @return Object of class \code{\link[=H5P_DATASET_CREATE]{H5P_DATASET_CREATE}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_DATASET_CREATE <- R6Class("H5P_DATASET_CREATE",
                               inherit=H5P,
                               public=list(
@@ -758,13 +758,13 @@ H5P_DATASET_CREATE <- R6Class("H5P_DATASET_CREATE",
 
 #' Class for HDF5 property list for dataset access
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_DATASET_ACCESS-class]{H5P_DATASET_ACCESS}}.
+#' @return Object of class \code{\link[=H5P_DATASET_ACCESS]{H5P_DATASET_ACCESS}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_DATASET_ACCESS <- R6Class("H5P_DATASET_ACCESS",
                            inherit=H5P,
                            public=list(
@@ -805,13 +805,13 @@ H5P_DATASET_ACCESS <- R6Class("H5P_DATASET_ACCESS",
 
 #' Class for HDF5 property list for dataset transfer
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_DATASET_XFER-class]{H5P_DATASET_XFER}}.
+#' @return Object of class \code{\link[=H5P_DATASET_XFER]{H5P_DATASET_XFER}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_DATASET_XFER <- R6Class("H5P_DATASET_XFER",
                            inherit=H5P,
                            public=list(
@@ -909,13 +909,13 @@ H5P_DATASET_XFER <- R6Class("H5P_DATASET_XFER",
 
 #' Class for HDF5 property list for link creation
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_LINK_CREATE-class]{H5P_LINK_CREATE}}.
+#' @return Object of class \code{\link[=H5P_LINK_CREATE]{H5P_LINK_CREATE}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_LINK_CREATE <- R6Class("H5P_LINK_CREATE",
                            inherit=H5P,
                            public=list(
@@ -978,13 +978,13 @@ H5P_LINK_CREATE <- R6Class("H5P_LINK_CREATE",
 
 #' Class for HDF5 property list for link access
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_LINK_ACCESS-class]{H5P_LINK_ACCESS}}.
+#' @return Object of class \code{\link[=H5P_LINK_ACCESS]{H5P_LINK_ACCESS}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_LINK_ACCESS <- R6Class("H5P_LINK_ACCESS",
                            inherit=H5P,
                            public=list(
@@ -1075,13 +1075,13 @@ H5P_LINK_ACCESS <- R6Class("H5P_LINK_ACCESS",
 
 #' Class for HDF5 property list for object creation
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_OBJECT_CREATE-class]{H5P_OBJECT_CREATE}}.
+#' @return Object of class \code{\link[=H5P_OBJECT_CREATE]{H5P_OBJECT_CREATE}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_OBJECT_CREATE <- R6Class("H5P_OBJECT_CREATE",
                            inherit=H5P,
                            public=list(
@@ -1159,13 +1159,13 @@ H5P_OBJECT_CREATE <- R6Class("H5P_OBJECT_CREATE",
 
 #' Class for HDF5 property list for object copying
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_OBJECT_COPY-class]{H5P_OBJECT_COPY}}.
+#' @return Object of class \code{\link[=H5P_OBJECT_COPY]{H5P_OBJECT_COPY}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_OBJECT_COPY <- R6Class("H5P_OBJECT_COPY",
                            inherit=H5P,
                            public=list(
@@ -1207,13 +1207,13 @@ H5P_OBJECT_COPY <- R6Class("H5P_OBJECT_COPY",
 
 #' Class for HDF5 property list for attribute creation
 #'
-#' It inherits all functions of the \code{\link{H5P-class}}.
+#' It inherits all functions of the \code{\link{H5P}}.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5P_ATTRIBUTE_CREATE-class]{H5P_ATTRIBUTE_CREATE}}.
+#' @return Object of class \code{\link[=H5P_ATTRIBUTE_CREATE]{H5P_ATTRIBUTE_CREATE}}.
 #' @export
 #' @author Holger Hoefling
-#' @seealso \code{\link[=H5P-class]{H5P}}
+#' @seealso \code{\link[=H5P]{H5P}}
 H5P_ATTRIBUTE_CREATE <- R6Class("H5P_ATTRIBUTE_CREATE",
                            inherit=H5P,
                            public=list(

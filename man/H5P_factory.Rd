@@ -2,7 +2,7 @@
 % Please edit documentation in R/R6Classes_H5P.R
 \name{H5P_factory}
 \alias{H5P_factory}
-\title{Create an \\code{\\link{H5P-class}} out of an id}
+\title{Create an \\code{\\link{H5P}} out of an id}
 \usage{
 H5P_factory(id)
 }
@@ -13,7 +13,7 @@ H5P_factory(id)
 An object of class \\code{\\link{H5P}}
 }
 \description{
-Create an \\code{\\link{H5P-class}} out of an id
+Create an \\code{\\link{H5P}} out of an id
 }
 \details{
 Function that determines the property list type of an id and creates

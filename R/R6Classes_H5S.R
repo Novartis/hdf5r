@@ -455,13 +455,13 @@ H5S$set("active", "rank", H5S$public_methods$get_simple_extent_ndims, overwrite=
 
 #' Class for HDF5 default space
 #'
-#' It inherits all functions of the \code{\link{H5S-class}}. As this is implemented, closing the id is overriden as this is a special id.
+#' It inherits all functions of the \code{\link{H5S}}. As this is implemented, closing the id is overriden as this is a special id.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5S_ALL-class]{H5S_ALL}}. 
+#' @return Object of class \code{\link[=H5S_ALL]{H5S_ALL}}. 
 #' @author Holger Hoefling
 #' @keywords internal
-#' @seealso \code{\link[=H5S-class]{H5S}}
+#' @seealso \code{\link[=H5S]{H5S}}
 H5S_ALL <- R6Class("H5S_ALL",
                        inherit=H5S,
                        public=list(

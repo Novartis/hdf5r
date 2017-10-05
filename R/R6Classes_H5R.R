@@ -33,10 +33,10 @@ ref_obj_size <- new.env()
 #'
 #' \code{H5R} is only the common base class and is never used. User should not create objects of this
 #' class by themselves and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
-#' Subclassses are \code{\link{H5R_OBJECT-class}} and \code{\link{H5R_DATASET_REGION-class}}
+#' Subclassses are \code{\link{H5R_OBJECT}} and \code{\link{H5R_DATASET_REGION}}
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5R-class]{H5R}}.
+#' @return Object of class \code{\link[=H5R]{H5R}}.
 #' @export
 #' @author Holger Hoefling
 H5R <- R6Class("H5R",
@@ -348,7 +348,7 @@ R6_set_list_of_items(H5R, "public", ref_func_clone_public, overwrite=TRUE)
 #' and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5R_OBJECT-class]{H5R_OBJECT}}.
+#' @return Object of class \code{\link[=H5R_OBJECT]{H5R_OBJECT}}.
 #' @export
 #' @author Holger Hoefling
 H5R_OBJECT <- R6Class("H5R_OBJECT",
@@ -416,7 +416,7 @@ H5R_OBJECT <- R6Class("H5R_OBJECT",
 #' and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
 #' @docType class
 #' @importFrom R6 R6Class
-#' @return Object of class \code{\link[=H5R_DATASET_REGION-class]{H5R_DATASET_REGION}}.
+#' @return Object of class \code{\link[=H5R_DATASET_REGION]{H5R_DATASET_REGION}}.
 #' @export
 #' @author Holger Hoefling
 H5R_DATASET_REGION <- R6Class("H5R_DATASET_REGION",
@@ -441,8 +441,8 @@ H5R_DATASET_REGION <- R6Class("H5R_DATASET_REGION",
                           },
                           dereference=function(object_access_pl=h5const$H5P_DEFAULT, obj=NULL, get_value=FALSE) {
                               "Dereference an H5R reference for a dataset region. The file the reference is pointing to is assigned automatically."
-                              "It returns a list where each item is a list with components \\code{dataset}, being an \\code{H5D-class} object and"
-                              "\\code{space} being a \\code{H5S-class} object. When setting \\code{get_value=TRUE}, then instead of these objects"
+                              "It returns a list where each item is a list with components \\code{dataset}, being an \\code{H5D} object and"
+                              "\\code{space} being a \\code{H5S} object. When setting \\code{get_value=TRUE}, then instead of these objects"
                               "The data itself is returned"
                               "This function implements the HDF5-API function H5Rdereference."
                               "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Dereference} for details."

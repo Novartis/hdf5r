@@ -11,7 +11,7 @@ Object of class \code{\link{H5File}}.
 \description{
 \code{H5File} objects are are the main entry point to access HDF5 data from binary 
 files. This class represents an open HDF5 File-id. It inherits all functions 
-of the \code{\link{H5RefClass-class}}.
+of the \code{\link{H5RefClass}}.
 }
 \details{
 HDF5 files can be opened or generated using the \code{H5File$new()} function and
@@ -26,9 +26,9 @@ to flush unwritten data to an HDF5 file.
 
 HDF5 Files typically contain the following objects:
 \describe{
-  \item{Groups}{Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also \code{\link{H5Group-class}}}
-  \item{Datasets}{Objects to store actual data, see also \code{\link{H5D-class}}}
-  \item{Attributes}{Meta data objects to store extra informatino about Files, Groups and Datasets, see also \code{\link{H5A-class}}}
+  \item{Groups}{Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also \code{\link{H5Group}}}
+  \item{Datasets}{Objects to store actual data, see also \code{\link{H5D}}}
+  \item{Attributes}{Meta data objects to store extra informatino about Files, Groups and Datasets, see also \code{\link{H5A}}}
 }
 }
 \section{Methods}{
@@ -202,7 +202,7 @@ Also note that this function implements the HDF5-API function H5Dcreate2 and H5D
 \item{robj}{An R-object to take as a template for creating the dataset. Either \code{robj} or both \code{dtype} and {space}
 have to be provided}
 \item{dtype}{The datatype to use for the creation of the object. Can be null if \code{robj} is given.}
-\item{space}{The space to use for the object creation. Can be null if \code{robj} is given. Otherwise an object of type \code{H5S-class} which specifies the dimensions of the dataset.}
+\item{space}{The space to use for the object creation. Can be null if \code{robj} is given. Otherwise an object of type \code{H5S} which specifies the dimensions of the dataset.}
 \item{dims}{Dimension of the new dataset; used if \code{space} is \code{NULL}. overwrite the dimension guessed from \code{robj}
 if \code{robj} is given.}
 \item{chunk_dims}{Size of the chunk. Has to have the same length as the dataset dimension. If \code{"auto"}
@@ -211,9 +211,9 @@ the \code{hdf5r.chunk_size} option. See also \code{\link{guess_chunks}} for a mo
 If set to \code{NULL}, then no chunking is used, unless explicitly set in \code{dataset_create_pl}.}
 \item{gzip_level}{Only if \code{chunk_dims} is not null. If given, then the \code{dataset_create_pl} is set to enable zipping
 at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in \code{dataset_create_pl}}
-\item{link_create_pl}{Link creation property list. See \code{\link{H5P_LINK_CREATE-class}}}
-\item{dataset_create_pl}{Datatset creation property list. See \code{\link{H5P_DATASET_CREATE-class}}}
-\item{dataset_access_pl}{Dataset access property list. See \code{\link{H5P_DATASET_ACCESS-class}}}
+\item{link_create_pl}{Link creation property list. See \code{\link{H5P_LINK_CREATE}}}
+\item{dataset_create_pl}{Datatset creation property list. See \code{\link{H5P_DATASET_CREATE}}}
+\item{dataset_access_pl}{Dataset access property list. See \code{\link{H5P_DATASET_ACCESS}}}
 }}
 
 \item{\code{commit(name, dtype, link_create_pl = h5const$H5P_DEFAULT,
@@ -465,7 +465,7 @@ The following functions are defined to extract HDF5 file contents:
 \describe{
   \item{\code{\link{list.groups}}}{List HDF5 groups in file.}
   \item{\code{\link{list.datasets}}}{List HDF5 datasets in file.}
-  \item{\code{\link{names}}}{List all items in a file or group (applicable for \code{\link{H5File-class}} and \code{\link{H5Group-class}})}
+  \item{\code{\link{names}}}{List all items in a file or group (applicable for \code{\link{H5File}} and \code{\link{H5Group}})}
   \item{\code{\link{list.attributes}}}{List Attributes of HDF5 object (file, group or dataset).}
   \item{\code{\link{h5attr_names}}}{Attribute names of an HDF5 object; similar to list.attributes}
 }

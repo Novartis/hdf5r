@@ -6,10 +6,10 @@
 \alias{H5P_OBJECT_CREATE}
 \title{Class for HDF5 property list for object creation}
 \value{
-Object of class \code{\link[=H5P_OBJECT_CREATE-class]{H5P_OBJECT_CREATE}}.
+Object of class \code{\link[=H5P_OBJECT_CREATE]{H5P_OBJECT_CREATE}}.
 }
 \description{
-It inherits all functions of the \code{\link{H5P-class}}.
+It inherits all functions of the \code{\link{H5P}}.
 }
 \section{Methods}{
 
@@ -49,7 +49,7 @@ This function implements the HDF5-API function H5Pget_attr_creation_order. Pleas
 }}
 
 \seealso{
-\code{\link[=H5P-class]{H5P}}
+\code{\link[=H5P]{H5P}}
 }
 \author{
 Holger Hoefling

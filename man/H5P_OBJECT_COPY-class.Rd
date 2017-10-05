@@ -6,10 +6,10 @@
 \alias{H5P_OBJECT_COPY}
 \title{Class for HDF5 property list for object copying}
 \value{
-Object of class \code{\link[=H5P_OBJECT_COPY-class]{H5P_OBJECT_COPY}}.
+Object of class \code{\link[=H5P_OBJECT_COPY]{H5P_OBJECT_COPY}}.
 }
 \description{
-It inherits all functions of the \code{\link{H5P-class}}.
+It inherits all functions of the \code{\link{H5P}}.
 }
 \section{Methods}{
 
@@ -33,7 +33,7 @@ This function implements the HDF5-API function H5Pget_copy_object. Please see th
 }}
 
 \seealso{
-\code{\link[=H5P-class]{H5P}}
+\code{\link[=H5P]{H5P}}
 }
 \author{
 Holger Hoefling

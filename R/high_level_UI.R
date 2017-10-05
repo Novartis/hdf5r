@@ -32,7 +32,7 @@
 ##' Get the names of the items in the group or at the \code{/} root of the file
 ##'
 ##' Works similar to the regular \code{names} function for a list. The names of the items of either a
-##' \code{\link{H5File-class}} at the root or a \code{\link{H5Group-class}} are returned as a character vector.
+##' \code{\link{H5File}} at the root or a \code{\link{H5Group}} are returned as a character vector.
 ##' The items are then accessed, again similar to a list, using \code{[[}.
 ##' @title Get the names of the items in the group or at the \code{/} root of the file
 ##' @param x An object of class \code{\link{H5File}} or \code{\link{H5Group}}
@@ -60,17 +60,17 @@ names.H5File <- names.H5Group
 ##' Works similar to retrieving objects in a list. \code{x[["my_name"]]} retrieves object \code{my_name} from the
 ##' HDF5-File or HDF5-Group \code{x}.
 ##'
-##' One can also assign objects under a not yet existing name. For either a  \code{\link{H5Group-class}} or \code{\link{H5D-class}},
-##' a hard link is created. If it is a datatype, \code{\link{H5T-class}}, this is committed under the chosen name \code{name}.
+##' One can also assign objects under a not yet existing name. For either a  \code{\link{H5Group}} or \code{\link{H5D}},
+##' a hard link is created. If it is a datatype, \code{\link{H5T}}, this is committed under the chosen name \code{name}.
 ##' @title Retrieve object from a group of file
 ##' @param x An object of class \code{\link{H5File}} or \code{\link{H5Group}}
 ##' @param name Name of the object to retrieve. Has to be a character vector of length one. No integer values allowed.
 ##' @param ... Currently ignored
-##' @param link_access_pl An object of class \code{\link{H5P_LINK_ACCESS-class}}.
-##' @param dataset_access_pl An object of class \code{\link{H5P_DATASET_ACCESS-class}}.
+##' @param link_access_pl An object of class \code{\link{H5P_LINK_ACCESS}}.
+##' @param dataset_access_pl An object of class \code{\link{H5P_DATASET_ACCESS}}.
 ##' @param type_access_pl Currently always \code{h5const$H5P_DEFAULT}
-##' @param value What to assign. Has to be one of \code{\link{H5Group-class}},  \code{\link{H5D-class}} or  \code{\link{H5T-class}}
-##' @return A \code{\link{H5Group-class}},  \code{\link{H5D-class}} or  \code{\link{H5T-class}}, depending on the object saved in the group under
+##' @param value What to assign. Has to be one of \code{\link{H5Group}},  \code{\link{H5D}} or  \code{\link{H5T}}
+##' @return A \code{\link{H5Group}},  \code{\link{H5D}} or  \code{\link{H5T}}, depending on the object saved in the group under
 ##' the requested name.
 ##' @author Holger Hoefling
 ##' @rdname H5Group_access
@@ -139,8 +139,8 @@ names.H5File <- names.H5Group
 ##' Implements high-level functions that allows interactions with HDF5-attributes in a way very similar to regular R-object attributes
 ##' in R are handled.
 ##' @title Interface for HDF5 attributes
-##' @param x The object to which to attach the attribute to or retrieve it from. Can be one of \code{\link{H5Group-class}},  \code{\link{H5D-class}},
-##' \code{\link{H5T-class}} or  \code{\link{H5File-class}}
+##' @param x The object to which to attach the attribute to or retrieve it from. Can be one of \code{\link{H5Group}},  \code{\link{H5D}},
+##' \code{\link{H5T}} or  \code{\link{H5File}}
 ##' @param which The name of the attribute to assign it to
 ##' @param value The value to assign to the attribute.
 ##' @return For \code{h5attributes}, a named list with the content of the attributes read out. For \code{h5attr_names},
@@ -209,19 +209,19 @@ h5attr <- function(x, which) {
 ##' Most importantly HDF5-COMPOUND objects only have a single dimension internally to HDF5 (a vector), but they correspond to R-data.frames,
 ##' which are 2 dimensional. For an HDF5 COMPOUND object, it is currently not possible to only sub-select a specific column.
 ##' All columns have to be extracted (using 1-dimensional access with \code{[} and can then be subset in R itself.
-##' The same is true for writing a COMPOUND object (\code{\link{H5T_COMPOUND-class}}). A complete data-frame
+##' The same is true for writing a COMPOUND object (\code{\link{H5T_COMPOUND}}). A complete data-frame
 ##' is needed, not just a subset of the columns.
 ##'
-##' Another important differences is for datasets of HDF5-ARRAY type \code{\link{H5T_ARRAY-class}}
+##' Another important differences is for datasets of HDF5-ARRAY type \code{\link{H5T_ARRAY}}
 ##' where the access to the object is only for the dimension of the object itself, not including the dimensions of the underlying array type.
 ##' @title Selecting and assigning subsets of HDF5-Spaces and HDF5-Datasets
-##' @param x The  \code{\link{H5S-class}} or \code{\link{H5D-class}} to subset or assign values to
+##' @param x The  \code{\link{H5S}} or \code{\link{H5D}} to subset or assign values to
 ##' @param d1 First dimension of the object
 ##' @param ... Used for other dimension of the object
-##' @param op Operation to perform on the \code{\link{H5S-class}}. Look into the HDF5 online help
+##' @param op Operation to perform on the \code{\link{H5S}}. Look into the HDF5 online help
 ##' \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements} and
 ##' \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab}
-##' @param dataset_xfer_pl An object of class \code{\link{H5P_DATASET_XFER-class}}.
+##' @param dataset_xfer_pl An object of class \code{\link{H5P_DATASET_XFER}}.
 ##' @param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
 ##' the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
 ##' (even using add-on packages). The constants governing this are part of \code{\link{h5const}}. The relevant ones start with the term
@@ -232,8 +232,8 @@ h5attr <- function(x, which) {
 ##' @param drop Logical. When reading data, should dimensions of size 1 be dropped.
 ##' @param envir The environment in which the dimension indices \code{d1, ...} are to be evaluated. Usually the environment from
 ##' where the function is called
-##' @return For \code{x} being a \code{\link{H5S-class}}, the same object is returned, but with the selection set as requested. For
-##' \code{\link{H5D-class}} it retrieves the subset of data requested or sets the subset of data assigned, as for any n-dimensional array
+##' @return For \code{x} being a \code{\link{H5S}}, the same object is returned, but with the selection set as requested. For
+##' \code{\link{H5D}} it retrieves the subset of data requested or sets the subset of data assigned, as for any n-dimensional array
 ##' in R.
 ##' @author Holger Hoefling
 ##' @name H5S_H5D_subset_assign

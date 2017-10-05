@@ -6,12 +6,12 @@
 \alias{H5T_COMPLEX}
 \title{Class for HDF5 complex datatypes}
 \value{
-Object of class \code{\link[=H5T_COMPLEX-class]{H5T_COMPLEX}}.
+Object of class \code{\link[=H5T_COMPLEX]{H5T_COMPLEX}}.
 }
 \description{
 In HDF5, complex numbers don't actually exist. They are represented as H5T_COMPOUND with two columns named \code{Real} and
 \code{Imaginary}.
-Inherits from class \code{\link[=H5T_COMPOUND-class]{H5T_COMPOUND}}.
+Inherits from class \code{\link[=H5T_COMPOUND]{H5T_COMPOUND}}.
 }
 \section{Methods}{
 
@@ -27,7 +27,7 @@ Create a new complex datatype
 }}
 
 \seealso{
-\code{\link[=H5T-class]{H5T}}, \code{\link[=H5T_COMPOUND-class]{H5T_COMPOUND}}
+\code{\link[=H5T]{H5T}}, \code{\link[=H5T_COMPOUND]{H5T_COMPOUND}}
 }
 \author{
 Holger Hoefling

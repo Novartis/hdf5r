@@ -326,7 +326,7 @@ commonFG <- list(
         "@param robj An R-object to take as a template for creating the dataset. Either \\code{robj} or both \\code{dtype} and {space}"
         "have to be provided"
         "@param dtype The datatype to use for the creation of the object. Can be null if \\code{robj} is given."
-        "@param space The space to use for the object creation. Can be null if \\code{robj} is given. Otherwise an object of type \\code{H5S-class} which specifies the dimensions of the dataset."
+        "@param space The space to use for the object creation. Can be null if \\code{robj} is given. Otherwise an object of type \\code{H5S} which specifies the dimensions of the dataset."
         "@param dims Dimension of the new dataset; used if \\code{space} is \\code{NULL}. overwrite the dimension guessed from \\code{robj}"
         "if \\code{robj} is given."
         "@param chunk_dims Size of the chunk. Has to have the same length as the dataset dimension. If \\code{\"auto\"}"
@@ -335,9 +335,9 @@ commonFG <- list(
         "If set to \\code{NULL}, then no chunking is used, unless explicitly set in \\code{dataset_create_pl}."
         "@param gzip_level Only if \\code{chunk_dims} is not null. If given, then the \\code{dataset_create_pl} is set to enable zipping"
         "at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in \\code{dataset_create_pl}"
-        "@param link_create_pl Link creation property list. See \\code{\\link{H5P_LINK_CREATE-class}}"
-        "@param dataset_create_pl Datatset creation property list. See \\code{\\link{H5P_DATASET_CREATE-class}}"
-        "@param dataset_access_pl Dataset access property list. See \\code{\\link{H5P_DATASET_ACCESS-class}}"
+        "@param link_create_pl Link creation property list. See \\code{\\link{H5P_LINK_CREATE}}"
+        "@param dataset_create_pl Datatset creation property list. See \\code{\\link{H5P_DATASET_CREATE}}"
+        "@param dataset_access_pl Dataset access property list. See \\code{\\link{H5P_DATASET_ACCESS}}"
 
 
         if(missing(name)) {

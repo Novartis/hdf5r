@@ -10,7 +10,7 @@ Object of class \code{\link{H5Group}}.
 }
 \description{
 HDF5-Groups are essentially equivalent to directories in a file system. Inside the groups, other groups or datasets can
-be created. For the most parts, groups behave like files, so please also look at the documentation of \code{H5File-class}.
+be created. For the most parts, groups behave like files, so please also look at the documentation of \code{H5File}.
 }
 \section{Methods}{
 
@@ -138,7 +138,7 @@ Also note that this function implements the HDF5-API function H5Dcreate2 and H5D
 \item{robj}{An R-object to take as a template for creating the dataset. Either \code{robj} or both \code{dtype} and {space}
 have to be provided}
 \item{dtype}{The datatype to use for the creation of the object. Can be null if \code{robj} is given.}
-\item{space}{The space to use for the object creation. Can be null if \code{robj} is given. Otherwise an object of type \code{H5S-class} which specifies the dimensions of the dataset.}
+\item{space}{The space to use for the object creation. Can be null if \code{robj} is given. Otherwise an object of type \code{H5S} which specifies the dimensions of the dataset.}
 \item{dims}{Dimension of the new dataset; used if \code{space} is \code{NULL}. overwrite the dimension guessed from \code{robj}
 if \code{robj} is given.}
 \item{chunk_dims}{Size of the chunk. Has to have the same length as the dataset dimension. If \code{"auto"}
@@ -147,9 +147,9 @@ the \code{hdf5r.chunk_size} option. See also \code{\link{guess_chunks}} for a mo
 If set to \code{NULL}, then no chunking is used, unless explicitly set in \code{dataset_create_pl}.}
 \item{gzip_level}{Only if \code{chunk_dims} is not null. If given, then the \code{dataset_create_pl} is set to enable zipping
 at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in \code{dataset_create_pl}}
-\item{link_create_pl}{Link creation property list. See \code{\link{H5P_LINK_CREATE-class}}}
-\item{dataset_create_pl}{Datatset creation property list. See \code{\link{H5P_DATASET_CREATE-class}}}
-\item{dataset_access_pl}{Dataset access property list. See \code{\link{H5P_DATASET_ACCESS-class}}}
+\item{link_create_pl}{Link creation property list. See \code{\link{H5P_LINK_CREATE}}}
+\item{dataset_create_pl}{Datatset creation property list. See \code{\link{H5P_DATASET_CREATE}}}
+\item{dataset_access_pl}{Dataset access property list. See \code{\link{H5P_DATASET_ACCESS}}}
 }}
 
 \item{\code{commit(name, dtype, link_create_pl = h5const$H5P_DEFAULT,

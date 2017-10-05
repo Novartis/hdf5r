@@ -16,7 +16,7 @@ H5ToR_Post(Robj, dtype, nelem, flags = getOption("hdf5r.h5tor_default"),
 \arguments{
 \item{Robj}{The R-object to transfer to HDF5}
 
-\item{dtype}{Datatype of the HDF5 object. Of class \code{\link{H5T-class}}}
+\item{dtype}{Datatype of the HDF5 object. Of class \code{\link{H5T}}}
 
 \item{nelem}{Number of elements to copy}
 

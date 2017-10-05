@@ -6,12 +6,12 @@
 \alias{H5R}
 \title{Class for HDF5 Reference datatypes.}
 \value{
-Object of class \code{\link[=H5R-class]{H5R}}.
+Object of class \code{\link[=H5R]{H5R}}.
 }
 \description{
 \code{H5R} is only the common base class and is never used. User should not create objects of this
 class by themselves and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
-Subclassses are \code{\link{H5R_OBJECT-class}} and \code{\link{H5R_DATASET_REGION-class}}
+Subclassses are \code{\link{H5R_OBJECT}} and \code{\link{H5R_DATASET_REGION}}
 }
 \section{Methods}{
 

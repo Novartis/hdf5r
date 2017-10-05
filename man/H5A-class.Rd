@@ -13,7 +13,7 @@ This class represents an HDF5 attribute. Usually it is easier to read and write 
 groups, datasets and commited datatypes using the functions documented in \code{\link{h5attributes}}.
 }
 \details{
-Otherwise, the functionality for attributes is very similar to that of datasets (\code{\link{H5D-class}}),
+Otherwise, the functionality for attributes is very similar to that of datasets (\code{\link{H5D}}),
 however with the notable exception that attributes always have to be read and written as a whole.
 }
 \section{Methods}{

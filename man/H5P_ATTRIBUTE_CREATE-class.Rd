@@ -6,10 +6,10 @@
 \alias{H5P_ATTRIBUTE_CREATE}
 \title{Class for HDF5 property list for attribute creation}
 \value{
-Object of class \code{\link[=H5P_ATTRIBUTE_CREATE-class]{H5P_ATTRIBUTE_CREATE}}.
+Object of class \code{\link[=H5P_ATTRIBUTE_CREATE]{H5P_ATTRIBUTE_CREATE}}.
 }
 \description{
-It inherits all functions of the \code{\link{H5P-class}}.
+It inherits all functions of the \code{\link{H5P}}.
 }
 \section{Methods}{
 
@@ -33,7 +33,7 @@ This function implements the HDF5-API function H5Pget_char_encoding. Please see 
 }}
 
 \seealso{
-\code{\link[=H5P-class]{H5P}}
+\code{\link[=H5P]{H5P}}
 }
 \author{
 Holger Hoefling

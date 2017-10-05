@@ -6,10 +6,10 @@
 \alias{H5T_STRING}
 \title{Class for HDF5 string datatypes.}
 \value{
-Object of class \code{\link[=H5T_STRING-class]{H5T_STRING}}.
+Object of class \code{\link[=H5T_STRING]{H5T_STRING}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}.
+Inherits from class \code{\link[=H5T]{H5T}}.
 }
 \section{Methods}{
 
@@ -68,7 +68,7 @@ str_vlen$is_vlen()
 str_vlen
 }
 \seealso{
-\code{\link[=H5T-class]{H5T}}
+\code{\link[=H5T]{H5T}}
 }
 \author{
 Holger Hoefling

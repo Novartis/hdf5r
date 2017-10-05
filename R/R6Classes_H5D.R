@@ -24,21 +24,21 @@ setOldClass("H5D")
 
 ##' Class for representing HDF5 datasets
 ##'
-##' In HDF5, datasets can be located in a group (see \code{\link{H5Group-class}}) or at the
-##' root of a file (see \code{\link{H5File-class}}). They can be created either with a pre-existing R-object
+##' In HDF5, datasets can be located in a group (see \code{\link{H5Group}}) or at the
+##' root of a file (see \code{\link{H5File}}). They can be created either with a pre-existing R-object
 ##' (arrays as well as data.frames are supported, but not lists or other complex objects), or by specifiying
 ##' an explicit datatype (for available datatypes see \code{h5types$overview} as well as the dimension.
 ##' In addition, other features are supported such as transparent compression (for which a chunk-size can be selected).
 ##'
-##' In order to create a dataset, the \code{create_dataset} methods of either \code{\link{H5Group-class}} or
-##' \code{\link{H5File-class}} should be used. Please see the documentation there for how to create them.
+##' In order to create a dataset, the \code{create_dataset} methods of either \code{\link{H5Group}} or
+##' \code{\link{H5File}} should be used. Please see the documentation there for how to create them.
 ##'
 ##' The most important parts of a dataset are the 
 ##' \describe{
 ##'   \item{Space}{The space of the dataset. It describes the dimension of the dataset as well as the maximum dimensions.
-##'                Can be obtained using the \code{get_space} of the \code{\link{H5S-class}} object.}
+##'                Can be obtained using the \code{get_space} of the \code{\link{H5S}} object.}
 ##'   \item{Datatype}{The datatypes that is being used in the dataset. Can be obtained using the \code{get_type} method.
-##'                   See \code{\link{H5T-class}} to get more information about using datatypes.}
+##'                   See \code{\link{H5T}} to get more information about using datatypes.}
 ##' }
 ##'
 ##' In order to read and write datasets, the \code{read} and \code{write} methods are available. In addition, the standard way of using
@@ -60,7 +60,7 @@ setOldClass("H5D")
 ##' 
 ##' @docType class
 ##' @importFrom R6 R6Class
-##' @return Object of class \code{\link{H5D-class}}.
+##' @return Object of class \code{\link{H5D}}.
 ##' @export
 ##' @author Holger Hoefling
 ##' @examples
@@ -205,13 +205,13 @@ H5D <- R6Class("H5D",
                        "This function implements the HDF5-API function H5Dread, with minor changes to the API to accomodate R."
                        "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details."
                        "It reads the data in the dataset as specified by \\code{mem_space} and return it as an R-obj"
-                       "@param file_space An HDF5-space, represented as class \\code{\\link{H5S-class}} that determines which part"
+                       "@param file_space An HDF5-space, represented as class \\code{\\link{H5S}} that determines which part"
                        "of the dataset is being read. Can also be given as an id"
                        "@param mem_space The space as it is represented in memory; advanced feature; may be removed in the future."
                        "Can also be given as an id."
                        "@param mem_type Memory type; extracted from the dataset if null (can be passed in for efficiency reasons"
                        "Can also be given as an id."
-                       "@param dataset_xfer_pl Dataset transfer property list. See \\code{\\link{H5P_DATASET_XFER-class}}"
+                       "@param dataset_xfer_pl Dataset transfer property list. See \\code{\\link{H5P_DATASET_XFER}}"
                        "@param flags Conversion rules for integer values. See also \\code{\\link{h5const}}"
                        "@param set_dim If \\code{TRUE}, the dimension attribute is set in the return value. How it is set "
                        "is determined by \\code{dim_to_set}."
@@ -322,7 +322,7 @@ H5D <- R6Class("H5D",
                        "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
                        "For interactive use we recomment the use of the \\code{[} operator. If set to \\code{NULL}, the entire dataset will be read."
                        "@param envir The environment in which to evaluate \\code{args}"
-                       "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER-class}}." 
+                       "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER}}." 
                        "@param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and"
                        "the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers"
                        "(even using add-on packages). The constants governing this are part of \\code{\\link{h5const}}. The relevant ones start with the term"
@@ -402,9 +402,9 @@ H5D <- R6Class("H5D",
                        "@param robj The object to write into the dataset"
                        "@param mem_space The space as it is represented in memory; advanced feature; may be removed in the future"
                        "@param mem_type Memory type; extracted from the dataset if null (can be passed in for efficiency reasons"
-                       "@param file_space An HDF5-space, represented as class \\code{\\link{H5S-class}} that determines which part"
+                       "@param file_space An HDF5-space, represented as class \\code{\\link{H5S}} that determines which part"
                        "of the dataset is being written."
-                       "@param dataset_xfer_pl Dataset transfer property list. See \\code{\\link{H5P_DATASET_XFER-class}}"
+                       "@param dataset_xfer_pl Dataset transfer property list. See \\code{\\link{H5P_DATASET_XFER}}"
                        "@param flush Should a flush be done after the write"
 
                        ## first ensure that file_space of the correct types and extract the id
@@ -486,7 +486,7 @@ H5D <- R6Class("H5D",
                        "For interactive use we recomment the use of the \\code{[} operator. If set to \\code{NULL}, the entire dataset will be read."
                        "@param value The data to write to the dataset"
                        "@param envir The environment in which to evaluate \\code{args}"
-                       "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER-class}}." 
+                       "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER}}." 
                        "@return The HDF5 dataset object, returned invisibly"
 
                        

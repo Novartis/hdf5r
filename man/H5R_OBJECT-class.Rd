@@ -6,7 +6,7 @@
 \alias{H5R_OBJECT}
 \title{Class for HDF5 Object-references.}
 \value{
-Object of class \code{\link[=H5R_OBJECT-class]{H5R_OBJECT}}.
+Object of class \code{\link[=H5R_OBJECT]{H5R_OBJECT}}.
 }
 \description{
 \code{H5R_OBJECT} is the reference class for objects. Users should not create this class by themselves, but use the appropriate 

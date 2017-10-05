@@ -16,8 +16,8 @@ h5attr(x, which)
 h5attr(x, which) <- value
 }
 \arguments{
-\item{x}{The object to which to attach the attribute to or retrieve it from. Can be one of \code{\link{H5Group-class}},  \code{\link{H5D-class}},
-\code{\link{H5T-class}} or  \code{\link{H5File-class}}}
+\item{x}{The object to which to attach the attribute to or retrieve it from. Can be one of \code{\link{H5Group}},  \code{\link{H5D}},
+\code{\link{H5T}} or  \code{\link{H5File}}}
 
 \item{which}{The name of the attribute to assign it to}
 

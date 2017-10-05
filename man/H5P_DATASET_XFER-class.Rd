@@ -6,10 +6,10 @@
 \alias{H5P_DATASET_XFER}
 \title{Class for HDF5 property list for dataset transfer}
 \value{
-Object of class \code{\link[=H5P_DATASET_XFER-class]{H5P_DATASET_XFER}}.
+Object of class \code{\link[=H5P_DATASET_XFER]{H5P_DATASET_XFER}}.
 }
 \description{
-It inherits all functions of the \code{\link{H5P-class}}.
+It inherits all functions of the \code{\link{H5P}}.
 }
 \section{Methods}{
 
@@ -60,7 +60,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P
 }}
 
 \seealso{
-\code{\link[=H5P-class]{H5P}}
+\code{\link[=H5P]{H5P}}
 }
 \author{
 Holger Hoefling

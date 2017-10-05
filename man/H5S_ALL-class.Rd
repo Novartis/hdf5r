@@ -6,10 +6,10 @@
 \alias{H5S_ALL}
 \title{Class for HDF5 default space}
 \value{
-Object of class \code{\link[=H5S_ALL-class]{H5S_ALL}}.
+Object of class \code{\link[=H5S_ALL]{H5S_ALL}}.
 }
 \description{
-It inherits all functions of the \code{\link{H5S-class}}. As this is implemented, closing the id is overriden as this is a special id.
+It inherits all functions of the \code{\link{H5S}}. As this is implemented, closing the id is overriden as this is a special id.
 }
 \section{Methods}{
 
@@ -25,7 +25,7 @@ Just prints that it is the default class
 }}
 
 \seealso{
-\code{\link[=H5S-class]{H5S}}
+\code{\link[=H5S]{H5S}}
 }
 \author{
 Holger Hoefling

@@ -27,7 +27,7 @@
 ##' for an example of how to use them.
 ##' @title Low-level conversion functions from R to HDF5 and vice versa
 ##' @param Robj The R-object to transfer to HDF5
-##' @param dtype Datatype of the HDF5 object. Of class \code{\link{H5T-class}}
+##' @param dtype Datatype of the HDF5 object. Of class \code{\link{H5T}}
 ##' @param nelem Number of elements to copy
 ##' @param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
 ##' the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
@@ -125,13 +125,13 @@ guess_dim <- function(x) {
 ##' @param dtype datatype; used in guessing the number of dataset elements of an r object
 ##' @param ds_dim Can explicitly set the dimension of the dataset object. For \code{scalar}, this is one. Otherwise, this can be
 ##' used so that a multi-dimensional object can be represented so that some of its dimension are in the dataset, and some are inside an
-##' \code{\link{H5T_ARRAY-class}}
+##' \code{\link{H5T_ARRAY}}
 ##' @param scalar Should the datatype be created so that \code{x} can be represented as a scalar with that datatype? This is intended
-##' to know if a vector/array should be represented as an \code{\link{H5T_ARRAY-class}} or not.
+##' to know if a vector/array should be represented as an \code{\link{H5T_ARRAY}} or not.
 ##' @param string_len If a string is in the R object, the length to which the corresponding HDF5 type should be set. If it is a
 ##' positive integer, the string is of that length. If it is \code{Inf}, it is variable length. If it is set to \code{estimate},
 ##' it is set to the length of the longest string in the \code{x}.
-##' @return An object of class \code{\link{H5T-class}} that represents the HDF5-type of the Robj that was passed in
+##' @return An object of class \code{\link{H5T}} that represents the HDF5-type of the Robj that was passed in
 ##' @author Holger Hoefling
 ##' @importFrom bit64 is.integer64
 ##' @export
@@ -285,10 +285,10 @@ guess_dtype <- function(x, ds_dim=NULL, scalar=FALSE, string_len=getOption("hdf5
 ##' for example in dataset creation based on an R-object, not a specifically defined dimensions.
 ##' @title Guess the dataspace of an object
 ##' @param x The R object for which to guess the space
-##' @param dtype Object of type \code{\link{H5T-class}}, that represents that datatype to use.
+##' @param dtype Object of type \code{\link{H5T}}, that represents that datatype to use.
 ##' @param chunked Is the datatype chunked? If yes, \code{maxdims} of the space will be set to infinity,
 ##' otherwise \code{maxdims} will be set to the original extent of the space.
-##' @return An object of type \code{\link{H5S-class}}
+##' @return An object of type \code{\link{H5S}}
 ##' @author Holger Hoefling
 ##' @export
 guess_space <- function(x, dtype, chunked=TRUE) {

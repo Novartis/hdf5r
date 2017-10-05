@@ -6,10 +6,10 @@
 \alias{H5T_VLEN}
 \title{Class for HDF5 variable-length datatypes.}
 \value{
-Object of class \code{\link[=H5T_VLEN-class]{H5T_VLEN}}.
+Object of class \code{\link[=H5T_VLEN]{H5T_VLEN}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}. This can make any datatype a variable length datatype.
+Inherits from class \code{\link[=H5T]{H5T}}. This can make any datatype a variable length datatype.
 This would mostly be intended for storing ragged arrays.
 }
 \section{Methods}{
@@ -40,7 +40,7 @@ vlen_int <- H5T_VLEN$new(h5types$H5T_NATIVE_INT)
 vlen_int
 }
 \seealso{
-\code{\link[=H5T-class]{H5T}}
+\code{\link[=H5T]{H5T}}
 }
 \author{
 Holger Hoefling

@@ -148,8 +148,8 @@ clean_ls_df <- function(df) {
 ##' the label is printed instead of the constant. This function is intended to provide the same functionality
 ##' for data frames with extended factors, by adding the class \code{data.frame_ext} to the class vector.
 ##' @title Print a data frame with extended factor objects
-##' @param x The \code{data.frame_ext} object to print; Is returned by ls from \code{\link{H5File-class}}
-##' and \code{\link{H5Group-class}} and this function allows for petter printing of \code{\link{factor_ext}}
+##' @param x The \code{data.frame_ext} object to print; Is returned by ls from \code{\link{H5File}}
+##' and \code{\link{H5Group}} and this function allows for petter printing of \code{\link{factor_ext}}
 ##' so that the label instead of the value is printed.
 ##' @param ... Parameters to be passed on directly to \code{\link{print.data.frame}}
 ##' @return The object to print itself, invisibly

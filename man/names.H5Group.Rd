@@ -20,7 +20,7 @@ Get the names of the items in the group or at the \code{/} root of the file
 }
 \details{
 Works similar to the regular \code{names} function for a list. The names of the items of either a
-\code{\link{H5File-class}} at the root or a \code{\link{H5Group-class}} are returned as a character vector.
+\code{\link{H5File}} at the root or a \code{\link{H5Group}} are returned as a character vector.
 The items are then accessed, again similar to a list, using \code{[[}.
 }
 \author{

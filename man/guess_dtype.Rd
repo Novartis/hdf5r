@@ -20,17 +20,17 @@ guess_dtype(x, ds_dim = NULL, scalar = FALSE,
 
 \item{ds_dim}{Can explicitly set the dimension of the dataset object. For \code{scalar}, this is one. Otherwise, this can be
 used so that a multi-dimensional object can be represented so that some of its dimension are in the dataset, and some are inside an
-\code{\link{H5T_ARRAY-class}}}
+\code{\link{H5T_ARRAY}}}
 
 \item{scalar}{Should the datatype be created so that \code{x} can be represented as a scalar with that datatype? This is intended
-to know if a vector/array should be represented as an \code{\link{H5T_ARRAY-class}} or not.}
+to know if a vector/array should be represented as an \code{\link{H5T_ARRAY}} or not.}
 
 \item{string_len}{If a string is in the R object, the length to which the corresponding HDF5 type should be set. If it is a
 positive integer, the string is of that length. If it is \code{Inf}, it is variable length. If it is set to \code{estimate},
 it is set to the length of the longest string in the \code{x}.}
 }
 \value{
-An object of class \code{\link{H5T-class}} that represents the HDF5-type of the Robj that was passed in
+An object of class \code{\link{H5T}} that represents the HDF5-type of the Robj that was passed in
 }
 \description{
 Guess the HDF5 datatype of an R object

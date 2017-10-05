@@ -27,16 +27,16 @@
 
 \item{...}{Currently ignored}
 
-\item{link_access_pl}{An object of class \code{\link{H5P_LINK_ACCESS-class}}.}
+\item{link_access_pl}{An object of class \code{\link{H5P_LINK_ACCESS}}.}
 
-\item{dataset_access_pl}{An object of class \code{\link{H5P_DATASET_ACCESS-class}}.}
+\item{dataset_access_pl}{An object of class \code{\link{H5P_DATASET_ACCESS}}.}
 
 \item{type_access_pl}{Currently always \code{h5const$H5P_DEFAULT}}
 
-\item{value}{What to assign. Has to be one of \code{\link{H5Group-class}},  \code{\link{H5D-class}} or  \code{\link{H5T-class}}}
+\item{value}{What to assign. Has to be one of \code{\link{H5Group}},  \code{\link{H5D}} or  \code{\link{H5T}}}
 }
 \value{
-A \code{\link{H5Group-class}},  \code{\link{H5D-class}} or  \code{\link{H5T-class}}, depending on the object saved in the group under
+A \code{\link{H5Group}},  \code{\link{H5D}} or  \code{\link{H5T}}, depending on the object saved in the group under
 the requested name.
 }
 \description{
@@ -46,8 +46,8 @@ Retrieve object from a group of file
 Works similar to retrieving objects in a list. \code{x[["my_name"]]} retrieves object \code{my_name} from the
 HDF5-File or HDF5-Group \code{x}.
 
-One can also assign objects under a not yet existing name. For either a  \code{\link{H5Group-class}} or \code{\link{H5D-class}},
-a hard link is created. If it is a datatype, \code{\link{H5T-class}}, this is committed under the chosen name \code{name}.
+One can also assign objects under a not yet existing name. For either a  \code{\link{H5Group}} or \code{\link{H5D}},
+a hard link is created. If it is a datatype, \code{\link{H5T}}, this is committed under the chosen name \code{name}.
 }
 \author{
 Holger Hoefling

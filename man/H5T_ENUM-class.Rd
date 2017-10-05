@@ -6,10 +6,10 @@
 \alias{H5T_ENUM}
 \title{Class for HDF5 enumeration datatypes.}
 \value{
-Object of class \code{\link[=H5T_ENUM-class]{H5T_ENUM}}.
+Object of class \code{\link[=H5T_ENUM]{H5T_ENUM}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}.
+Inherits from class \code{\link[=H5T]{H5T}}.
 }
 \section{Methods}{
 
@@ -55,7 +55,7 @@ nucleotide_enum$get_size()
 nucleotide_enum$get_precision()
 }
 \seealso{
-\code{\link[=H5T-class]{H5T}}
+\code{\link[=H5T]{H5T}}
 }
 \author{
 Holger Hoefling

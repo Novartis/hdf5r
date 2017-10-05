@@ -9,13 +9,13 @@ guess_space(x, dtype, chunked = TRUE)
 \arguments{
 \item{x}{The R object for which to guess the space}
 
-\item{dtype}{Object of type \code{\link{H5T-class}}, that represents that datatype to use.}
+\item{dtype}{Object of type \code{\link{H5T}}, that represents that datatype to use.}
 
 \item{chunked}{Is the datatype chunked? If yes, \code{maxdims} of the space will be set to infinity,
 otherwise \code{maxdims} will be set to the original extent of the space.}
 }
 \value{
-An object of type \code{\link{H5S-class}}
+An object of type \code{\link{H5S}}
 }
 \description{
 Guess the dataspace of an object

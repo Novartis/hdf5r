@@ -26,7 +26,7 @@
 ##' Class for representing HDF5 groups
 ##' 
 ##' HDF5-Groups are essentially equivalent to directories in a file system. Inside the groups, other groups or datasets can
-##' be created. For the most parts, groups behave like files, so please also look at the documentation of \code{H5File-class}.
+##' be created. For the most parts, groups behave like files, so please also look at the documentation of \code{H5File}.
 ##' 
 ##' @docType class
 ##' @importFrom R6 R6Class
@@ -74,12 +74,12 @@ R6_set_list_of_items(H5Group, "public", commonFGDTA, overwrite=TRUE)
 ##' This particular factory dispatches ids that can be of type Group, Datatype of dataset (these are
 ##' id types that can be the result of opening an object. For datatypes, the \code{\link{H5T_factory}} exists that can be used
 ##' @title Wrap an HDF5-id in the appropriate class
-##' @param id The id to wrap in an R6-class object
-##' @return An R6-class object corresponding to the HDF5 internal class of the ID
+##' @param id The id to wrap in an R6 object
+##' @return An R6 object corresponding to the HDF5 internal class of the ID
 ##' @author Holger Hoefling
 ##' @keywords internal
 H5GTD_factory <- function(id) {
-    ## find out the type, then stick it into the correct R6-class (or send to the next factory)
+    ## find out the type, then stick it into the correct R6 (or send to the next factory)
     res <- .Call("R_H5Iget_type", id, PACKAGE = "hdf5r")$return_val
     res <- as.character(res)
     if(res == "H5I_BADID") {

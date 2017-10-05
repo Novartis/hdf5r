@@ -7,8 +7,8 @@
 \method{print}{data.frame_ext}(x, ...)
 }
 \arguments{
-\item{x}{The \code{data.frame_ext} object to print; Is returned by ls from \code{\link{H5File-class}}
-and \code{\link{H5Group-class}} and this function allows for petter printing of \code{\link{factor_ext}}
+\item{x}{The \code{data.frame_ext} object to print; Is returned by ls from \code{\link{H5File}}
+and \code{\link{H5Group}} and this function allows for petter printing of \code{\link{factor_ext}}
 so that the label instead of the value is printed.}
 
 \item{...}{Parameters to be passed on directly to \code{\link{print.data.frame}}}

@@ -7,10 +7,10 @@
 \title{Class for HDF5 logical datatypes. This is an enum with the 3 values FALSE, TRUE and NA mapped on values 0, 1 and 2.
 Is transparently mapped onto a logical variable}
 \value{
-Object of class \code{\link[=H5T_LOGICAL-class]{H5T_LOGICAL}}.
+Object of class \code{\link[=H5T_LOGICAL]{H5T_LOGICAL}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}.
+Inherits from class \code{\link[=H5T]{H5T}}.
 }
 \section{Methods}{
 
@@ -27,7 +27,7 @@ internally represented by an ENUM-type
 }}
 
 \seealso{
-\code{\link[=H5T-class]{H5T}}, \code{\link[=H5T_ENUM-class]{H5T_ENUM}}
+\code{\link[=H5T]{H5T}}, \code{\link[=H5T_ENUM]{H5T_ENUM}}
 }
 \author{
 Holger Hoefling

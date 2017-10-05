@@ -6,10 +6,10 @@
 \alias{H5T_COMPOUND}
 \title{Class for HDF5 compound datatypes.}
 \value{
-Object of class \code{\link[=H5T_COMPOUND-class]{H5T_COMPOUND}}.
+Object of class \code{\link[=H5T_COMPOUND]{H5T_COMPOUND}}.
 }
 \description{
-Inherits from class \code{\link[=H5T-class]{H5T}}.
+Inherits from class \code{\link[=H5T]{H5T}}.
 }
 \section{Methods}{
 
@@ -36,7 +36,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5T
 
 \item{\code{get_cpd_types()}}{
 
-Return \code{\link{H5T-class}} objects that represent the datatypes of the columns of the 
+Return \code{\link{H5T}} objects that represent the datatypes of the columns of the 
 compound object. Returned as a list if more than 1}
 
 \item{\code{get_cpd_labels()}}{
@@ -63,7 +63,7 @@ my_cpd <- H5T_COMPOUND$new(c("name", "age", "salary"),
 my_cpd
 }
 \seealso{
-\code{\link[=H5T-class]{H5T}}
+\code{\link[=H5T]{H5T}}
 }
 \author{
 Holger Hoefling

@@ -100,7 +100,7 @@ is_hdf5 <- function(name) {
 #' 
 #' \code{H5File} objects are are the main entry point to access HDF5 data from binary 
 #' files. This class represents an open HDF5 File-id. It inherits all functions 
-#' of the \code{\link{H5RefClass-class}}.
+#' of the \code{\link{H5RefClass}}.
 #' 
 #' HDF5 files can be opened or generated using the \code{H5File$new()} function and
 #' a specified file access mode. \code{H5File$new()} returns a \code{H5File} object
@@ -114,9 +114,9 @@ is_hdf5 <- function(name) {
 #' 
 #' HDF5 Files typically contain the following objects:
 #' \describe{
-#'   \item{Groups}{Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also \code{\link{H5Group-class}}}
-#'   \item{Datasets}{Objects to store actual data, see also \code{\link{H5D-class}}}
-#'   \item{Attributes}{Meta data objects to store extra informatino about Files, Groups and Datasets, see also \code{\link{H5A-class}}}
+#'   \item{Groups}{Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also \code{\link{H5Group}}}
+#'   \item{Datasets}{Objects to store actual data, see also \code{\link{H5D}}}
+#'   \item{Attributes}{Meta data objects to store extra informatino about Files, Groups and Datasets, see also \code{\link{H5A}}}
 #' }
 #' 
 #' @section Extract/List File Contents:
@@ -124,7 +124,7 @@ is_hdf5 <- function(name) {
 #' \describe{
 #'   \item{\code{\link{list.groups}}}{List HDF5 groups in file.}
 #'   \item{\code{\link{list.datasets}}}{List HDF5 datasets in file.}
-#'   \item{\code{\link{names}}}{List all items in a file or group (applicable for \code{\link{H5File-class}} and \code{\link{H5Group-class}})}
+#'   \item{\code{\link{names}}}{List all items in a file or group (applicable for \code{\link{H5File}} and \code{\link{H5Group}})}
 #'   \item{\code{\link{list.attributes}}}{List Attributes of HDF5 object (file, group or dataset).}
 #'   \item{\code{\link{h5attr_names}}}{Attribute names of an HDF5 object; similar to list.attributes}
 #' }

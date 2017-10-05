@@ -12,7 +12,7 @@ text_to_dtype(text, lang_type = h5const$H5LT_DDL)
 \item{lang_type}{The type of language to use; currently only \code{H5LT_DDL} is supported.}
 }
 \value{
-A datatype corresponding to the text with the appropriate class inheriting from \code{\link{H5T-class}}.
+A datatype corresponding to the text with the appropriate class inheriting from \code{\link{H5T}}.
 }
 \description{
 Convert a text description to a datatype
