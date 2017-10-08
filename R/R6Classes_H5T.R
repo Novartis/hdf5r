@@ -146,7 +146,7 @@ text_to_dtype <- function(text, lang_type=h5const$H5LT_DDL) {
 
 #' Class for HDF5 datatypes.
 #'
-#' This is the base class for all datatypes, but most have a specialized class.
+#' This is the base class for all datatypes, but most have a specialised class.
 #' This class represents an HDF5 datatype. It inherits all functions of the
 #' \code{\link{H5RefClass}}. It is also the base class for many other classes well, specifically
 #' \describe{
