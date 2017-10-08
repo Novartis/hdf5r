@@ -33,7 +33,7 @@ ref_obj_size <- new.env()
 #'
 #' \code{H5R} is only the common base class and is never used. User should not create objects of this
 #' class by themselves and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
-#' Subclassses are \code{\link{H5R_OBJECT}} and \code{\link{H5R_DATASET_REGION}}
+#' Sub-classes are \code{\link{H5R_OBJECT}} and \code{\link{H5R_DATASET_REGION}}
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5R]{H5R}}.
@@ -126,7 +126,7 @@ H5R <- R6Class("H5R",
                    },
                    subset_assign=function(dim_index, value) {
                        "Assign values into a subset of the H5R-vector"
-                       "@param dim_index A list of dimension indices as usually pased into \\code{[}"
+                       "@param dim_index A list of dimension indices as usually passed into \\code{[}"
                        "@param value The value to assign"
                        if(inherits(value, "H5R")) {
                            value <- value$ref
@@ -356,7 +356,7 @@ H5R_OBJECT <- R6Class("H5R_OBJECT",
                       public=list(
                           initialize=function(num=0, id=NULL) {
                               "Create a new reference for object; Usually, users shouldn't have to call this, but use the \\code{create_reference}"
-                              "method of a dataset, group of commited datatype"
+                              "method of a dataset, group of committed datatype"
                               if(inherits(id, "H5File")) {
                                   id$inc_ref()
                                   id <- id$id

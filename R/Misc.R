@@ -24,7 +24,7 @@
 ##' Return the version of the HDF5-API and print it to the screen if requested
 ##' @title Return the version of the HDF5-API
 ##' @param verbose Should the information be printed to the screen as well
-##' @return Version of the underlying HDF5 api as a string
+##' @return Version of the underlying HDF5 API as a string
 ##' @author Holger Hoefling
 ##' @importFrom utils packageVersion
 ##' @export
@@ -58,7 +58,7 @@ h5garbage_collect <- function() {
 
 ##' Convert a double or integer to hex
 ##'
-##' Converts a double or integer to hex. Contrary to the builtin \code{\link{format}},
+##' Converts a double or integer to hex. Contrary to the built-in \code{\link{format}},
 ##' this is done without any conversion of integers in double-format to integers in integer format.
 ##' @title Convert a double or integer to hex
 ##' @param x The integer or double vector to convert

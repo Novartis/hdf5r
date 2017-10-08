@@ -92,7 +92,7 @@
     
     <p>In HDF5, datasets can be located in a group (see <code><a href='H5Group-class.html'>H5Group</a></code>) or at the
 root of a file (see <code><a href='H5File-class.html'>H5File</a></code>). They can be created either with a pre-existing R-object
-(arrays as well as data.frames are supported, but not lists or other complex objects), or by specifiying
+(arrays as well as data.frames are supported, but not lists or other complex objects), or by specifying
 an explicit datatype (for available datatypes see <code>h5types$overview</code> as well as the dimension.
 In addition, other features are supported such as transparent compression (for which a chunk-size can be selected).</p>
     
@@ -129,7 +129,7 @@ In addition, other features are supported such as transparent compression (for w
 
     
     <dl class='dl-horizontal'>
-<dt><code>new(id = NULL)</code></dt><dd><p>Intializes a new dataset-object. Only for internal use. Use the <code>create_dataset</code> function for <code><a href='H5Group-class.html'>H5Group</a></code>
+<dt><code>new(id = NULL)</code></dt><dd><p>Initializes a new dataset-object. Only for internal use. Use the <code>create_dataset</code> function for <code><a href='H5Group-class.html'>H5Group</a></code>
 and <code><a href='H5File-class.html'>H5File</a></code> objects
     <strong>Parameters</strong>
 <dl class='dl-horizontal'>
@@ -158,7 +158,7 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
   mem_type = NULL, dataset_xfer_pl = h5const$H5P_DEFAULT,
   flags = getOption("hdf5r.h5tor_default"), set_dim = FALSE,
   dim_to_set = NULL, drop = TRUE)</code></dt><dd><p>This function is for advanced users. It is recommended to use <code>read</code> instead or the <code>[</code> interface.
-This function implements the HDF5-API function H5Dread, with minor changes to the API to accomodate R.
+This function implements the HDF5-API function H5Dread, with minor changes to the API to accommodate R.
 Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read</a> for details.
 It reads the data in the dataset as specified by <code>mem_space</code> and return it as an R-obj
     <strong>Parameters</strong>
@@ -185,7 +185,7 @@ all indices are being passed in the parameter <code>args</code>.
     <strong>Parameters</strong>
 <dl class='dl-horizontal'>
 <dt>args</dt><dd><p>The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
-For interactive use we recomment the use of the <code>[</code> operator. If set to <code>NULL</code>, the entire dataset will be read.</p></dd>
+For interactive use we recommend the use of the <code>[</code> operator. If set to <code>NULL</code>, the entire dataset will be read.</p></dd>
 <dt>envir</dt><dd><p>The environment in which to evaluate <code>args</code></p></dd>
 <dt>dataset_xfer_pl</dt><dd><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code>.</p></dd>
 <dt>flags</dt><dd><p>Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
@@ -203,7 +203,7 @@ it return a <code>double</code>. This looses precision, however.</p></dd>
   dataset_xfer_pl = h5const$H5P_DEFAULT,
   flush = getOption("hdf5r.flush_on_write"))</code></dt><dd><p>This function is for advanced users. It is recommended to use <code>read</code> instead or the <code>[&lt;-</code> interface
 as used for arrays.
-This function implements the HDF5-API function H5Dwrite, with some changes to accomodate R.
+This function implements the HDF5-API function H5Dwrite, with some changes to accommodate R.
 Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write</a> for details.
 It writes that data from the <code>robj</code> into the dataset.
     <strong>Parameters</strong>
@@ -222,7 +222,7 @@ all indices are being passed in the parameter <code>args</code>.
     <strong>Parameters</strong>
 <dl class='dl-horizontal'>
 <dt>args</dt><dd><p>The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
-For interactive use we recomment the use of the <code>[</code> operator. If set to <code>NULL</code>, the entire dataset will be read.</p></dd>
+For interactive use we recommend the use of the <code>[</code> operator. If set to <code>NULL</code>, the entire dataset will be read.</p></dd>
 <dt>value</dt><dd><p>The data to write to the dataset</p></dd>
 <dt>envir</dt><dd><p>The environment in which to evaluate <code>args</code></p></dd>
 <dt>dataset_xfer_pl</dt><dd><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code>.</p></dd>
@@ -375,7 +375,7 @@ for type_size_variable and the underlying size for type_size_raw</p></dd>
 #&gt; [1] 5 2
 #&gt; </div><div class='input'><span class='no'>dset</span></div><div class='output co'>#&gt; Class: H5D
 #&gt; Dataset: /basic
-#&gt; Filename: /tmp/Rtmpeta3Rc/file3274d09f49.h5
+#&gt; Filename: /tmp/Rtmpeta3Rc/file32c3576db.h5
 #&gt; Access type: H5F_ACC_RDWR
 #&gt; Datatype: H5T_STD_I32LE
 #&gt; Space: Type=Simple     Dims=5 x 2     Maxdims=10 x 2

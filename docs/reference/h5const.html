@@ -103,19 +103,19 @@ the issue of R not being able to natively represent 64bit integers and not at al
 (even using add-on packages).
 The constants all start with the term <code>H5TOR</code>. There are currently possible values</p><dl class='dl-horizontal'>
   <dt>H5TOR_CONV_NONE</dt><dd><p>Doesn't do any conversion. Every integer datatype with more than 32 bit is returned as 64bit integers. For
-  usigned 64bit integers, the conversion to signed 64bit integers is done by truncation</p></dd>
-  <dt>H5TOR_CONV_INT64_INT_NOLOSS</dt><dd><p>Under this setting, whenever a 64 bit integer would be returend, it is checked if it would also
-  fit into a 32 bit integer without data loss and returned as such if posible</p></dd>
-  <dt>H5TOR_CONV_INT64_FLOAT_NOLOSS</dt><dd><p>Under this setting, whenever a 64 bit integer would be returend, it is checked if it would also
-  fit into a 64 bit floating point value without data loss and returned as such if posible</p></dd>
+  unsigned 64bit integers, the conversion to signed 64bit integers is done by truncation</p></dd>
+  <dt>H5TOR_CONV_INT64_INT_NOLOSS</dt><dd><p>Under this setting, whenever a 64 bit integer would be returned, it is checked if it would also
+  fit into a 32 bit integer without data loss and returned as such if possible</p></dd>
+  <dt>H5TOR_CONV_INT64_FLOAT_NOLOSS</dt><dd><p>Under this setting, whenever a 64 bit integer would be returned, it is checked if it would also
+  fit into a 64 bit floating point value without data loss and returned as such if possible</p></dd>
   <dt>H5TOR_CONV_INT64_NOLOSS</dt><dd><p>Combines <code>H5TOR_CONV_INT64_INT_NOLOSS</code> and <code>H5TOR_CONV_INT64_FLOAT_NOLOSS</code> and is set
   as the default in the <code>hdf5r.h5tor_default</code> option.</p></dd>
-  <dt>H5TOR_CONV_INT64_FLOAT_FORCE</dt><dd><p>Under this setting, whenever a 64 bit integer would be returend, it is coerced to a double
+  <dt>H5TOR_CONV_INT64_FLOAT_FORCE</dt><dd><p>Under this setting, whenever a 64 bit integer would be returned, it is coerced to a double
   even if this results in a loss of precision. If a loss of precision occurs, a warning is issued. Please note that this also overrides
   the use of <code>H5TOR_CONV_UNIT64_NA</code>. As loss of precision is already accepted, UINT64-values that are larger than LLONG_MAX will be represented
   as their next possible floating point value.</p></dd>
   <dt>H5TOR_CONV_UINT64_NA</dt><dd><p>When converting an unsigned 64bit integer, any values that don't fit into a signed 64bit integer are
-  set to NA. If this flag is not set, then the values will be truncated to <code>LLONG_MAX</code>, the largerst 64bit signed integer.</p></dd>
+  set to NA. If this flag is not set, then the values will be truncated to <code>LLONG_MAX</code>, the largest 64bit signed integer.</p></dd>
   <dt>H5TOR_CONV_DEFAULT</dt><dd><p>Is both <code>H5TOR_CONV_INT64_INT</code> and <code>H5TOR_CONV_UNIT64_FLOAT</code></p></dd>
 </dl>
     

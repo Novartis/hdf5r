@@ -92,7 +92,7 @@
     
     <p><code>H5R</code> is only the common base class and is never used. User should not create objects of this
 class by themselves and instead use the <code>create_reference</code> methods of <code>H5D</code>, <code>H5Group</code> or <code>H5File</code> classes.
-Subclassses are <code><a href='H5R_OBJECT-class.html'>H5R_OBJECT</a></code> and <code><a href='H5R_DATASET_REGION-class.html'>H5R_DATASET_REGION</a></code></p>
+Sub-classes are <code><a href='H5R_OBJECT-class.html'>H5R_OBJECT</a></code> and <code><a href='H5R_DATASET_REGION-class.html'>H5R_DATASET_REGION</a></code></p>
     
 
         
@@ -119,7 +119,7 @@ Subclassses are <code><a href='H5R_OBJECT-class.html'>H5R_OBJECT</a></code> and 
     <dt><code>subset_assign(dim_index, value)</code></dt><dd><p>Assign values into a subset of the H5R-vector
     <strong>Parameters</strong>
 <dl class='dl-horizontal'>
-<dt>dim_index</dt><dd><p>A list of dimension indices as usually pased into <code>[</code></p></dd>
+<dt>dim_index</dt><dd><p>A list of dimension indices as usually passed into <code>[</code></p></dd>
 <dt>value</dt><dd><p>The value to assign</p></dd>
 </dl></p></dd>
     <dt><code>subset2_assign(i, exact = TRUE, value)</code></dt><dd><p>Assign a value to a single value in the array

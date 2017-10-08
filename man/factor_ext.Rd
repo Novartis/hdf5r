@@ -10,11 +10,11 @@ factor_ext(x, values, levels, drop = FALSE)
 \item{x}{The object to convert to an \code{factor_ext}}
 
 \item{values}{The values used for the levels; This is were \code{factor_ext} is different from a
-\code{factor}, as values for levels do not have to be consequitive or start at 1.}
+\code{factor}, as values for levels do not have to be consecutive or start at 1.}
 
 \item{levels}{The levels of the object; character string}
 
-\item{drop}{Should non-occuring levels be dropped}
+\item{drop}{Should non-occurring levels be dropped}
 }
 \value{
 An object of S3 class \code{factor_ext}

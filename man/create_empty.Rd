@@ -9,7 +9,7 @@ create_empty(nelem, dtype)
 \arguments{
 \item{nelem}{The number of elements to use for the object}
 
-\item{dtype}{The dataype based on which an empty R-object should be created}
+\item{dtype}{The datatype based on which an empty R-object should be created}
 }
 \value{
 An empty R object corresponding to the datatype that was passed in

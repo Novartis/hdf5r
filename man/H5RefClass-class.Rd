@@ -9,7 +9,7 @@
 Object of reference class \code{\link{H5RefClass}}.
 }
 \description{
-This class is not indended for creating objects, but as a base class for all other
+This class is not intended for creating objects, but as a base class for all other
 H5-derived classes to provide common functionality for id tracking
 }
 \section{Fields}{

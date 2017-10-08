@@ -109,7 +109,7 @@ test_filename &lt;-<span class="st"> </span><span class="kw">tempfile</span>(<sp
 file.h5 &lt;-<span class="st"> </span>H5File<span class="op">$</span><span class="kw">new</span>(test_filename, <span class="dt">mode =</span> <span class="st">"w"</span>)
 file.h5</code></pre></div>
 <pre><code>## Class: H5File
-## Filename: /tmp/RtmpyFlbis/filee30107263cb.h5
+## Filename: /tmp/RtmpvZ6YP6/file1d0918f2bb53.h5
 ## Access type: H5F_ACC_RDWR</code></pre>
 <p>Now that we have this, we will create 2 groups, one for the <strong>mtcars</strong> dataset and one for the <strong>nycflights13</strong> dataset.</p>
 <div class="sourceCode"><pre class="sourceCode r"><code class="sourceCode r">mtcars.grp &lt;-<span class="st"> </span>file.h5<span class="op">$</span><span class="kw">create_group</span>(<span class="st">"mtcars"</span>)
@@ -356,7 +356,7 @@ uint2_ds_deflate<span class="op">$</span><span class="kw">get_storage_size</span
 uint2_ds_none<span class="op">$</span><span class="kw">get_storage_size</span>()</code></pre></div>
 <pre><code>## [1] 35
 ## [1] 26
-## [1] 55
+## [1] 56
 ## [1] 100</code></pre>
 <p>and we see that in the case of random data, not surprisingly, the nbit filter alone is the most efficient. Using compression on the nbit-filter actually increases the storage size. However, despite the random data, compression can still save some space compared to raw storage as in raw storage mode, a whole byte is stored and not just 2 bit.</p>
 </div>

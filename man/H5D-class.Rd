@@ -11,7 +11,7 @@ Object of class \code{\link{H5D}}.
 \description{
 In HDF5, datasets can be located in a group (see \code{\link{H5Group}}) or at the
 root of a file (see \code{\link{H5File}}). They can be created either with a pre-existing R-object
-(arrays as well as data.frames are supported, but not lists or other complex objects), or by specifiying
+(arrays as well as data.frames are supported, but not lists or other complex objects), or by specifying
 an explicit datatype (for available datatypes see \code{h5types$overview} as well as the dimension.
 In addition, other features are supported such as transparent compression (for which a chunk-size can be selected).
 }
@@ -49,7 +49,7 @@ Please also note the active methods
 \describe{
 \item{\code{new(id = NULL)}}{
 
-Intializes a new dataset-object. Only for internal use. Use the \code{create_dataset} function for \code{\link{H5Group}}
+Initializes a new dataset-object. Only for internal use. Use the \code{create_dataset} function for \code{\link{H5Group}}
 and \code{\link{H5File}} objects
 
 \strong{Parameters}
@@ -109,7 +109,7 @@ Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D
   dim_to_set = NULL, drop = TRUE)}}{
 
 This function is for advanced users. It is recommended to use \code{read} instead or the \code{[} interface.
-This function implements the HDF5-API function H5Dread, with minor changes to the API to accomodate R.
+This function implements the HDF5-API function H5Dread, with minor changes to the API to accommodate R.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details.
 It reads the data in the dataset as specified by \code{mem_space} and return it as an R-obj
 
@@ -141,7 +141,7 @@ all indices are being passed in the parameter \code{args}.
 \strong{Parameters}
 \describe{
 \item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
-For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
+For interactive use we recommend the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
 \item{envir}{The environment in which to evaluate \code{args}}
 \item{dataset_xfer_pl}{An object of class \code{\link{H5P_DATASET_XFER}}.}
 \item{flags}{Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
@@ -167,7 +167,7 @@ The data that was read as an R object
 
 This function is for advanced users. It is recommended to use \code{read} instead or the \code{[<-} interface
 as used for arrays.
-This function implements the HDF5-API function H5Dwrite, with some changes to accomodate R.
+This function implements the HDF5-API function H5Dwrite, with some changes to accommodate R.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write} for details.
 It writes that data from the \code{robj} into the dataset.
 
@@ -191,7 +191,7 @@ all indices are being passed in the parameter \code{args}.
 \strong{Parameters}
 \describe{
 \item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
-For interactive use we recomment the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
+For interactive use we recommend the use of the \code{[} operator. If set to \code{NULL}, the entire dataset will be read.}
 \item{value}{The data to write to the dataset}
 \item{envir}{The environment in which to evaluate \code{args}}
 \item{dataset_xfer_pl}{An object of class \code{\link{H5P_DATASET_XFER}}.}

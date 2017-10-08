@@ -167,7 +167,7 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
   link_create_pl = h5const$H5P_DEFAULT,
   dataset_create_pl = h5const$H5P_DEFAULT,
   dataset_access_pl = h5const$H5P_DEFAULT)</code></dt><dd><p>This function is the main interface to create a new dataset. Its parameters allow for customization of the default
-behaviour, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality.
+behavior, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality.
 Also note that this function implements the HDF5-API function H5Dcreate2 and H5Dcreate_anon (if name is NULL). Please see the documentation at
 <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Create2'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Create2</a> for regular groups and
 <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-CreateAnon'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-CreateAnon</a> for anonymous groups for details.
@@ -187,7 +187,7 @@ If set to <code>NULL</code>, then no chunking is used, unless explicitly set in 
 <dt>gzip_level</dt><dd><p>Only if <code>chunk_dims</code> is not null. If given, then the <code>dataset_create_pl</code> is set to enable zipping
 at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in <code>dataset_create_pl</code></p></dd>
 <dt>link_create_pl</dt><dd><p>Link creation property list. See <code><a href='H5P_LINK_CREATE-class.html'>H5P_LINK_CREATE</a></code></p></dd>
-<dt>dataset_create_pl</dt><dd><p>Datatset creation property list. See <code><a href='H5P_DATASET_CREATE-class.html'>H5P_DATASET_CREATE</a></code></p></dd>
+<dt>dataset_create_pl</dt><dd><p>Dataset creation property list. See <code><a href='H5P_DATASET_CREATE-class.html'>H5P_DATASET_CREATE</a></code></p></dd>
 <dt>dataset_access_pl</dt><dd><p>Dataset access property list. See <code><a href='H5P_DATASET_ACCESS-class.html'>H5P_DATASET_ACCESS</a></code></p></dd>
 </dl></p></dd>
     <dt><code>commit(name, dtype, link_create_pl = h5const$H5P_DEFAULT,

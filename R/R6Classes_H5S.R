@@ -368,7 +368,7 @@ H5S <- R6Class("H5S",
                        "Subsetting the space. This is mainly intended as a helper function for the '[' function, but"
                        "can also be used on its own."
                        "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
-                       "For interactive use we recomment the use of the \\code{[} operator."
+                       "For interactive use we recommend the use of the \\code{[} operator."
                        "@param op The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in"
                        "\\code{h5const$H5S_seloper_t}"
                        "@param envir The environment in which to evaluate \\code{args}"
@@ -455,7 +455,7 @@ H5S$set("active", "rank", H5S$public_methods$get_simple_extent_ndims, overwrite=
 
 #' Class for HDF5 default space
 #'
-#' It inherits all functions of the \code{\link{H5S}}. As this is implemented, closing the id is overriden as this is a special id.
+#' It inherits all functions of the \code{\link{H5S}}. As this is implemented, closing the id is overridden as this is a special id.
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5S_ALL]{H5S_ALL}}. 
@@ -599,7 +599,7 @@ standalone_H5S_select_hyperslab <- function(id, start, count, stride=NULL, block
 ##' Selects multiple hyperslabs in a space. Before the selection, the space selection will be cleared.
 ##' @title Select multiple hyperslabs in a space
 ##' @param id The id of the space
-##' @param hyperslab_array The array with the hyperslabs. Is of dimension num_dim x num_hyperslabs x 4. With teh elements
+##' @param hyperslab_array The array with the hyperslabs. Is of dimension num_dim x num_hyperslabs x 4. With the elements
 ##' being start, count, stride and block
 ##' @return \code{NULL}. The space has been manipulated as a side effect
 ##' @author Holger Hoefling

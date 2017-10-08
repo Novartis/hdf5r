@@ -9,7 +9,7 @@
 Object of class \code{\link{H5P}}.
 }
 \description{
-This is the base class for all property lists, but most have a specialised class.
+This is the base class for all property lists, but most have a specialized class.
 It inherits all functions of the
 \code{\link{H5RefClass}}. It is also the base class for many other classes, specifically
 \describe{

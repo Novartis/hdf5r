@@ -89,7 +89,7 @@ H5P_factory <- function(id) {
 
 #' Class for HDF5 property lists.
 #'
-#' This is the base class for all property lists, but most have a specialised class.
+#' This is the base class for all property lists, but most have a specialized class.
 #' It inherits all functions of the
 #' \code{\link{H5RefClass}}. It is also the base class for many other classes, specifically
 #' \describe{

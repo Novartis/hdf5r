@@ -66,7 +66,7 @@ H5ToR_Post <- function(Robj, dtype, nelem, flags=getOption("hdf5r.h5tor_default"
 ##' empty strings.
 ##' @title Create an empty R-object according to a given HDF5 datatype
 ##' @param nelem The number of elements to use for the object
-##' @param dtype The dataype based on which an empty R-object should be created
+##' @param dtype The datatype based on which an empty R-object should be created
 ##' @return An empty R object corresponding to the datatype that was passed in
 ##' @author Holger Hoefling
 ##' @export

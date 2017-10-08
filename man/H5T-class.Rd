@@ -9,7 +9,7 @@
 Object of class \code{\link{H5T}}.
 }
 \description{
-This is the base class for all datatypes, but most have a specialised class.
+This is the base class for all datatypes, but most have a specialized class.
 This class represents an HDF5 datatype. It inherits all functions of the
 \code{\link{H5RefClass}}. It is also the base class for many other classes well, specifically
 \describe{

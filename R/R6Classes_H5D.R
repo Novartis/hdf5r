@@ -26,7 +26,7 @@ setOldClass("H5D")
 ##'
 ##' In HDF5, datasets can be located in a group (see \code{\link{H5Group}}) or at the
 ##' root of a file (see \code{\link{H5File}}). They can be created either with a pre-existing R-object
-##' (arrays as well as data.frames are supported, but not lists or other complex objects), or by specifiying
+##' (arrays as well as data.frames are supported, but not lists or other complex objects), or by specifying
 ##' an explicit datatype (for available datatypes see \code{h5types$overview} as well as the dimension.
 ##' In addition, other features are supported such as transparent compression (for which a chunk-size can be selected).
 ##'
@@ -100,7 +100,7 @@ H5D <- R6Class("H5D",
                inherit=H5RefClass,
                public=list(
                    initialize=function(id=NULL) {
-                       "Intializes a new dataset-object. Only for internal use. Use the \\code{create_dataset} function for \\code{\\link{H5Group}}"
+                       "Initializes a new dataset-object. Only for internal use. Use the \\code{create_dataset} function for \\code{\\link{H5Group}}"
                        "and \\code{\\link{H5File}} objects"
                        "@param id For internal use only"
                        if(is.null(id)) {
@@ -202,7 +202,7 @@ H5D <- R6Class("H5D",
                    read_low_level=function(file_space=h5const$H5S_ALL, mem_space=NULL, mem_type=NULL,
                        dataset_xfer_pl=h5const$H5P_DEFAULT, flags=getOption("hdf5r.h5tor_default"), set_dim=FALSE, dim_to_set=NULL, drop=TRUE) {
                        "This function is for advanced users. It is recommended to use \\code{read} instead or the \\code{[} interface."
-                       "This function implements the HDF5-API function H5Dread, with minor changes to the API to accomodate R."
+                       "This function implements the HDF5-API function H5Dread, with minor changes to the API to accommodate R."
                        "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Read} for details."
                        "It reads the data in the dataset as specified by \\code{mem_space} and return it as an R-obj"
                        "@param file_space An HDF5-space, represented as class \\code{\\link{H5S}} that determines which part"
@@ -320,7 +320,7 @@ H5D <- R6Class("H5D",
                        "Main interface for reading data from the dataset. It is the function that is used by \\code{[}, where"
                        "all indices are being passed in the parameter \\code{args}."
                        "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
-                       "For interactive use we recomment the use of the \\code{[} operator. If set to \\code{NULL}, the entire dataset will be read."
+                       "For interactive use we recommend the use of the \\code{[} operator. If set to \\code{NULL}, the entire dataset will be read."
                        "@param envir The environment in which to evaluate \\code{args}"
                        "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER}}." 
                        "@param flags Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and"
@@ -396,7 +396,7 @@ H5D <- R6Class("H5D",
                        flush=getOption("hdf5r.flush_on_write")) {
                        "This function is for advanced users. It is recommended to use \\code{read} instead or the \\code{[<-} interface"
                        "as used for arrays."
-                       "This function implements the HDF5-API function H5Dwrite, with some changes to accomodate R."
+                       "This function implements the HDF5-API function H5Dwrite, with some changes to accommodate R."
                        "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Write} for details."
                        "It writes that data from the \\code{robj} into the dataset."
                        "@param robj The object to write into the dataset"
@@ -483,7 +483,7 @@ H5D <- R6Class("H5D",
                        "Main interface for writing data to the dataset. It is the function that is used by \\code{[<-}, where"
                        "all indices are being passed in the parameter \\code{args}."
                        "@param args The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API."
-                       "For interactive use we recomment the use of the \\code{[} operator. If set to \\code{NULL}, the entire dataset will be read."
+                       "For interactive use we recommend the use of the \\code{[} operator. If set to \\code{NULL}, the entire dataset will be read."
                        "@param value The data to write to the dataset"
                        "@param envir The environment in which to evaluate \\code{args}"
                        "@param dataset_xfer_pl An object of class \\code{\\link{H5P_DATASET_XFER}}." 

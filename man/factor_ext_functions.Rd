@@ -83,7 +83,7 @@ Various functions for \code{factor_ext} objects
   \item{values.factor_ext}{Extracts the underlying values of a \code{factor_ext} object}
   \item{values.factor}{Extracts the underlying values of a \code{factor}}
   \item{values.default}{Default of the values function; currently returns an error}
-  \item{as.character}{Coerces \code{factor_ext} to a character-respresentation using it levels, not values}
+  \item{as.character}{Coerces \code{factor_ext} to a character-representation using it levels, not values}
   \item{[[.factor_ext}{Single-item subsetting of a \code{factor_ext} object}
   \item{[[<-.factor_ext}{Single-item subset assignment to a \code{factor_ext} object}
   \item{[.factor_ext}{Subsetting of a \code{factor_ext} object}

@@ -10,7 +10,7 @@ h5version(verbose = TRUE)
 \item{verbose}{Should the information be printed to the screen as well}
 }
 \value{
-Version of the underlying HDF5 api as a string
+Version of the underlying HDF5 API as a string
 }
 \description{
 Return the version of the HDF5-API
