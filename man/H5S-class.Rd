@@ -141,7 +141,7 @@ can also be used on its own.
 \strong{Parameters}
 \describe{
 \item{args}{The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
-For interactive use we recomment the use of the \code{[} operator.}
+For interactive use we recommend the use of the \code{[} operator.}
 \item{op}{The operator to use. Same as for the other HDF5 space selection functions. One of the elements shown in
 \code{h5const$H5S_seloper_t}}
 \item{envir}{The environment in which to evaluate \code{args}}

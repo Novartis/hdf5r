@@ -18,7 +18,7 @@ and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group
 \item{\code{new(num = 0, id = NULL)}}{
 
 Create a new reference for object; Usually, users shouldn't have to call this, but use the \code{create_reference}
-method of a dataset, group of commited datatype}
+method of a dataset, group of committed datatype}
 
 \item{\code{dereference(object_access_pl = h5const$H5P_DEFAULT, obj = NULL)}}{
 

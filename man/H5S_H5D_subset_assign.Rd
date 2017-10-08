@@ -51,7 +51,7 @@ the issue of R not being able to natively represent 64bit integers and not at al
 (even using add-on packages). The constants governing this are part of \code{\link{h5const}}. The relevant ones start with the term
 \code{H5TOR} and are documented there. The default set here returns a regular 32bit integer if it doesn't lead to an overflow
 and returns a 64bit integer from the \code{bit64} package otherwise. For 64bit unsigned int that are larger than 64bit signed int,
-it return a \code{double}. This looses precision, however. See also documentatio for \code{\link{h5const}}.}
+it return a \code{double}. This looses precision, however. See also documentation or \code{\link{h5const}}.}
 
 \item{drop}{Logical. When reading data, should dimensions of size 1 be dropped.}
 

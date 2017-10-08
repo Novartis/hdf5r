@@ -2,7 +2,7 @@
 % Please edit documentation in R/high_level_UI.R
 \name{args_regularity_evaluation}
 \alias{args_regularity_evaluation}
-\title{Evalute if the arguments are regular for hyperslab use}
+\title{Evaluate if the arguments are regular for hyperslab use}
 \usage{
 args_regularity_evaluation(args, ds_dims, envir, post_read = TRUE)
 }
@@ -21,7 +21,7 @@ with components \code{args_in}, \code{args_point}, \code{is_hyperslab}, \code{hy
 \code{needs_reshuffle}, code{reshuffle}, \code{result_dims_pre_shuffle}, \code{result_dims_post_shuffle}, \code{max_dims}
 }
 \description{
-Evalute if the arguments are regular for hyperslab use
+Evaluate if the arguments are regular for hyperslab use
 }
 \details{
 For each argument check if it can be used as a hyperslab, potentially after sorting and making unique.

@@ -11,7 +11,7 @@ Object of class \code{\link[=H5R]{H5R}}.
 \description{
 \code{H5R} is only the common base class and is never used. User should not create objects of this
 class by themselves and instead use the \code{create_reference} methods of \code{H5D}, \code{H5Group} or \code{H5File} classes.
-Subclassses are \code{\link{H5R_OBJECT}} and \code{\link{H5R_DATASET_REGION}}
+Sub-classes are \code{\link{H5R_OBJECT}} and \code{\link{H5R_DATASET_REGION}}
 }
 \section{Methods}{
 
@@ -42,7 +42,7 @@ Assign values into a subset of the H5R-vector
 
 \strong{Parameters}
 \describe{
-\item{dim_index}{A list of dimension indices as usually pased into \code{[}}
+\item{dim_index}{A list of dimension indices as usually passed into \code{[}}
 \item{value}{The value to assign}
 }}
 

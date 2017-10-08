@@ -127,7 +127,7 @@ This function implements the HDF5-API function H5Gcreate2 and H5Gcreate_anon (if
   dataset_access_pl = h5const$H5P_DEFAULT)}}{
 
 This function is the main interface to create a new dataset. Its parameters allow for customization of the default
-behaviour, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality.
+behavior, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality.
 Also note that this function implements the HDF5-API function H5Dcreate2 and H5Dcreate_anon (if name is NULL). Please see the documentation at
 \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Create2} for regular groups and
 \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-CreateAnon} for anonymous groups for details.
@@ -148,7 +148,7 @@ If set to \code{NULL}, then no chunking is used, unless explicitly set in \code{
 \item{gzip_level}{Only if \code{chunk_dims} is not null. If given, then the \code{dataset_create_pl} is set to enable zipping
 at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in \code{dataset_create_pl}}
 \item{link_create_pl}{Link creation property list. See \code{\link{H5P_LINK_CREATE}}}
-\item{dataset_create_pl}{Datatset creation property list. See \code{\link{H5P_DATASET_CREATE}}}
+\item{dataset_create_pl}{Dataset creation property list. See \code{\link{H5P_DATASET_CREATE}}}
 \item{dataset_access_pl}{Dataset access property list. See \code{\link{H5P_DATASET_ACCESS}}}
 }}
 

@@ -318,7 +318,7 @@ commonFG <- list(
     create_dataset=function(name, robj=NULL, dtype=NULL, space=NULL, dims=NULL, chunk_dims="auto", gzip_level=4,
         link_create_pl=h5const$H5P_DEFAULT, dataset_create_pl=h5const$H5P_DEFAULT, dataset_access_pl=h5const$H5P_DEFAULT) {
         "This function is the main interface to create a new dataset. Its parameters allow for customization of the default"
-        "behaviour, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality."
+        "behavior, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality."
         "Also note that this function implements the HDF5-API function H5Dcreate2 and H5Dcreate_anon (if name is NULL). Please see the documentation at"
         "\\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Create2} for regular groups and"
         "\\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-CreateAnon} for anonymous groups for details."
@@ -336,7 +336,7 @@ commonFG <- list(
         "@param gzip_level Only if \\code{chunk_dims} is not null. If given, then the \\code{dataset_create_pl} is set to enable zipping"
         "at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in \\code{dataset_create_pl}"
         "@param link_create_pl Link creation property list. See \\code{\\link{H5P_LINK_CREATE}}"
-        "@param dataset_create_pl Datatset creation property list. See \\code{\\link{H5P_DATASET_CREATE}}"
+        "@param dataset_create_pl Dataset creation property list. See \\code{\\link{H5P_DATASET_CREATE}}"
         "@param dataset_access_pl Dataset access property list. See \\code{\\link{H5P_DATASET_ACCESS}}"
 
 

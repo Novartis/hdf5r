@@ -116,7 +116,7 @@ is_hdf5 <- function(name) {
 #' \describe{
 #'   \item{Groups}{Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also \code{\link{H5Group}}}
 #'   \item{Datasets}{Objects to store actual data, see also \code{\link{H5D}}}
-#'   \item{Attributes}{Meta data objects to store extra informatino about Files, Groups and Datasets, see also \code{\link{H5A}}}
+#'   \item{Attributes}{Meta data objects to store extra information about Files, Groups and Datasets, see also \code{\link{H5A}}}
 #' }
 #' 
 #' @section Extract/List File Contents:

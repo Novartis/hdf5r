@@ -10,7 +10,7 @@ Object of class \code{\link{H5A}}.
 }
 \description{
 This class represents an HDF5 attribute. Usually it is easier to read and write attributes for
-groups, datasets and commited datatypes using the functions documented in \code{\link{h5attributes}}.
+groups, datasets and committed datatypes using the functions documented in \code{\link{h5attributes}}.
 }
 \details{
 Otherwise, the functionality for attributes is very similar to that of datasets (\code{\link{H5D}}),

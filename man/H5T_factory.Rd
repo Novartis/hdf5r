@@ -18,7 +18,7 @@ An object of type R6 class \code{\link{H5T}}
 Turn ids into  \code{\link{H5T}} objects
 }
 \details{
-Gets the HDF5 internal class for an id and dispactches them so that the correct
+Gets the HDF5 internal class for an id and dispatches them so that the correct
 R6es are being created.
 }
 \author{

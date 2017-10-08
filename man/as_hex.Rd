@@ -16,7 +16,7 @@ Character string with the hex value
 Convert a double or integer to hex
 }
 \details{
-Converts a double or integer to hex. Contrary to the builtin \code{\link{format}},
+Converts a double or integer to hex. Contrary to the built-in \code{\link{format}},
 this is done without any conversion of integers in double-format to integers in integer format.
 }
 \author{

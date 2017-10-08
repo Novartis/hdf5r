@@ -107,7 +107,7 @@ flatten_df <- function(df, factor_ext_to_char=FALSE) {
 
 ##' Cleaning result of internal \code{_H5ls} function
 ##'
-##' For every \code{*_success} item that is \code{FALSE}, the correspoding row of the data.frame will be set to NA.
+##' For every \code{*_success} item that is \code{FALSE}, the corresponding row of the data.frame will be set to NA.
 ##' @title Cleaning result of internal \code{R_H5ls} function
 ##' @param df The result of the C-function \code{R_H5ls}
 ##' @return A data frame with content that was not successfully gathered set to \code{NA} and \code{*_success} columns removed

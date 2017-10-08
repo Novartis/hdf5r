@@ -56,7 +56,7 @@ H5T_extractID <- function(dtype_ids) {
 
 ##' Turn ids into  \code{\link{H5T}} objects
 ##'
-##' Gets the HDF5 internal class for an id and dispactches them so that the correct
+##' Gets the HDF5 internal class for an id and dispatches them so that the correct
 ##' R6es are being created.
 ##' @title Turn ids into  \code{\link{H5T}} objects
 ##' @param ids The ids to return as objects
@@ -431,7 +431,7 @@ standalone_H5T_dtype_to_text <- function(h5t_id, lang_type) {
 #' Class for HDF5 integer-datatypes.
 #'
 #' Inherits from class \code{\link[=H5T]{H5T}}.
-#' Users should not create integer datatypes themsevels using this class. Instead, integer should be derived
+#' Users should not create integer datatypes themselves using this class. Instead, integer should be derived
 #' from one of the base-types such as \code{h5types$H5T_NATIVE_INT} (which internally automatically creates a copy of the type).
 #' For a complete list of types see \code{h5types$overview}.
 #' @docType class

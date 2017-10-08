@@ -9,7 +9,7 @@
 Object of class \code{\link[=H5S_ALL]{H5S_ALL}}.
 }
 \description{
-It inherits all functions of the \code{\link{H5S}}. As this is implemented, closing the id is overriden as this is a special id.
+It inherits all functions of the \code{\link{H5S}}. As this is implemented, closing the id is overridden as this is a special id.
 }
 \section{Methods}{
 

@@ -16,7 +16,7 @@ A data frame with content that was not successfully gathered set to \code{NA} an
 Cleaning result of internal \code{_H5ls} function
 }
 \details{
-For every \code{*_success} item that is \code{FALSE}, the correspoding row of the data.frame will be set to NA.
+For every \code{*_success} item that is \code{FALSE}, the corresponding row of the data.frame will be set to NA.
 }
 \author{
 Holger Hoefling

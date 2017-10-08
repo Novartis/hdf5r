@@ -40,9 +40,9 @@ INT_MAX <- as.integer64(2^31 - 1)
 ##' @title Create an extended factor
 ##' @param x The object to convert to an \code{factor_ext}
 ##' @param values The values used for the levels; This is were \code{factor_ext} is different from a
-##' \code{factor}, as values for levels do not have to be consequitive or start at 1.
+##' \code{factor}, as values for levels do not have to be consecutive or start at 1.
 ##' @param levels The levels of the object; character string
-##' @param drop Should non-occuring levels be dropped
+##' @param drop Should non-occurring levels be dropped
 ##' @return An object of S3 class \code{factor_ext}
 ##' @author Holger Hoefling
 ##' @importFrom methods setOldClass
@@ -152,7 +152,7 @@ factor_ext <- function(x, values, levels, drop=FALSE) {
 ##'   \item{values.factor_ext}{Extracts the underlying values of a \code{factor_ext} object}
 ##'   \item{values.factor}{Extracts the underlying values of a \code{factor}}
 ##'   \item{values.default}{Default of the values function; currently returns an error}
-##'   \item{as.character}{Coerces \code{factor_ext} to a character-respresentation using it levels, not values}
+##'   \item{as.character}{Coerces \code{factor_ext} to a character-representation using it levels, not values}
 ##'   \item{[[.factor_ext}{Single-item subsetting of a \code{factor_ext} object}
 ##'   \item{[[<-.factor_ext}{Single-item subset assignment to a \code{factor_ext} object}
 ##'   \item{[.factor_ext}{Subsetting of a \code{factor_ext} object}

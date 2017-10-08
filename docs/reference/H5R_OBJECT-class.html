@@ -63,6 +63,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -101,7 +104,7 @@ and instead use the <code>create_reference</code> methods of <code>H5D</code>, <
     
     <dl class='dl-horizontal'>
 <dt><code>new(num = 0, id = NULL)</code></dt><dd><p>Create a new reference for object; Usually, users shouldn't have to call this, but use the <code>create_reference</code>
-method of a dataset, group of commited datatype</p></dd>
+method of a dataset, group of committed datatype</p></dd>
     <dt><code>dereference(object_access_pl = h5const$H5P_DEFAULT, obj = NULL)</code></dt><dd><p>Dereference an H5R reference. The file the reference is pointing to is assigned automatically
 This function implements the HDF5-API function H5Rdereference.
 Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Dereference'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5R.html#Reference-Dereference</a> for details.

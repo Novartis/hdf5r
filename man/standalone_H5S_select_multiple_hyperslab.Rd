@@ -9,7 +9,7 @@ standalone_H5S_select_multiple_hyperslab(id, hyperslab_array)
 \arguments{
 \item{id}{The id of the space}
 
-\item{hyperslab_array}{The array with the hyperslabs. Is of dimension num_dim x num_hyperslabs x 4. With teh elements
+\item{hyperslab_array}{The array with the hyperslabs. Is of dimension num_dim x num_hyperslabs x 4. With the elements
 being start, count, stride and block}
 }
 \value{

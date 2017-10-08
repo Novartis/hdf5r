@@ -63,6 +63,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -89,7 +92,7 @@
     
     <p><code>H5File</code> objects are are the main entry point to access HDF5 data from binary 
 files. This class represents an open HDF5 File-id. It inherits all functions 
-of the <code><a href='H5RefClass-class.html'>H5RefClass-class</a></code>.</p>
+of the <code><a href='H5RefClass-class.html'>H5RefClass</a></code>.</p>
     
 
         
@@ -108,9 +111,9 @@ to be closed afterwards using <code>$close_all()</code>. <code>$close_all()</cod
 but also all objects that are still open inside it (such as groups or datasets). <code>$flush()</code> can be used 
 to flush unwritten data to an HDF5 file.</p>
 <p>HDF5 Files typically contain the following objects:</p><dl class='dl-horizontal'>
-  <dt>Groups</dt><dd><p>Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also <code><a href='H5Group-class.html'>H5Group-class</a></code></p></dd>
-  <dt>Datasets</dt><dd><p>Objects to store actual data, see also <code><a href='H5D-class.html'>H5D-class</a></code></p></dd>
-  <dt>Attributes</dt><dd><p>Meta data objects to store extra informatino about Files, Groups and Datasets, see also <code><a href='H5A-class.html'>H5A-class</a></code></p></dd>
+  <dt>Groups</dt><dd><p>Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also <code><a href='H5Group-class.html'>H5Group</a></code></p></dd>
+  <dt>Datasets</dt><dd><p>Objects to store actual data, see also <code><a href='H5D-class.html'>H5D</a></code></p></dd>
+  <dt>Attributes</dt><dd><p>Meta data objects to store extra information about Files, Groups and Datasets, see also <code><a href='H5A-class.html'>H5A</a></code></p></dd>
 </dl>
     
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
@@ -204,7 +207,7 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
   link_create_pl = h5const$H5P_DEFAULT,
   dataset_create_pl = h5const$H5P_DEFAULT,
   dataset_access_pl = h5const$H5P_DEFAULT)</code></dt><dd><p>This function is the main interface to create a new dataset. Its parameters allow for customization of the default
-behaviour, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality.
+behavior, i.e. in order to get a specific datatype, a certain chunk size or dataset dimensionality.
 Also note that this function implements the HDF5-API function H5Dcreate2 and H5Dcreate_anon (if name is NULL). Please see the documentation at
 <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Create2'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-Create2</a> for regular groups and
 <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-CreateAnon'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5D.html#Dataset-CreateAnon</a> for anonymous groups for details.
@@ -214,7 +217,7 @@ Also note that this function implements the HDF5-API function H5Dcreate2 and H5D
 <dt>robj</dt><dd><p>An R-object to take as a template for creating the dataset. Either <code>robj</code> or both <code>dtype</code> and space
 have to be provided</p></dd>
 <dt>dtype</dt><dd><p>The datatype to use for the creation of the object. Can be null if <code>robj</code> is given.</p></dd>
-<dt>space</dt><dd><p>The space to use for the object creation. Can be null if <code>robj</code> is given. Otherwise an object of type <code>H5S-class</code> which specifies the dimensions of the dataset.</p></dd>
+<dt>space</dt><dd><p>The space to use for the object creation. Can be null if <code>robj</code> is given. Otherwise an object of type <code>H5S</code> which specifies the dimensions of the dataset.</p></dd>
 <dt>dims</dt><dd><p>Dimension of the new dataset; used if <code>space</code> is <code>NULL</code>. overwrite the dimension guessed from <code>robj</code>
 if <code>robj</code> is given.</p></dd>
 <dt>chunk_dims</dt><dd><p>Size of the chunk. Has to have the same length as the dataset dimension. If <code>"auto"</code>
@@ -223,9 +226,9 @@ the <code>hdf5r.chunk_size</code> option. See also <code><a href='guess_chunks.h
 If set to <code>NULL</code>, then no chunking is used, unless explicitly set in <code>dataset_create_pl</code>.</p></dd>
 <dt>gzip_level</dt><dd><p>Only if <code>chunk_dims</code> is not null. If given, then the <code>dataset_create_pl</code> is set to enable zipping
 at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in <code>dataset_create_pl</code></p></dd>
-<dt>link_create_pl</dt><dd><p>Link creation property list. See <code><a href='H5P_LINK_CREATE-class.html'>H5P_LINK_CREATE-class</a></code></p></dd>
-<dt>dataset_create_pl</dt><dd><p>Datatset creation property list. See <code><a href='H5P_DATASET_CREATE-class.html'>H5P_DATASET_CREATE-class</a></code></p></dd>
-<dt>dataset_access_pl</dt><dd><p>Dataset access property list. See <code><a href='H5P_DATASET_ACCESS-class.html'>H5P_DATASET_ACCESS-class</a></code></p></dd>
+<dt>link_create_pl</dt><dd><p>Link creation property list. See <code><a href='H5P_LINK_CREATE-class.html'>H5P_LINK_CREATE</a></code></p></dd>
+<dt>dataset_create_pl</dt><dd><p>Dataset creation property list. See <code><a href='H5P_DATASET_CREATE-class.html'>H5P_DATASET_CREATE</a></code></p></dd>
+<dt>dataset_access_pl</dt><dd><p>Dataset access property list. See <code><a href='H5P_DATASET_ACCESS-class.html'>H5P_DATASET_ACCESS</a></code></p></dd>
 </dl></p></dd>
     <dt><code>commit(name, dtype, link_create_pl = h5const$H5P_DEFAULT,
   type_create_pl = h5const$H5P_DEFAULT,
@@ -359,7 +362,7 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
     <p>The following functions are defined to extract HDF5 file contents:</p><dl class='dl-horizontal'>
   <dt><code><a href='list-groups-datasets.html'>list.groups</a></code></dt><dd><p>List HDF5 groups in file.</p></dd>
   <dt><code><a href='list-groups-datasets.html'>list.datasets</a></code></dt><dd><p>List HDF5 datasets in file.</p></dd>
-  <dt><code>names</code></dt><dd><p>List all items in a file or group (applicable for <code>H5File-class</code> and <code><a href='H5Group-class.html'>H5Group-class</a></code>)</p></dd>
+  <dt><code>names</code></dt><dd><p>List all items in a file or group (applicable for <code>H5File</code> and <code><a href='H5Group-class.html'>H5Group</a></code>)</p></dd>
   <dt><code><a href='h5-wrapper.html'>list.attributes</a></code></dt><dd><p>List Attributes of HDF5 object (file, group or dataset).</p></dd>
   <dt><code><a href='h5attributes.html'>h5attr_names</a></code></dt><dd><p>Attribute names of an HDF5 object; similar to list.attributes</p></dd>
 </dl>
@@ -377,11 +380,11 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
 <span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testdataset"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
 <span class='fu'><a href='h5attributes.html'>h5attr</a></span>(<span class='no'>file</span>, <span class='st'>"testattrib"</span>) <span class='kw'>&lt;-</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]
 <span class='no'>file</span>$<span class='fu'>create_group</span>(<span class='st'>"testgroup"</span>)</div><div class='output co'>#&gt; Class: H5Group
-#&gt; Filename: /tmp/RtmpstefDG/filed0e9400ed.h5
+#&gt; Filename: /tmp/Rtmpeta3Rc/file32a45bda6.h5
 #&gt; Group: /testgroup</div><div class='input'><span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testgroup/testdataset2"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
 <span class='co'># Show contents of file</span>
 <span class='no'>file</span></div><div class='output co'>#&gt; Class: H5File
-#&gt; Filename: /tmp/RtmpstefDG/filed0e9400ed.h5
+#&gt; Filename: /tmp/Rtmpeta3Rc/file32a45bda6.h5
 #&gt; Access type: H5F_ACC_RDWR
 #&gt; Attributes: testattrib
 #&gt; Listing:
@@ -394,17 +397,17 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='h5-wrapper.html'>h5file</a></span>(<span class='no'>fname</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"a"</span>)
 <span class='fu'>sapply</span>(<span class='fu'>c</span>(<span class='st'>"testgroup1"</span>, <span class='st'>"testgroup2"</span>, <span class='st'>"testgroup3"</span>), <span class='no'>file</span>$<span class='no'>create_group</span>)</div><div class='output co'>#&gt; $testgroup1
 #&gt; Class: H5Group
-#&gt; Filename: /tmp/RtmpstefDG/filed0e9400ed.h5
+#&gt; Filename: /tmp/Rtmpeta3Rc/file32a45bda6.h5
 #&gt; Group: /testgroup1
 #&gt; 
 #&gt; $testgroup2
 #&gt; Class: H5Group
-#&gt; Filename: /tmp/RtmpstefDG/filed0e9400ed.h5
+#&gt; Filename: /tmp/Rtmpeta3Rc/file32a45bda6.h5
 #&gt; Group: /testgroup2
 #&gt; 
 #&gt; $testgroup3
 #&gt; Class: H5Group
-#&gt; Filename: /tmp/RtmpstefDG/filed0e9400ed.h5
+#&gt; Filename: /tmp/Rtmpeta3Rc/file32a45bda6.h5
 #&gt; Group: /testgroup3
 #&gt; </div><div class='input'><span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testgroup1/testset1"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
 <span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testgroup2/testset2"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>11</span>:<span class='fl'>20</span>

@@ -20,7 +20,7 @@
 
 ##' Base class that tracks the ids and allows for closing an id
 ##' 
-##' This class is not indended for creating objects, but as a base class for all other
+##' This class is not intended for creating objects, but as a base class for all other
 ##' H5-derived classes to provide common functionality for id tracking
 ##' @docType class
 ##' @importFrom R6 R6Class
