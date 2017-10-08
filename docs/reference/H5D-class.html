@@ -63,6 +63,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -87,8 +90,8 @@
     </div>
 
     
-    <p>In HDF5, datasets can be located in a group (see <code><a href='H5Group-class.html'>H5Group-class</a></code>) or at the
-root of a file (see <code><a href='H5File-class.html'>H5File-class</a></code>). They can be created either with a pre-existing R-object
+    <p>In HDF5, datasets can be located in a group (see <code><a href='H5Group-class.html'>H5Group</a></code>) or at the
+root of a file (see <code><a href='H5File-class.html'>H5File</a></code>). They can be created either with a pre-existing R-object
 (arrays as well as data.frames are supported, but not lists or other complex objects), or by specifiying
 an explicit datatype (for available datatypes see <code>h5types$overview</code> as well as the dimension.
 In addition, other features are supported such as transparent compression (for which a chunk-size can be selected).</p>
@@ -97,17 +100,17 @@ In addition, other features are supported such as transparent compression (for w
         
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>Object of class <code>H5D-class</code>.</p>
+    <p>Object of class <code>H5D</code>.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>In order to create a dataset, the <code>create_dataset</code> methods of either <code><a href='H5Group-class.html'>H5Group-class</a></code> or
-<code><a href='H5File-class.html'>H5File-class</a></code> should be used. Please see the documentation there for how to create them.</p>
+    <p>In order to create a dataset, the <code>create_dataset</code> methods of either <code><a href='H5Group-class.html'>H5Group</a></code> or
+<code><a href='H5File-class.html'>H5File</a></code> should be used. Please see the documentation there for how to create them.</p>
 <p>The most important parts of a dataset are the</p><dl class='dl-horizontal'>
   <dt>Space</dt><dd><p>The space of the dataset. It describes the dimension of the dataset as well as the maximum dimensions.
-               Can be obtained using the <code>get_space</code> of the <code><a href='H5S-class.html'>H5S-class</a></code> object.</p></dd>
+               Can be obtained using the <code>get_space</code> of the <code><a href='H5S-class.html'>H5S</a></code> object.</p></dd>
   <dt>Datatype</dt><dd><p>The datatypes that is being used in the dataset. Can be obtained using the <code>get_type</code> method.
-                  See <code><a href='H5T-class.html'>H5T-class</a></code> to get more information about using datatypes.</p></dd>
+                  See <code><a href='H5T-class.html'>H5T</a></code> to get more information about using datatypes.</p></dd>
 </dl>
     <p>In order to read and write datasets, the <code>read</code> and <code>write</code> methods are available. In addition, the standard way of using
 <code>[</code> to access arrays is supported as well (see <code><a href='H5S_H5D_subset_assign.html'>H5S_H5D_subset_assign</a></code> for more help).</p>
@@ -160,13 +163,13 @@ Please see the documentation at <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM
 It reads the data in the dataset as specified by <code>mem_space</code> and return it as an R-obj
     <strong>Parameters</strong>
 <dl class='dl-horizontal'>
-<dt>file_space</dt><dd><p>An HDF5-space, represented as class <code><a href='H5S-class.html'>H5S-class</a></code> that determines which part
+<dt>file_space</dt><dd><p>An HDF5-space, represented as class <code><a href='H5S-class.html'>H5S</a></code> that determines which part
 of the dataset is being read. Can also be given as an id</p></dd>
 <dt>mem_space</dt><dd><p>The space as it is represented in memory; advanced feature; may be removed in the future.
 Can also be given as an id.</p></dd>
 <dt>mem_type</dt><dd><p>Memory type; extracted from the dataset if null (can be passed in for efficiency reasons
 Can also be given as an id.</p></dd>
-<dt>dataset_xfer_pl</dt><dd><p>Dataset transfer property list. See <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER-class</a></code></p></dd>
+<dt>dataset_xfer_pl</dt><dd><p>Dataset transfer property list. See <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code></p></dd>
 <dt>flags</dt><dd><p>Conversion rules for integer values. See also <code><a href='h5const.html'>h5const</a></code></p></dd>
 <dt>set_dim</dt><dd><p>If <code>TRUE</code>, the dimension attribute is set in the return value. How it is set 
 is determined by <code>dim_to_set</code>.</p></dd>
@@ -184,7 +187,7 @@ all indices are being passed in the parameter <code>args</code>.
 <dt>args</dt><dd><p>The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
 For interactive use we recomment the use of the <code>[</code> operator. If set to <code>NULL</code>, the entire dataset will be read.</p></dd>
 <dt>envir</dt><dd><p>The environment in which to evaluate <code>args</code></p></dd>
-<dt>dataset_xfer_pl</dt><dd><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER-class</a></code>.</p></dd>
+<dt>dataset_xfer_pl</dt><dd><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code>.</p></dd>
 <dt>flags</dt><dd><p>Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
 the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
 (even using add-on packages). The constants governing this are part of <code><a href='h5const.html'>h5const</a></code>. The relevant ones start with the term
@@ -208,9 +211,9 @@ It writes that data from the <code>robj</code> into the dataset.
 <dt>robj</dt><dd><p>The object to write into the dataset</p></dd>
 <dt>mem_space</dt><dd><p>The space as it is represented in memory; advanced feature; may be removed in the future</p></dd>
 <dt>mem_type</dt><dd><p>Memory type; extracted from the dataset if null (can be passed in for efficiency reasons</p></dd>
-<dt>file_space</dt><dd><p>An HDF5-space, represented as class <code><a href='H5S-class.html'>H5S-class</a></code> that determines which part
+<dt>file_space</dt><dd><p>An HDF5-space, represented as class <code><a href='H5S-class.html'>H5S</a></code> that determines which part
 of the dataset is being written.</p></dd>
-<dt>dataset_xfer_pl</dt><dd><p>Dataset transfer property list. See <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER-class</a></code></p></dd>
+<dt>dataset_xfer_pl</dt><dd><p>Dataset transfer property list. See <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code></p></dd>
 <dt>flush</dt><dd><p>Should a flush be done after the write</p></dd>
 </dl></p></dd>
     <dt><code>write(args, value, dataset_xfer_pl = h5const$H5P_DEFAULT,
@@ -222,7 +225,7 @@ all indices are being passed in the parameter <code>args</code>.
 For interactive use we recomment the use of the <code>[</code> operator. If set to <code>NULL</code>, the entire dataset will be read.</p></dd>
 <dt>value</dt><dd><p>The data to write to the dataset</p></dd>
 <dt>envir</dt><dd><p>The environment in which to evaluate <code>args</code></p></dd>
-<dt>dataset_xfer_pl</dt><dd><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER-class</a></code>.</p></dd>
+<dt>dataset_xfer_pl</dt><dd><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code>.</p></dd>
 </dl>
     <strong>Return</strong>
     The HDF5 dataset object, returned invisibly</p></dd>
@@ -372,7 +375,7 @@ for type_size_variable and the underlying size for type_size_raw</p></dd>
 #&gt; [1] 5 2
 #&gt; </div><div class='input'><span class='no'>dset</span></div><div class='output co'>#&gt; Class: H5D
 #&gt; Dataset: /basic
-#&gt; Filename: /tmp/RtmpstefDG/filed0258eefbd.h5
+#&gt; Filename: /tmp/Rtmpeta3Rc/file3274d09f49.h5
 #&gt; Access type: H5F_ACC_RDWR
 #&gt; Datatype: H5T_STD_I32LE
 #&gt; Space: Type=Simple     Dims=5 x 2     Maxdims=10 x 2

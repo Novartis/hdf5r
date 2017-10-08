@@ -6,7 +6,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<title>Wrapper functions to provide a <strong>h5</strong> compatible interface. — h5-wrapper • hdf5r</title>
+<title>Wrapper functions to provide an <span class="pkg">h5</span> compatible interface. — h5-wrapper • hdf5r</title>
 
 <!-- jquery -->
 <script src="https://code.jquery.com/jquery-3.1.0.min.js" integrity="sha384-nrOSfDHtoPMzJHjVTdCopGqIqeYETSXhZDFyniQ8ZHcVy08QesyHcnOUpMpqnmWq" crossorigin="anonymous"></script>
@@ -63,6 +63,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -83,14 +86,16 @@
       <div class="row">
   <div class="col-md-9 contents">
     <div class="page-header">
-    <h1>Wrapper functions to provide a <strong>h5</strong> compatible interface.</h1>
+    <h1>Wrapper functions to provide an <span class="pkg">h5</span> compatible interface.</h1>
     </div>
 
     
-    <p>Since it has been decided to join forces on the hdf5r package and deprecate
-h5 we wanted to make the transition for users as smooth as possible.
-Additionally, we could transfer almost all testcases to hdf5r and improve
-test coverage even more.</p>
+    <p>The functions listed below provide a wrapper-interface compatible to 
+functions specified in the <span class="pkg">h5</span> package. The author(s)
+have decided to deprecate <span class="pkg">h5</span> and join forces and still 
+make the transition for <span class="pkg">h5</span> users as smooth as possible.
+Additionally, almost all testcases could be transferred to <span class="pkg">hdf5r</span> 
+to improve test coverage even more.</p>
     
 
     <pre class="usage"><span class='fu'>h5file</span>(<span class='no'>...</span>)
@@ -161,7 +166,32 @@ test coverage even more.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Below you can find a list of all <strong>h5</strong> function including <strong>hdf5r</strong> mappings.</p>
+    <p>Below you can find a list of all <strong>h5</strong> functions including <strong>hdf5r</strong> <em>mappings</em>.</p><dl class='dl-horizontal'>
+  <dt>h5file</dt><dd><p>Directly maps to <code>H5File$new</code>, see also <code><a href='H5File-class.html'>H5File</a></code>.</p></dd>
+  <dt>createGroup</dt><dd><p>Maps to <code>object$create_group</code> where object implements <em>CommonFG</em>.</p></dd>
+  <dt>openLocation</dt><dd><p>Uses <code>object$open</code> where object implements <em>CommonFG</em>.</p></dd>
+  <dt>createDataSet</dt><dd><p>Maps to <code>object$create_dataset</code> where object implements <em>CommonFG</em>.</p></dd>
+  <dt>readDataSet</dt><dd><p>Maps to <code>object$read</code>, see also <code><a href='H5D-class.html'>H5D</a></code>.</p></dd>
+  <dt>h5close</dt><dd><p>Maps to <code>object$close_all</code> for <code><a href='H5File-class.html'>H5File</a></code> and <code>object$close</code> 
+    for other.</p></dd>
+  <dt>h5flush</dt><dd><p>Maps to <code>object$flush</code> where object implements <em>CommonFGDTA</em>.</p></dd>
+</dl>
+    <p>The following <strong>interfaces</strong> are defined:</p><dl class='dl-horizontal'>
+  <dt>CommonFG</dt><dd><p>Implemented by objects of class 
+    <code><a href='H5File-class.html'>H5File</a></code> and 
+    <code><a href='H5Group-class.html'>H5Group</a></code>.</p></dd>
+  <dt>CommonFGDTA</dt><dd><p>Implemented by objects of class
+    <code><a href='H5File-class.html'>H5File</a></code>, 
+    <code><a href='H5Group-class.html'>H5Group</a></code>, 
+    <code><a href='H5D-class.html'>H5D</a></code>, 
+    <code><a href='H5T-class.html'>H5T</a></code> and
+    <code><a href='H5A-class.html'>H5A</a></code>.</p></dd>
+</dl>
+    
+    <h2 class="hasAnchor" id="references"><a class="anchor" href="#references"></a>References</h2>
+
+    <p>Mario Annau (2017). <em><span class="pkg">h5</span>: Interface to the 'HDF5' Library</em>. R package version 0.9.9.
+<a href='https://github.com/mannau/h5'>https://github.com/mannau/h5</a></p>
     
 
   </div>
@@ -171,6 +201,8 @@ test coverage even more.</p>
       <li><a href="#arguments">Arguments</a></li>
       
       <li><a href="#details">Details</a></li>
+
+      <li><a href="#references">References</a></li>
           </ul>
 
   </div>

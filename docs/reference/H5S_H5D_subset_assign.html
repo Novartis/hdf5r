@@ -63,6 +63,9 @@
 <li>
   <a href="../reference/index.html">Reference</a>
 </li>
+<li>
+  <a href="../news/index.html">News</a>
+</li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">
@@ -118,7 +121,7 @@ subset_assign_h5.H5D(x, d1, ..., dataset_xfer_pl = h5const$H5P_DEFAULT,
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>The  <code><a href='H5S-class.html'>H5S-class</a></code> or <code><a href='H5D-class.html'>H5D-class</a></code> to subset or assign values to</p></td>
+      <td><p>The  <code><a href='H5S-class.html'>H5S</a></code> or <code><a href='H5D-class.html'>H5D</a></code> to subset or assign values to</p></td>
     </tr>
     <tr>
       <th>d1</th>
@@ -130,7 +133,7 @@ subset_assign_h5.H5D(x, d1, ..., dataset_xfer_pl = h5const$H5P_DEFAULT,
     </tr>
     <tr>
       <th>op</th>
-      <td><p>Operation to perform on the <code><a href='H5S-class.html'>H5S-class</a></code>. Look into the HDF5 online help
+      <td><p>Operation to perform on the <code><a href='H5S-class.html'>H5S</a></code>. Look into the HDF5 online help
 <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectElements</a> and
 <a href='https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab'>https://www.hdfgroup.org/HDF5/doc/RM/RM_H5S.html#Dataspace-SelectHyperslab</a></p></td>
     </tr>
@@ -141,7 +144,7 @@ where the function is called</p></td>
     </tr>
     <tr>
       <th>dataset_xfer_pl</th>
-      <td><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER-class</a></code>.</p></td>
+      <td><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code>.</p></td>
     </tr>
     <tr>
       <th>flags</th>
@@ -164,8 +167,8 @@ it return a <code>double</code>. This looses precision, however. See also docume
     
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>For <code>x</code> being a <code><a href='H5S-class.html'>H5S-class</a></code>, the same object is returned, but with the selection set as requested. For
-<code><a href='H5D-class.html'>H5D-class</a></code> it retrieves the subset of data requested or sets the subset of data assigned, as for any n-dimensional array
+    <p>For <code>x</code> being a <code><a href='H5S-class.html'>H5S</a></code>, the same object is returned, but with the selection set as requested. For
+<code><a href='H5D-class.html'>H5D</a></code> it retrieves the subset of data requested or sets the subset of data assigned, as for any n-dimensional array
 in R.</p>
     
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
@@ -175,9 +178,9 @@ consider with R itself.</p>
 <p>Most importantly HDF5-COMPOUND objects only have a single dimension internally to HDF5 (a vector), but they correspond to R-data.frames,
 which are 2 dimensional. For an HDF5 COMPOUND object, it is currently not possible to only sub-select a specific column.
 All columns have to be extracted (using 1-dimensional access with <code>[</code> and can then be subset in R itself.
-The same is true for writing a COMPOUND object (<code><a href='H5T_COMPOUND-class.html'>H5T_COMPOUND-class</a></code>). A complete data-frame
+The same is true for writing a COMPOUND object (<code><a href='H5T_COMPOUND-class.html'>H5T_COMPOUND</a></code>). A complete data-frame
 is needed, not just a subset of the columns.</p>
-<p>Another important differences is for datasets of HDF5-ARRAY type <code><a href='H5T_ARRAY-class.html'>H5T_ARRAY-class</a></code>
+<p>Another important differences is for datasets of HDF5-ARRAY type <code><a href='H5T_ARRAY-class.html'>H5T_ARRAY</a></code>
 where the access to the object is only for the dimension of the object itself, not including the dimensions of the underlying array type.</p>
     
 
