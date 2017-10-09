@@ -145,4 +145,4 @@ limitations under the License.
 
 The licensing terms of HDF5 can as of this writing be found in the inst/HDF5_COPYRIGHTS file or online at
 
-https://www.hdfgroup.org/ftp/HDF5/releases/hdf5-1.10/hdf5-1.10.0/src/unpacked/COPYING
+https://support.hdfgroup.org/ftp/HDF5/releases/COPYING
