@@ -7,14 +7,17 @@
 ## R CMD check results
 
 0 errors | 0 warnings | 1 note
+checking CRAN incoming feasibility ... NOTE
+Maintainer: ‘Holger Hoefling <hhoeflin@gmail.com>’
+
+New submission
 
 * This is a new release.
 
-The Non-FOSS license is intended as is and cannot be changed.
+- Novartis Institute of Biomedical Research (NIBR) added as a Copyright Holder
+- Reference to HDF5 copyright added to Description file
 
-No words are misspelled (false positives)
-
-The URL in README.md that is currently not working will work as soon as the package is released.
+- The License is required by Novartis Institute for Biomedical Research, where much of the programming was done, for release of the code as open-source. 
 
 ## Reverse dependencies
 
