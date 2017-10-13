@@ -98,6 +98,22 @@ This function implements the HDF5-API function H5Fget_name.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5F.html#File-GetName} for details.}
 }}
 
+\examples{
+fname <- tempfile(fileext = ".h5")
+file <- H5File$new(fname, mode = "a")
+h5attr(file, "attr_numeric") <- rnorm(10)
+a <- file$attr_open("attr_numeric")
+a$get_info()
+a$attr_name()
+a$get_space()
+a$get_type()
+a$get_storage_size()
+a$read()
+a$write(10:1)
+a$print()
+a$close()
+file$close_all()
+}
 \author{
 Holger Hoefling
 }

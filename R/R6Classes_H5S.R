@@ -36,7 +36,6 @@
 ##' @docType class
 ##' @importFrom R6 R6Class
 ##' @return Object of class \code{\link{H5S}}. 
-##' @export
 ##' @author Holger Hoefling
 ##'
 ##' @examples
@@ -58,7 +57,7 @@
 ##' h5s_variable[2:7, 1:2]
 ##' h5s_variable$get_select_type()
 ##' h5s_variable$get_select_hyper_blocklist()
-##' 
+##' @export
 H5S <- R6Class("H5S",
                inherit=H5RefClass,
                public=list(

@@ -37,8 +37,15 @@ ref_obj_size <- new.env()
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link[=H5R]{H5R}}.
-#' @export
 #' @author Holger Hoefling
+#' @examples
+#' fname <- tempfile(fileext = ".h5")
+#' file <- H5File$new(fname, mode = "a")
+#' file[["testset"]] <- matrix(rnorm(9), nrow = 3)
+#' dset <- file[["testset"]]
+#' r <- file$create_reference("testset")
+#' file$close_all()
+#' @export
 H5R <- R6Class("H5R",
                inherit=H5RefClass,
                public=list(

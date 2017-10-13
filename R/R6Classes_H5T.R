@@ -163,7 +163,6 @@ text_to_dtype <- function(text, lang_type=h5const$H5LT_DDL) {
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5T}}.
-#' @export
 #' @author Holger Hoefling
 #'
 #' @examples
@@ -184,6 +183,7 @@ text_to_dtype <- function(text, lang_type=h5const$H5LT_DDL) {
 #' 
 #' file$close_all()
 #' file.remove(fname)
+#' @export
 H5T <- R6Class("H5T",
                inherit=H5RefClass,
                public=list(

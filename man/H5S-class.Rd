@@ -188,7 +188,6 @@ h5s_variable$get_select_elem_pointlist()
 h5s_variable[2:7, 1:2]
 h5s_variable$get_select_type()
 h5s_variable$get_select_hyper_blocklist()
-
 }
 \author{
 Holger Hoefling

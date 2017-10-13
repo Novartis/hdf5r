@@ -395,6 +395,14 @@ Returns the names of the items in the group or at the root of the file
 }}
 }}
 
+\examples{
+fname <- tempfile(fileext = ".h5")
+file <- H5File$new(fname, mode = "a")
+group <- file$create_group("testgroup")
+group$print()
+group$close()
+file$close_all()
+}
 \author{
 Holger Hoefling
 }

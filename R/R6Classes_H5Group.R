@@ -33,6 +33,13 @@
 ##' @return Object of class \code{\link{H5Group}}. 
 ##' @export
 ##' @author Holger Hoefling
+##' @examples
+##' fname <- tempfile(fileext = ".h5")
+##' file <- H5File$new(fname, mode = "a")
+##' group <- file$create_group("testgroup")
+##' group$print()
+##' group$close()
+##' file$close_all()
 H5Group <- R6Class("H5Group",
                    inherit=H5RefClass,
                    public=list(

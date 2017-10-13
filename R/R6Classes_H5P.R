@@ -106,8 +106,18 @@ H5P_factory <- function(id) {
 #' @docType class
 #' @importFrom R6 R6Class
 #' @return Object of class \code{\link{H5P}}.
-#' @export
 #' @author Holger Hoefling
+#' @examples 
+#' fname <- tempfile(fileext = ".h5")
+#' file <- H5File$new(fname, mode = "a")
+#' file[["testdataset"]] <- 1:10
+#' p <- file[["testdataset"]]$get_create_plist()
+#' p$get_class()
+#' p$get_class_name()
+#' p$copy()
+#' p$equal(p)
+#' file$close_all()
+#' @export
 H5P <- R6Class("H5P",
                inherit=H5RefClass,
                public=list(

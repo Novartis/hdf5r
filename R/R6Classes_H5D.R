@@ -61,7 +61,6 @@ setOldClass("H5D")
 ##' @docType class
 ##' @importFrom R6 R6Class
 ##' @return Object of class \code{\link{H5D}}.
-##' @export
 ##' @author Holger Hoefling
 ##' @examples
 ##' # First create a file to create datasets in it
@@ -96,6 +95,7 @@ setOldClass("H5D")
 ##'
 ##' file$close_all()
 ##' file.remove(fname)
+##' @export
 H5D <- R6Class("H5D",
                inherit=H5RefClass,
                public=list(

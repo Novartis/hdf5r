@@ -58,6 +58,17 @@ This function implements the HDF5-API function H5Pequal.
 Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html#Property-Equal} for details.}
 }}
 
+\examples{
+fname <- tempfile(fileext = ".h5")
+file <- H5File$new(fname, mode = "a")
+file[["testdataset"]] <- 1:10
+p <- file[["testdataset"]]$get_create_plist()
+p$get_class()
+p$get_class_name()
+p$copy()
+p$equal(p)
+file$close_all()
+}
 \author{
 Holger Hoefling
 }
