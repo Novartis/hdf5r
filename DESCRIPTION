@@ -5,7 +5,7 @@ Version: 1.0.0
 Authors@R: c(
     person("Holger", "Hoefling", email = "hhoeflin@gmail.com", role = c("aut", "cre")),
     person("Mario", "Annau", email = "mario.annau@gmail.com", role = "aut"),
-    person("Novartis Institute for Biomedical Research (NIBR)", role = "cph")
+    person("Novartis Institute for BioMedical Research (NIBR)", role = "cph")
     )
 Description: 'HDF5' is a data model, library and file format for storing 
     and managing large amounts of data. This package provides a nearly
@@ -16,7 +16,7 @@ Description: 'HDF5' is a data model, library and file format for storing
 URL:  https://hhoeflin.github.io/hdf5r, https://github.com/hhoeflin/hdf5r
 BugReports: https://github.com/hhoeflin/hdf5r/issues
 License: Apache License 2.0 | file LICENSE
-Copyright: For the hdf5r package: Novartis Institutes for BioMedical Research
+Copyright: For the hdf5r package: Novartis Institute for BioMedical Research
     Inc. For HDF5: see the HDF5_COPYRIGHTS file.
 LazyLoad: true
 Depends:
