@@ -119,6 +119,8 @@ function(name) {
 #' 
 #' @param object \code{CommonFG}; Object implementing the CommonFG Interface (e.g. \code{\link{H5File}}, \code{\link{H5Group}}).
 #' @param path character; Path named to be used for iteration.
+#' @param full.names character; Specify if absolute DataSet path names should be returned.
+#' @param object.type character; Object type to be returned.
 #' @param recursive logical; Specify if object should be traversed recursively.
 #' @param ... Additional Parameters passed to \code{$ls()}
 #' @return \code{\link{character}}
@@ -127,20 +129,31 @@ NULL
 
 #' @rdname list-groups-datasets
 #' @export
-list.groups <- function(object, path = "/", recursive = TRUE, ...) {
-  obj <- object
-  if (path != "/") obj <- object[[path]]
-  df <- obj$ls(... ,recursive = recursive)
-  df[df$object.type == "H5O_TYPE_GROUP", 1]
+list.groups <- function(object, path = "/", full.names = FALSE, recursive = TRUE, ...) {
+  list.objects(object, "H5O_TYPE_GROUP", path, full.names, recursive, ...)
 }
 
 #' @rdname list-groups-datasets
 #' @export
-list.datasets <- function(object, path = "/", recursive = TRUE, ...) {
-  obj <- object
-  if (path != "/") obj <- object[[path]]
-  df <- obj$ls(... ,recursive = recursive)
-  df[df$object.type == "H5O_TYPE_DATASET", 1]
+list.datasets <- function(object, path = "/", full.names = FALSE, recursive = TRUE, ...) {
+  list.objects(object, "H5O_TYPE_DATASET", path, full.names, recursive, ...)
+}
+
+#' @rdname list-groups-datasets
+#' @export
+list.objects <- function(object, 
+  object.type = c("H5O_TYPE_UNKNOWN", "H5O_TYPE_GROUP", "H5O_TYPE_DATASET", "H5O_TYPE_NAMED_DATATYPE", "H5O_TYPE_NTYPES"), 
+  path = "/", full.names = FALSE, recursive = TRUE, ...) {
+  
+  object.type = match.arg(object.type, several.ok = TRUE)
+  if (path != "/") object <- object[[path]]
+  df <- object$ls(... , recursive = recursive)
+  onames <- df[as.character(df$object.type) %in% object.type, "name"]
+  if (full.names) {
+    onames <- sprintf("%s/%s", object$get_obj_name(), onames)
+    onames <- gsub("^/+", "/", onames)
+  }
+  onames
 }
 
 GetDimensions <- function(data) {
