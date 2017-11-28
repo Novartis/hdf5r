@@ -12,8 +12,7 @@ list.groups(object, path = "/", full.names = FALSE, recursive = TRUE, ...)
 list.datasets(object, path = "/", full.names = FALSE, recursive = TRUE,
   ...)
 
-list.objects(object, object.type = c("H5O_TYPE_UNKNOWN", "H5O_TYPE_GROUP",
-  "H5O_TYPE_DATASET", "H5O_TYPE_NAMED_DATATYPE", "H5O_TYPE_NTYPES"),
+list.objects(object, obj_type = c("H5I_GROUP", "H5I_DATASET", "H5I_DATATYPE"),
   path = "/", full.names = FALSE, recursive = TRUE, ...)
 }
 \arguments{
@@ -27,7 +26,7 @@ list.objects(object, object.type = c("H5O_TYPE_UNKNOWN", "H5O_TYPE_GROUP",
 
 \item{...}{Additional Parameters passed to \code{$ls()}}
 
-\item{object.type}{character; Object type to be returned.}
+\item{obj_type}{character; Object type to be returned.}
 }
 \value{
 \code{\link{character}}

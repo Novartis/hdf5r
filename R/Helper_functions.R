@@ -120,19 +120,21 @@ clean_ls_df <- function(df) {
     df <- within(df, {
         ## make them into logical for now, will drop them at the end
         link_success <- as.logical(link_success)
-        object_success <- as.logical(object_success)
+        obj_type_success <- as.logical(obj_type_success)
         group_success <- as.logical(group_success)
         dataset_success <- as.logical(dataset_success)
         type_success <- as.logical(type_success)
-
+    })
+    df <- within(df, {
         link[!link_success,] <- NA
-        object[!object_success,] <- NA
+        obj_type[!obj_type_success] <- NA
+        num_attrs[!obj_type_success] <- NA
         group[!group_success,] <- NA
         dataset[!dataset_success,] <- NA
         committed_type[!type_success] <- NA
     })
     df$link_success <- NULL
-    df$object_success <- NULL
+    df$obj_type_success <- NULL
     df$group_success <- NULL
     df$dataset_success <- NULL
     df$type_success <- NULL
@@ -239,7 +241,7 @@ print_attributes <- function(obj, max_to_print) {
 ##' @keywords internal
 print_listing <- function(obj, max_to_print) {
     listing <- obj$ls(recursive=FALSE, detailed=FALSE)
-    listing <- listing[, c("name", "object.type", "dataset.dims", "dataset.type_class")]
+    listing <- listing[, c("name", "obj_type", "dataset.dims", "dataset.type_class")]
     if(nrow(listing) > 0) {
         cat("Listing:\n")
         if(nrow(listing) <= max_to_print) {
