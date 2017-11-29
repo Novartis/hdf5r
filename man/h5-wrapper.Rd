@@ -6,6 +6,7 @@
 \alias{h5file}
 \alias{createGroup}
 \alias{openLocation}
+\alias{openGroup}
 \alias{createDataSet}
 \alias{readDataSet}
 \alias{h5close}
@@ -25,6 +26,8 @@ h5file(...)
 createGroup(object, name, ...)
 
 openLocation(object, name)
+
+openGroup(object, name)
 
 createDataSet(object, name, ...)
 

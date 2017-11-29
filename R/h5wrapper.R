@@ -68,6 +68,10 @@ openLocation <- function(object, name) object$open(name=name)
 
 #' @rdname h5-wrapper
 #' @export
+openGroup <- openLocation
+
+#' @rdname h5-wrapper
+#' @export
 createDataSet <- function(object, name, ...) object$create_dataset(name, ...)
 
 #' @rdname h5-wrapper

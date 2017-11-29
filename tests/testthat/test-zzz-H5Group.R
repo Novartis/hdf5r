@@ -75,6 +75,35 @@ test_that("H5Group-openLocation",{
   h5close(file)
 })
 
+test_that("H5Group-openGroup",{
+  expect_that(file.exists(fname), is_true())
+  file <- h5file(fname, "r")
+  # Fail for nested (non-existent) group name
+  f <- function() group1 <- openGroup(file, "/testgroup/test")
+  expect_that(f(), throws_error("component not found"))
+  
+  group3 <- openGroup(file, "/testgroup3")
+  expect_that(group3, is_a("H5Group"))
+  expect_that(group3$get_obj_name(), is_identical_to("/testgroup3"))
+  
+  groupnested <- openGroup(group3, "test")
+  expect_that(groupnested, is_a("H5Group"))
+  expect_that(groupnested$get_obj_name(), is_identical_to("/testgroup3/test"))
+  h5close(groupnested)
+  h5close(group3)
+  
+  group3 <- openGroup(file, "/testgroup3")
+  grouprelative <- openGroup(group3, "test")
+  expect_that(grouprelative, is_a("H5Group"))
+  expect_that(grouprelative$get_obj_name(), is_identical_to("/testgroup3/test"))
+  # TODO: should absolute path be displayed?
+  # eg. expect_that(grouprelative@name, is_identical_to("/testgroup3/test"))
+  
+  h5close(grouprelative)
+  h5close(group3)
+  h5close(file)
+})
+
 test_that("H5Group-existsGroup",{
   expect_that(file.exists(fname), is_true())
   file <- h5file(fname, "r")
