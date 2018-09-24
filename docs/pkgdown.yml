@@ -1,6 +1,9 @@
+pandoc: 1.19.2.1
+pkgdown: 1.1.0.9000
+pkgdown_sha: b62fef53d0a5633adea58b9c503d35e465a9af43
+articles:
+  hdf5r: hdf5r.html
 urls:
   reference: http://hhoeflin.github.io/hdf5r/reference
   article: http://hhoeflin.github.io/hdf5r/articles
-articles:
-  hdf5r: hdf5r.html
 
