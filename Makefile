@@ -61,6 +61,8 @@ src/Makevars.in > src/Makevars.win
 roxygen: $(R_FILES)
 	$(R) 'devtools::load_all(".", reset=TRUE, recompile = FALSE, export_all=FALSE)';
 	$(R) 'devtools::document(".")';
+
+sitedoc:
 	$(R) 'pkgdown::build_site()';
 
 $(RCPPEXPORTS): compileAttributes
