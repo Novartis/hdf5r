@@ -1,3 +1,11 @@
+# hdf5r 1.2.0
+- Fixes bug #123: inconsistent subsetting, where certain subsets (usually short and one-dimensional) were
+  returned incorrectly (offset by 1)
+
+# hdf5r 1.1.1
+- Fixes some potential problematic places in code by RCHK
+- Update the links to the documentation
+
 # hdf5r 1.0.1
 - Updated package to work with version 1.10.2 and 1.10.3 of HDF5
 - Fixed issue #84, adding full.names argument in h5-wrapper to list.groups; also added test

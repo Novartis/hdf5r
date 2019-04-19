@@ -77,6 +77,17 @@ index_negative_some <- c(1, 3, -2, 5, 6)
 index_large <- c(1, 20)
 index_empty <- list(quote(expr=))
 
+example_indices <- list(index_logical,
+                            index_regular,
+                            index_regular2,
+                            index_positive,
+                            index_ident,
+                            index_ident2,
+                            index_decreasing,
+                            index_negative_all,
+                            index_large,
+                            quote(expr=),
+                            NULL)
 
 test_that("args_regularity_evaluation to selection", {
     ## first, check arg for hyperslab func, i.e. for functions that can directly be interpreted as a
@@ -91,17 +102,7 @@ test_that("args_regularity_evaluation to selection", {
     check_for_func_res <- lapply(example_calls, hdf5r:::check_arg_for_hyperslab_func, envir=sys.frame())
     expect_equal(check_for_func_res, list(c(4, 1, 1, 5), c(1, 1, 1, 6), c(4, 3, 2, 1), c(4, 1, 1, 4), c(NA, NA, NA, NA), c(NA, NA, NA, NA)))
 
-    example_indices <- list(index_logical,
-                            index_regular,
-                            index_regular2,
-                            index_positive,
-                            index_ident,
-                            index_ident2,
-                            index_decreasing,
-                            index_negative_all,
-                            index_large,
-                            quote(expr=),
-                            NULL)
+    
     ## now do the argument regularity evaluation
     ds_dims <- rep(10, length(example_indices))
     example_indices_regularity <- hdf5r:::args_regularity_evaluation(example_indices, ds_dims, envir=sys.frame())
@@ -245,27 +246,45 @@ test_that("subset_h5.H5D", {
     ## open a new one, truncate if it exists
     file.h5 <- H5File$new(test_file, mode="w")
 
-    robj <- matrix(as.integer(1:40), ncol=4)
+    robj <- matrix(as.integer(1:100), ncol=10)
     file.h5[["test"]] <- robj
     test <- file.h5[["test"]]
 
+    indices_test <- list(
+        1:10, 
+        10:1, 
+        c(1,2,3,4), 
+        c(4, 3, 2, 1),
+        c(1, 3, 5, 7), 
+        c(7, 5, 3, 1), 
+        c(1, 2, 5, 9), 
+        c(9, 5, 2, 1), 
+        c(1:10, 1:10), 
+        c(1, 2, 2, 2, 3, 4, 5), 
+        c(-1, -2, -3), 
+        c(-1, -3, -4))
+    
+    for(ind1 in indices_test) {
+        for(ind2 in indices_test) {
+            expect_equal(test[ind1, ind2], robj[ind1, ind2])
+        }
+    }
+    
     expect_equal(test[1:3, 2:4], robj[1:3, 2:4])
-
     expect_equal(test[c(1,3,4),], robj[c(1,3,4),])
-
     test[1:3, 2:4] <- 1:9
     expect_equal(test[1:3, 2:4], matrix(1:9, ncol=3))
 
     ## write outside of the current set
     ## will trigger an automatic expansion of the current set if possible
-    test[11:15, ] <- 1:20
-    expect_equal(as.vector(test[11:15,]), 1:20)
+    test[11:15, ] <- 1:50
+    expect_equal(as.vector(test[11:15,]), 1:50)
 
     ## also test an indirect subsetting
     get_1 <- function(i, ds) {
         return(ds[i,])
     }
-    expect_equal(get_1(11, test), c(1, 6, 11, 16))
+    expect_equal(get_1(11, test), c(1, 6, 11, 16, 21, 26, 31, 36, 41, 46))
 
 
     ## need to recreate an error where writing into an array failed when there was a missing dimension
@@ -282,8 +301,27 @@ test_that("subset_h5.H5D", {
     ## check that selecting a dimension as NULL yields the correct result
     expect_equal(test[, NULL], matrix(numeric(0), ncol=0, nrow=15))
     
+    # also do one-dimensional subsetting
+    robj_onedim = 1:10
+    file.h5[["onedim"]] <- robj_onedim
+    test_onedim <- file.h5[["onedim"]]
+    expect_equal(test_onedim[1:5], robj_onedim[1:5])
+    # this is the issue #123 that was reported
+    expect_equal(test_onedim[c(1, 3)], robj_onedim[c(1, 3)])
+    expect_equal(test_onedim[c(2, 4)], robj_onedim[c(2, 4)])
+    
+    for(ind1 in indices_test) {
+        expect_equal(test_onedim[ind1], robj_onedim[ind1])
+    }
+
+    
     file.h5$close_all()
     file.remove(test_file)
+})
+
+test_that("hyperslab_to_points", {
+    # due to issue #123
+    expect_equal(hdf5r:::hyperslab_to_points(c(2,2,2,1)), c(2,4))
 })
 
 

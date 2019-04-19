@@ -128,7 +128,7 @@ H5T_factory <- function(ids, do_copy=FALSE) {
 ##' Convert a text description to a datatype
 ##'
 ##' Converts a text to a datatype using the HDF5 function H5LT_text_to_dtype. Documentation can be found at 
-##' \url{https://www.hdfgroup.org/HDF5/doc/HL/RM_H5LT.html#H5LTtext_to_dtype}.
+##' \url{https://portal.hdfgroup.org/display/HDF5/H5LT_TEXT_TO_DTYPE}.
 ##' @title Convert a text description to a datatype
 ##' @param text The text to convert to the datatype
 ##' @param lang_type The type of language to use; currently only \code{H5LT_DDL} is supported.
@@ -381,7 +381,7 @@ H5T <- R6Class("H5T",
                    },
                    to_text=function(lang_type=h5const$H5LT_DDL) {
                        "This function implements the HDF5-API function H5LTdtype_to_text."
-                       "Please see the documentation at \\url{https://www.hdfgroup.org/HDF5/doc/HL/RM_H5LT.html#H5LTdtype_to_text} for details."
+                       "Please see the documentation at \\url{https://portal.hdfgroup.org/display/HDF5/H5LT_DTYPE_TO_TEXT} for details."
                        res <- standalone_H5T_dtype_to_text(self$id, lang_type)
 
                        return(res)

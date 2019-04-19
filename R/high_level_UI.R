@@ -583,10 +583,10 @@ hyperslab_to_points <- function(hyperslab) {
     stopifnot(length(hyperslab)==4 && is.numeric(hyperslab))
     ## c("start", "count", "stride", "block")
     if(hyperslab[[2]] == 1) { # only one block
-        res <- seq_len(hyperslab[[4]]) + hyperslab[[1]] - 1
+        res <- (seq_len(hyperslab[[4]]) - 1) + hyperslab[[1]] 
     }
     else if(hyperslab[[4]] == 1) { # only blocks of size 1
-        res <- ((seq_len(hyperslab[[2]]) - 1) * hyperslab[[3]]) + hyperslab[[1]] - 1
+        res <- ((seq_len(hyperslab[[2]]) - 1) * hyperslab[[3]]) + hyperslab[[1]]
     }
     else { # mixed; should not occur for us but will write function to handle this anyway
         ## doesn't need to be overly efficient

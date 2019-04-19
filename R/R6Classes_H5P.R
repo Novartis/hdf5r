@@ -361,7 +361,7 @@ H5P_FILE_CREATE <-  R6Class("H5P_FILE_CREATE",
                                   },
                                   set_file_space=function(strategy, threshold) {
                                       "This function implements the HDF5-API function H5Pset_file_space."
-                                      "Please see the documentation at \\url{https://portal.hdfgroup.org/display/HDF5/H5P_SET_FILE_SPAE} for details."
+                                      "Please see the documentation at \\url{https://portal.hdfgroup.org/display/HDF5/H5P_SET_FILE_SPACE_STRATEGY} for details."
 
                                       if(compareVersion(h5version(verbose=FALSE), "1.10.0") < 0) {
                                           stop("Function only available for 1.10.0 or higher")
@@ -373,7 +373,7 @@ H5P_FILE_CREATE <-  R6Class("H5P_FILE_CREATE",
                                   },
                                   get_file_space=function() {
                                       "This function implements the HDF5-API function H5Pget_file_space."
-                                      "Please see the documentation at \\url{https://portal.hdfgroup.org/display/HDF5/H5P_GET_FILE_SPACE} for details."
+                                      "Please see the documentation at \\url{https://portal.hdfgroup.org/display/HDF5/H5P_GET_FILE_SPACE_STRATEGY} for details."
 
                                       if(compareVersion(h5version(verbose=FALSE), "1.10.0") < 0) {
                                           stop("Function only available for 1.10.0 or higher")
@@ -430,7 +430,7 @@ H5P_FILE_ACCESS <-  R6Class("H5P_FILE_ACCESS",
                                   },
                                   get_cache=function() {
                                       "This function implements the HDF5-API function H5Pget_cache."
-                                      "Please see the documentation at \\url{https://portal.hdfgroup.org/display/HDF5/H5P_GET_CACHE} for details."
+                                      "Please see the documentation at \\url{https://portal.hdfgroup.org/display/HDF5/HP5_GET_CACHE} for details."
 
                                       res <- .Call("R_H5Pget_cache", self$id, 0, request_empty(1), request_empty(1), request_empty(1),
                                                     PACKAGE="hdf5r")

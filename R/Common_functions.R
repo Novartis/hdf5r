@@ -816,7 +816,7 @@ commonFG <- list(
 commonFG_active <- list(
         names=function(link_access_pl=h5const$H5P_DEFAULT) {
         "Returns the names of the items in the group or at the root of the file"
-        "@param link_access_pl The link-access property list. See \\url{https://www.hdfgroup.org/HDF5/doc/RM/RM_H5P.html} for more detail."
+        "@param link_access_pl The link-access property list. See \\url{https://portal.hdfgroup.org/display/HDF5/Link+Access+Properties} for more detail."
         ginfo <- self$group_info()
         nlinks <- ginfo$nlinks
         res <- character(nlinks)

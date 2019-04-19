@@ -66,12 +66,12 @@ Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5
 \item{\code{set_file_space(strategy, threshold)}}{
 
 This function implements the HDF5-API function H5Pset_file_space.
-Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5P_SET_FILE_SPAE} for details.}
+Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5P_SET_FILE_SPACE_STRATEGY} for details.}
 
 \item{\code{get_file_space()}}{
 
 This function implements the HDF5-API function H5Pget_file_space.
-Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5P_GET_FILE_SPACE} for details.}
+Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5P_GET_FILE_SPACE_STRATEGY} for details.}
 }}
 
 \seealso{

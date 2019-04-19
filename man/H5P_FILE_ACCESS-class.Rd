@@ -31,7 +31,7 @@ Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5
 \item{\code{get_cache()}}{
 
 This function implements the HDF5-API function H5Pget_cache.
-Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5P_GET_CACHE} for details.}
+Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/HP5_GET_CACHE} for details.}
 }}
 
 \seealso{

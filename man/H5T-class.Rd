@@ -129,7 +129,7 @@ Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5
 \item{\code{to_text(lang_type = h5const$H5LT_DDL)}}{
 
 This function implements the HDF5-API function H5LTdtype_to_text.
-Please see the documentation at \url{https://www.hdfgroup.org/HDF5/doc/HL/RM_H5LT.html#H5LTdtype_to_text} for details.}
+Please see the documentation at \url{https://portal.hdfgroup.org/display/HDF5/H5LT_DTYPE_TO_TEXT} for details.}
 
 \item{\code{print(...)}}{
 
