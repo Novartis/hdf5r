@@ -555,7 +555,9 @@ SEXP H5ToR_single_step(void* _h5obj, hid_t dtype_id, R_xlen_t nelem, int flags) 
   hsize_t dtype_size = H5Tget_size(dtype_id);
 
   SEXP Rval = PROTECT(H5ToR_Pre(dtype_id, nelem));
-  memcpy(VOIDPTR(Rval), _h5obj, dtype_size * nelem);
+  if(nelem > 0) {
+      memcpy(VOIDPTR(Rval), _h5obj, dtype_size * nelem);
+  }
   Rval = PROTECT(H5ToR_Post(Rval, dtype_id, nelem, flags, -1));
   UNPROTECT(2);
   return(Rval);
@@ -1659,7 +1661,14 @@ long long SEXP_to_longlong(SEXP _value, R_xlen_t pos) {
       return(value);
     }
     else {
-      value = (long long) (REAL(_value)[pos] + sgn(REAL(_value)[pos]) * 0.5);
+      // need to check if the value of REAL is Inf, if yes, set to maximum 
+      // longlong value
+      if(REAL(_value)[pos] == R_PosInf) {
+        value = LLONG_MAX;
+      }
+      else {
+        value = (long long) (REAL(_value)[pos] + sgn(REAL(_value)[pos]) * 0.5);
+      }
       return(value);
     }
   case LGLSXP:
