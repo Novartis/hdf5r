@@ -32,6 +32,7 @@ Suggests:
     rmarkdown,
     nycflights13,
     reshape2,
+    formatR,
 SystemRequirements: HDF5 (>= 1.8.13)
 VignetteBuilder: knitr
 NeedsCompilation: yes
