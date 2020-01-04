@@ -271,7 +271,7 @@ typedef enum {
 } DT_enum;
 
 
-hid_t h5_datatype[DT_LAST_ITEM];
+extern hid_t h5_datatype[DT_LAST_ITEM];
 
 
 

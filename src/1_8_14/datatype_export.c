@@ -19,6 +19,8 @@
 
 #include "datatype_export.h"
 
+hid_t h5_datatype[DT_LAST_ITEM];
+
 hid_t get_h5_equiv(int size, bool sign) {
   switch(size) {
   case 1: {
