@@ -1,4 +1,5 @@
 R := R --slave --vanilla -e
+Rscript := Rscript -e
 
 PKG_VERSION := $(shell grep -i ^version DESCRIPTION | cut -d : -d \  -f 2)
 PKG_NAME := $(shell grep -i ^package DESCRIPTION | cut -d : -d \  -f 2)
@@ -35,6 +36,7 @@ $(PKG_NAME)_$(PKG_VERSION).tar.gz: $(PKG_FILES)
 build-cran:
 	@make clean
 	@make roxygen
+	@make build
 
 roxygen: $(R_FILES)
 	$(R) 'devtools::load_all(".", reset=TRUE, recompile = FALSE, export_all=FALSE)';
