@@ -1,3 +1,7 @@
+# hdf53 1.3.1
+- Add missing formatR dependency to Suggests entry
+- Fix bug of multiple inclusion of defined variable in C code that causes error with new gcc version
+
 # hdf5r 1.3.0
 - Fixes bug #130. Errors from UBSAN-clang UBSAN-gcc
 - Upgrades the windows version of HDF5 to 1.8.16 and ensures compatibility with RTools 4.0
