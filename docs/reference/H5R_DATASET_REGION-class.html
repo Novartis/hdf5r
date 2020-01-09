@@ -8,22 +8,25 @@
 
 <title>Class for HDF5 dataset-region references. — H5R_DATASET_REGION-class • hdf5r</title>
 
+
 <!-- jquery -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
 <link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
+
 <script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/all.min.css" integrity="sha256-nAmazAk6vS34Xqo0BSrTb+abbtFlgsFK7NKSi6o7Y78=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.7.1/css/v4-shims.min.css" integrity="sha256-6qHlizsOWFskGlwVOKuns+D1nB6ssZrHQrNj1wGplHc=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
 
-<!-- sticky kit -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sticky-kit/1.1.3/sticky-kit.min.js" integrity="sha256-c4Rlo1ZozqTPE2RLuvbusY3+SU1pQaJC0TjuhygMipw=" crossorigin="anonymous"></script>
+<!-- headroom.js -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -31,11 +34,12 @@
 
 
 
-<meta property="og:title" content="Class for HDF5 dataset-region references. — H5R_DATASET_REGION-class" />
 
+<meta property="og:title" content="Class for HDF5 dataset-region references. — H5R_DATASET_REGION-class" />
 <meta property="og:description" content="H5R_DATASET_REGION is the reference class for dataset regions. Users should not create this class by themselves, but use the appropriate 
 and instead use the create_reference methods of H5D, H5Group or H5File classes." />
 <meta name="twitter:card" content="summary" />
+
 
 
 
@@ -47,6 +51,7 @@ and instead use the create_reference methods of H5D, H5Group or H5File classes."
 <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
 <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
 <![endif]-->
+
 
 
   </head>
@@ -65,7 +70,7 @@ and instead use the create_reference methods of H5D, H5Group or H5File classes."
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hdf5r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.0.1.8000</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.1.9000</span>
       </span>
     </div>
 
@@ -87,7 +92,6 @@ and instead use the create_reference methods of H5D, H5Group or H5File classes."
   <a href="../news/index.html">Changelog</a>
 </li>
       </ul>
-      
       <ul class="nav navbar-nav navbar-right">
         <li>
   <a href="https://github.com/hhoeflin/hdf5r">
@@ -102,6 +106,7 @@ and instead use the create_reference methods of H5D, H5Group or H5File classes."
 </div><!--/.navbar -->
 
       
+
       </header>
 
 <div class="row">
@@ -113,52 +118,49 @@ and instead use the create_reference methods of H5D, H5Group or H5File classes."
     </div>
 
     <div class="ref-description">
-    
     <p><code>H5R_DATASET_REGION</code> is the reference class for dataset regions. Users should not create this class by themselves, but use the appropriate 
 and instead use the <code>create_reference</code> methods of <code>H5D</code>, <code>H5Group</code> or <code>H5File</code> classes.</p>
-    
     </div>
 
-        
+
+
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
     <p>Object of class <code>H5R_DATASET_REGION</code>.</p>
-    
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
-    <dl class='dl-horizontal'>
+
+<dl class='dl-horizontal'>
 <dt><code>new(num = 0, id = NULL)</code></dt><dd><p>Create a new reference for dataset regions; Usually, users shouldn't have to call this, but use the 
 <code>create_reference</code> method of a dataset.</p></dd>
-    <dt><code>dereference(object_access_pl = h5const$H5P_DEFAULT, obj = NULL,
+
+<dt><code>dereference(object_access_pl = h5const$H5P_DEFAULT, obj = NULL,
   get_value = FALSE)</code></dt><dd><p>Dereference an H5R reference for a dataset region. The file the reference is pointing to is assigned automatically.
 It returns a list where each item is a list with components <code>dataset</code>, being an <code>H5D</code> object and
 <code>space</code> being a <code>H5S</code> object. When setting <code>get_value=TRUE</code>, then instead of these objects
 The data itself is returned
 This function implements the HDF5-API function H5Rdereference.
-Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5R_DEREFERENCE'>https://portal.hdfgroup.org/display/HDF5/H5R_DEREFERENCE</a> for details.
-    <strong>Parameters</strong>
+Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5R_DEREFERENCE'>https://portal.hdfgroup.org/display/HDF5/H5R_DEREFERENCE</a> for details.<strong>Parameters</strong>
 <dl class='dl-horizontal'>
 <dt>obj</dt><dd><p>Overriding the default file the reference is referring to</p></dd>
-<dt>object_access_pl</dt><dd><p>The object-access property list. Currently always the default</p></dd>
-</dl></p></dd>
+<dt>object_access_pl</dt><dd><p>The object-access property list. Currently always the default</p></dd></dl></p></dd>
+
 </dl>
-    
 
   </div>
-  <div class="col-md-3 hidden-xs hidden-sm" id="sidebar">
+  <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
     <h2>Contents</h2>
     <ul class="nav nav-pills nav-stacked">
-      
       <li><a href="#value">Value</a></li>
-
       <li><a href="#methods">Methods</a></li>
-          </ul>
+    </ul>
 
     <h2>Author</h2>
     <p>Holger Hoefling</p>
   </div>
 </div>
+
 
       <footer>
       <div class="copyright">
@@ -166,13 +168,16 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.3.0.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
 </div>
+
       </footer>
    </div>
 
   
 
+
   </body>
 </html>
+
 
