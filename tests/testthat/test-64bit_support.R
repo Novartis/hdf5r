@@ -47,15 +47,16 @@ test_that("Dataset with more than 2^31 rows", {
 })
 
 truncateVec <- function(x, min, max) {
-    x[is.na(x) | x < min] <- min
+    # truncate values, leave na alone
+    x[!is.na(x) & x < min] <- min
     x[!is.na(x) & x > max] <- max
     return(x)
 }
 
 value_LLONG_MAX <- function() {
-    res <- as.integer64(0)
+    res <- bit64::as.integer64(0)
     for(i in 0:62) {
-        res <- res + as.integer64(2)^i
+        res <- res + bit64::as.integer64(2)^i
     }
     return(res)
 }
@@ -70,7 +71,7 @@ test_that("Datatype conversion with 64bit", {
     ## Should differ between truncation, NA and FLOAT_FORCE
     dbl_vec_pos <- c(1, 2, 2^31-1, 2^31, 2^32, 2^33, 2^62, 2^63, 1.5 * 2^63, 2^65)
     dbl_vec <- c(-dbl_vec_pos, dbl_vec_pos)
-    dbl_vec_int64 <- suppressWarnings(as.integer64(dbl_vec))
+    dbl_vec_int64 <- suppressWarnings(bit64::as.integer64(dbl_vec))
 
     res_dbl_uint64_default <- hdf5r:::convertRoundTrip(dbl_vec, dtype_uint64, flags=h5const$H5TOR_CONV_NONE)
     res_dbl_uint64_na <- suppressWarnings(hdf5r:::convertRoundTrip(dbl_vec, dtype_uint64, flags=h5const$H5TOR_CONV_UINT64_NA))
@@ -78,10 +79,10 @@ test_that("Datatype conversion with 64bit", {
 
 
     ## for truncation - need to convert to int64, then set NA to LLONG_MAX
-    dbl_vec_int64_trunc <- suppressWarnings(as.integer64(dbl_vec))
+    dbl_vec_int64_trunc <- suppressWarnings(bit64::as.integer64(dbl_vec))
     dbl_vec_int64_trunc[dbl_vec < 0] <- 0
     dbl_vec_int64_trunc[is.na(dbl_vec_int64_trunc)] <- LLONG_MAX
-    dbl_vec_int64_na <- suppressWarnings(as.integer64(dbl_vec))
+    dbl_vec_int64_na <- suppressWarnings(bit64::as.integer64(dbl_vec))
     dbl_vec_int64_na[dbl_vec < 0] <- 0
     expect_equal(suppressWarnings(truncateVec(dbl_vec_int64_trunc, 0, LLONG_MAX)), res_dbl_uint64_default$output)
     expect_equal(suppressWarnings(truncateVec(dbl_vec_int64_na, 0, LLONG_MAX)), res_dbl_uint64_na$output)

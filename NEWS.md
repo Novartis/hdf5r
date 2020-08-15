@@ -1,3 +1,6 @@
+# hdf5r 1.3.3
+- Bugfix for failing test related to 64-bit support
+
 # hdf5r 1.3.2
 - Add support for HDF5 1.12.0 release
 
