@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -41,7 +45,6 @@ root of a file (see H5File). They can be created either with a pre-existing R-ob
 (arrays as well as data.frames are supported, but not lists or other complex objects), or by specifying
 an explicit datatype (for available datatypes see h5types$overview as well as the dimension.
 In addition, other features are supported such as transparent compression (for which a chunk-size can be selected)." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -59,7 +62,7 @@ In addition, other features are supported such as transparent compression (for w
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -73,7 +76,7 @@ In addition, other features are supported such as transparent compression (for w
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hdf5r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -97,7 +100,7 @@ In addition, other features are supported such as transparent compression (for w
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hhoeflin/hdf5r">
+  <a href="https://github.com/hhoeflin/hdf5r/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -121,8 +124,8 @@ In addition, other features are supported such as transparent compression (for w
     </div>
 
     <div class="ref-description">
-    <p>In HDF5, datasets can be located in a group (see <code>H5Group</code>) or at the
-root of a file (see <code>H5File</code>). They can be created either with a pre-existing R-object
+    <p>In HDF5, datasets can be located in a group (see <code><a href='H5Group-class.html'>H5Group</a></code>) or at the
+root of a file (see <code><a href='H5File-class.html'>H5File</a></code>). They can be created either with a pre-existing R-object
 (arrays as well as data.frames are supported, but not lists or other complex objects), or by specifying
 an explicit datatype (for available datatypes see <code>h5types$overview</code> as well as the dimension.
 In addition, other features are supported such as transparent compression (for which a chunk-size can be selected).</p>
@@ -135,25 +138,25 @@ In addition, other features are supported such as transparent compression (for w
     <p>Object of class <code>H5D</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>In order to create a dataset, the <code>create_dataset</code> methods of either <code>H5Group</code> or
-<code>H5File</code> should be used. Please see the documentation there for how to create them.</p>
-<p>The most important parts of a dataset are the</p><dl class='dl-horizontal'>
+    <p>In order to create a dataset, the <code>create_dataset</code> methods of either <code><a href='H5Group-class.html'>H5Group</a></code> or
+<code><a href='H5File-class.html'>H5File</a></code> should be used. Please see the documentation there for how to create them.</p>
+<p>The most important parts of a dataset are the</p><dl'>
   <dt>Space</dt><dd><p>The space of the dataset. It describes the dimension of the dataset as well as the maximum dimensions.
-               Can be obtained using the <code>get_space</code> of the <code>H5S</code> object.</p></dd>
+               Can be obtained using the <code>get_space</code> of the <code><a href='H5S-class.html'>H5S</a></code> object.</p></dd>
   <dt>Datatype</dt><dd><p>The datatypes that is being used in the dataset. Can be obtained using the <code>get_type</code> method.
-                  See <code>H5T</code> to get more information about using datatypes.</p></dd>
+                  See <code><a href='H5T-class.html'>H5T</a></code> to get more information about using datatypes.</p></dd>
 
 </dl>
 
 <p>In order to read and write datasets, the <code>read</code> and <code>write</code> methods are available. In addition, the standard way of using
-<code>[</code> to access arrays is supported as well (see <code>H5S_H5D_subset_assign</code> for more help).</p>
-<p>Other information/action of possible interest are</p><dl class='dl-horizontal'>
+<code>[</code> to access arrays is supported as well (see <code><a href='H5S_H5D_subset_assign.html'>H5S_H5D_subset_assign</a></code> for more help).</p>
+<p>Other information/action of possible interest are</p><dl'>
   <dt>Storage size</dt><dd><p>The size of the dataset can be extracted using <code>get_storage_size</code></p></dd>
   <dt>Size change</dt><dd><p>The size of the dataset can be changed using the <code>set_extent</code> method</p></dd>
 
 </dl>
 
-<p>Please also note the active methods</p><dl class='dl-horizontal'>
+<p>Please also note the active methods</p><dl'>
   <dt>dims</dt><dd><p>Dimension of the dataset</p></dd>
   <dt>maxdims</dt><dd><p>Maximum dimensions of the dataset</p></dd>
   <dt>chunk_dims</dt><dd><p>Dimension of the chunks</p></dd>
@@ -165,10 +168,10 @@ In addition, other features are supported such as transparent compression (for w
 
     
 
-<dl class='dl-horizontal'>
-<dt><code>new(id = NULL)</code></dt><dd><p>Initializes a new dataset-object. Only for internal use. Use the <code>create_dataset</code> function for <code>H5Group</code>
-and <code>H5File</code> objects<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
+<dt><code>new(id = NULL)</code></dt><dd><p>Initializes a new dataset-object. Only for internal use. Use the <code>create_dataset</code> function for <code><a href='H5Group-class.html'>H5Group</a></code>
+and <code><a href='H5File-class.html'>H5File</a></code> objects<strong>Parameters</strong>
+<dl'>
 <dt>id</dt><dd><p>For internal use only</p></dd></dl></p></dd>
 
 <dt><code>get_space()</code></dt><dd><p>This function implements the HDF5-API function H5Dget_space.
@@ -206,15 +209,15 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 This function implements the HDF5-API function H5Dread, with minor changes to the API to accommodate R.
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5D_READ'>https://portal.hdfgroup.org/display/HDF5/H5D_READ</a> for details.
 It reads the data in the dataset as specified by <code>mem_space</code> and return it as an R-obj<strong>Parameters</strong>
-<dl class='dl-horizontal'>
-<dt>file_space</dt><dd><p>An HDF5-space, represented as class <code>H5S</code> that determines which part
+<dl'>
+<dt>file_space</dt><dd><p>An HDF5-space, represented as class <code><a href='H5S-class.html'>H5S</a></code> that determines which part
 of the dataset is being read. Can also be given as an id</p></dd>
 <dt>mem_space</dt><dd><p>The space as it is represented in memory; advanced feature; may be removed in the future.
 Can also be given as an id.</p></dd>
 <dt>mem_type</dt><dd><p>Memory type; extracted from the dataset if null (can be passed in for efficiency reasons
 Can also be given as an id.</p></dd>
-<dt>dataset_xfer_pl</dt><dd><p>Dataset transfer property list. See <code>H5P_DATASET_XFER</code></p></dd>
-<dt>flags</dt><dd><p>Conversion rules for integer values. See also <code>h5const</code></p></dd>
+<dt>dataset_xfer_pl</dt><dd><p>Dataset transfer property list. See <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code></p></dd>
+<dt>flags</dt><dd><p>Conversion rules for integer values. See also <code><a href='h5const.html'>h5const</a></code></p></dd>
 <dt>set_dim</dt><dd><p>If <code>TRUE</code>, the dimension attribute is set in the return value. How it is set 
 is determined by <code>dim_to_set</code>.</p></dd>
 <dt>dim_to_set</dt><dd><p>The dimension to set; Has to be numeric and needs to be specified if <code>set_dim</code> is <code>TRUE</code>.
@@ -226,14 +229,14 @@ correct dimension is already set.</p></dd>
   flags = getOption("hdf5r.h5tor_default"), drop = TRUE,
   envir = parent.frame())</code></dt><dd><p>Main interface for reading data from the dataset. It is the function that is used by <code>[</code>, where
 all indices are being passed in the parameter <code>args</code>.<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>args</dt><dd><p>The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
 For interactive use we recommend the use of the <code>[</code> operator. If set to <code>NULL</code>, the entire dataset will be read.</p></dd>
 <dt>envir</dt><dd><p>The environment in which to evaluate <code>args</code></p></dd>
-<dt>dataset_xfer_pl</dt><dd><p>An object of class <code>H5P_DATASET_XFER</code>.</p></dd>
+<dt>dataset_xfer_pl</dt><dd><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code>.</p></dd>
 <dt>flags</dt><dd><p>Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
 the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
-(even using add-on packages). The constants governing this are part of <code>h5const</code>. The relevant ones start with the term
+(even using add-on packages). The constants governing this are part of <code><a href='h5const.html'>h5const</a></code>. The relevant ones start with the term
 <code>H5TOR</code> and are documented there. The default set here returns a regular 32bit integer if it doesn't lead to an overflow
 and returns a 64bit integer from the <code>bit64</code> package otherwise. For 64bit unsigned int that are larger than 64bit signed int,
 it return a <code>double</code>. This looses precision, however.</p></dd>
@@ -247,24 +250,24 @@ as used for arrays.
 This function implements the HDF5-API function H5Dwrite, with some changes to accommodate R.
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5D_WRITE'>https://portal.hdfgroup.org/display/HDF5/H5D_WRITE</a> for details.
 It writes that data from the <code>robj</code> into the dataset.<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>robj</dt><dd><p>The object to write into the dataset</p></dd>
 <dt>mem_space</dt><dd><p>The space as it is represented in memory; advanced feature; may be removed in the future</p></dd>
 <dt>mem_type</dt><dd><p>Memory type; extracted from the dataset if null (can be passed in for efficiency reasons</p></dd>
-<dt>file_space</dt><dd><p>An HDF5-space, represented as class <code>H5S</code> that determines which part
+<dt>file_space</dt><dd><p>An HDF5-space, represented as class <code><a href='H5S-class.html'>H5S</a></code> that determines which part
 of the dataset is being written.</p></dd>
-<dt>dataset_xfer_pl</dt><dd><p>Dataset transfer property list. See <code>H5P_DATASET_XFER</code></p></dd>
+<dt>dataset_xfer_pl</dt><dd><p>Dataset transfer property list. See <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code></p></dd>
 <dt>flush</dt><dd><p>Should a flush be done after the write</p></dd></dl></p></dd>
 
 <dt><code><a href='https://rdrr.io/r/base/write.html'>write(args, value, dataset_xfer_pl = h5const$H5P_DEFAULT,
   envir = parent.frame())</a></code></dt><dd><p>Main interface for writing data to the dataset. It is the function that is used by <code>[&lt;-</code>, where
 all indices are being passed in the parameter <code>args</code>.<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>args</dt><dd><p>The indices for each dimension to subset given as a list. This makes this easier to use as a programmatic API.
 For interactive use we recommend the use of the <code>[</code> operator. If set to <code>NULL</code>, the entire dataset will be read.</p></dd>
 <dt>value</dt><dd><p>The data to write to the dataset</p></dd>
 <dt>envir</dt><dd><p>The environment in which to evaluate <code>args</code></p></dd>
-<dt>dataset_xfer_pl</dt><dd><p>An object of class <code>H5P_DATASET_XFER</code>.</p></dd></dl><strong>Return</strong>The HDF5 dataset object, returned invisibly</p></dd>
+<dt>dataset_xfer_pl</dt><dd><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code>.</p></dd></dl><strong>Return</strong>The HDF5 dataset object, returned invisibly</p></dd>
 
 <dt><code>set_extent(dims)</code></dt><dd><p>This function implements the HDF5-API function H5Dset_extent.
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5D_SET_EXTENT'>https://portal.hdfgroup.org/display/HDF5/H5D_SET_EXTENT</a> for details.</p></dd>
@@ -278,7 +281,7 @@ The function always create <code>H5R_DATASET_REGION</code> references
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5R_CREATE'>https://portal.hdfgroup.org/display/HDF5/H5R_CREATE</a> for details.</p></dd>
 
 <dt><code><a href='https://rdrr.io/r/base/print.html'>print(..., max.attributes = 10)</a></code></dt><dd><p>Prints information for the dataset<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>...</dt><dd><p>ignored</p></dd>
 <dt>max.attributes</dt><dd><p>Maximum number of attribute names to print</p></dd></dl></p></dd>
 
@@ -439,7 +442,7 @@ for type_size_variable and the underlying size for type_size_raw</p></dd>
 #&gt; [1] 5 2
 #&gt; </div><div class='input'><span class='no'>dset</span></div><div class='output co'>#&gt; Class: H5D
 #&gt; Dataset: /basic
-#&gt; Filename: /tmp/Rtmpu9cLuu/file9f48254bfb45.h5
+#&gt; Filename: /tmp/RtmpT54Ups/file53c930f55f7c.h5
 #&gt; Access type: H5F_ACC_RDWR
 #&gt; Datatype: H5T_STD_I32LE
 #&gt; Space: Type=Simple     Dims=5 x 2     Maxdims=10 x 2
@@ -448,16 +451,9 @@ for type_size_variable and the underlying size for type_size_raw</p></dd>
 <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.remove</a></span>(<span class='no'>fname</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Holger Hoefling</p>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -468,7 +464,7 @@ for type_size_variable and the underlying size for type_size_raw</p></dd>
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

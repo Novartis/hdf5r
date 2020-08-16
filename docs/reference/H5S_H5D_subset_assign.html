@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -37,7 +41,6 @@
 
 <meta property="og:title" content="Selecting and assigning subsets of HDF5-Spaces and HDF5-Datasets — H5S_H5D_subset_assign" />
 <meta property="og:description" content="Selecting and assigning subsets of HDF5-Spaces and HDF5-Datasets" />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -55,7 +58,7 @@
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -69,7 +72,7 @@
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hdf5r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -93,7 +96,7 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hhoeflin/hdf5r">
+  <a href="https://github.com/hhoeflin/hdf5r/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -141,14 +144,14 @@ subset_assign_h5.H5D(x, d1, ..., dataset_xfer_pl = h5const$H5P_DEFAULT,
 
 # S3 method for H5D
 [(x, d1, ..., dataset_xfer_pl = h5const$H5P_DEFAULT,
-  envir = parent.frame()) <- value</pre>
+  envir = parent.frame()) &lt;- value</pre>
 
     <h2 class="hasAnchor" id="arguments"><a class="anchor" href="#arguments"></a>Arguments</h2>
     <table class="ref-arguments">
     <colgroup><col class="name" /><col class="desc" /></colgroup>
     <tr>
       <th>x</th>
-      <td><p>The  <code>H5S</code> or <code>H5D</code> to subset or assign values to</p></td>
+      <td><p>The  <code><a href='H5S-class.html'>H5S</a></code> or <code><a href='H5D-class.html'>H5D</a></code> to subset or assign values to</p></td>
     </tr>
     <tr>
       <th>d1</th>
@@ -160,7 +163,7 @@ subset_assign_h5.H5D(x, d1, ..., dataset_xfer_pl = h5const$H5P_DEFAULT,
     </tr>
     <tr>
       <th>op</th>
-      <td><p>Operation to perform on the <code>H5S</code>. Look into the HDF5 online help
+      <td><p>Operation to perform on the <code><a href='H5S-class.html'>H5S</a></code>. Look into the HDF5 online help
 <a href='https://portal.hdfgroup.org/display/HDF5/H5S_SELECT_ELEMENTS'>https://portal.hdfgroup.org/display/HDF5/H5S_SELECT_ELEMENTS</a> and
 <a href='https://portal.hdfgroup.org/display/HDF5/H5S_SELECT_HYPERSLAB'>https://portal.hdfgroup.org/display/HDF5/H5S_SELECT_HYPERSLAB</a></p></td>
     </tr>
@@ -171,16 +174,16 @@ where the function is called</p></td>
     </tr>
     <tr>
       <th>dataset_xfer_pl</th>
-      <td><p>An object of class <code>H5P_DATASET_XFER</code>.</p></td>
+      <td><p>An object of class <code><a href='H5P_DATASET_XFER-class.html'>H5P_DATASET_XFER</a></code>.</p></td>
     </tr>
     <tr>
       <th>flags</th>
       <td><p>Some flags governing edge cases of conversion from HDF5 to R. This is related to how integers are being treated and
 the issue of R not being able to natively represent 64bit integers and not at all being able to represent unsigned 64bit integers
-(even using add-on packages). The constants governing this are part of <code>h5const</code>. The relevant ones start with the term
+(even using add-on packages). The constants governing this are part of <code><a href='h5const.html'>h5const</a></code>. The relevant ones start with the term
 <code>H5TOR</code> and are documented there. The default set here returns a regular 32bit integer if it doesn't lead to an overflow
 and returns a 64bit integer from the <code>bit64</code> package otherwise. For 64bit unsigned int that are larger than 64bit signed int,
-it return a <code>double</code>. This looses precision, however. See also documentation or <code>h5const</code>.</p></td>
+it return a <code>double</code>. This looses precision, however. See also documentation or <code><a href='h5const.html'>h5const</a></code>.</p></td>
     </tr>
     <tr>
       <th>drop</th>
@@ -194,8 +197,8 @@ it return a <code>double</code>. This looses precision, however. See also docume
 
     <h2 class="hasAnchor" id="value"><a class="anchor" href="#value"></a>Value</h2>
 
-    <p>For <code>x</code> being a <code>H5S</code>, the same object is returned, but with the selection set as requested. For
-<code>H5D</code> it retrieves the subset of data requested or sets the subset of data assigned, as for any n-dimensional array
+    <p>For <code>x</code> being a <code><a href='H5S-class.html'>H5S</a></code>, the same object is returned, but with the selection set as requested. For
+<code><a href='H5D-class.html'>H5D</a></code> it retrieves the subset of data requested or sets the subset of data assigned, as for any n-dimensional array
 in R.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
@@ -204,22 +207,16 @@ consider with R itself.</p>
 <p>Most importantly HDF5-COMPOUND objects only have a single dimension internally to HDF5 (a vector), but they correspond to R-data.frames,
 which are 2 dimensional. For an HDF5 COMPOUND object, it is currently not possible to only sub-select a specific column.
 All columns have to be extracted (using 1-dimensional access with <code>[</code> and can then be subset in R itself.
-The same is true for writing a COMPOUND object (<code>H5T_COMPOUND</code>). A complete data-frame
+The same is true for writing a COMPOUND object (<code><a href='H5T_COMPOUND-class.html'>H5T_COMPOUND</a></code>). A complete data-frame
 is needed, not just a subset of the columns.</p>
-<p>Another important differences is for datasets of HDF5-ARRAY type <code>H5T_ARRAY</code>
+<p>Another important differences is for datasets of HDF5-ARRAY type <code><a href='H5T_ARRAY-class.html'>H5T_ARRAY</a></code>
 where the access to the object is only for the dimension of the object itself, not including the dimensions of the underlying array type.</p>
 
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#arguments">Arguments</a></li>
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Holger Hoefling</p>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -230,7 +227,7 @@ where the access to the object is only for the dimension of the object itself, n
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

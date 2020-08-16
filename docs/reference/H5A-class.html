@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Class for representing HDF5 attributes — H5A-class" />
 <meta property="og:description" content="This class represents an HDF5 attribute. Usually it is easier to read and write attributes for
 groups, datasets and committed datatypes using the functions documented in h5attributes." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ groups, datasets and committed datatypes using the functions documented in h5att
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +73,7 @@ groups, datasets and committed datatypes using the functions documented in h5att
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hdf5r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -94,7 +97,7 @@ groups, datasets and committed datatypes using the functions documented in h5att
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hhoeflin/hdf5r">
+  <a href="https://github.com/hhoeflin/hdf5r/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -119,7 +122,7 @@ groups, datasets and committed datatypes using the functions documented in h5att
 
     <div class="ref-description">
     <p>This class represents an HDF5 attribute. Usually it is easier to read and write attributes for
-groups, datasets and committed datatypes using the functions documented in <code>h5attributes</code>.</p>
+groups, datasets and committed datatypes using the functions documented in <code><a href='h5attributes.html'>h5attributes</a></code>.</p>
     </div>
 
 
@@ -129,13 +132,13 @@ groups, datasets and committed datatypes using the functions documented in <code
     <p>Object of class <code>H5A</code>.</p>
     <h2 class="hasAnchor" id="details"><a class="anchor" href="#details"></a>Details</h2>
 
-    <p>Otherwise, the functionality for attributes is very similar to that of datasets (<code>H5D</code>),
+    <p>Otherwise, the functionality for attributes is very similar to that of datasets (<code><a href='H5D-class.html'>H5D</a></code>),
 however with the notable exception that attributes always have to be read and written as a whole.</p>
     <h2 class="hasAnchor" id="methods"><a class="anchor" href="#methods"></a>Methods</h2>
 
     
 
-<dl class='dl-horizontal'>
+<dl'>
 <dt><code>get_info()</code></dt><dd><p>This function implements the HDF5-API function H5Aget_info.
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5A_GET_INFO'>https://portal.hdfgroup.org/display/HDF5/H5A_GET_INFO</a> for details.</p></dd>
 
@@ -156,8 +159,8 @@ This function implements the HDF5-API function H5Aread.
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5A_READ'>https://portal.hdfgroup.org/display/HDF5/H5A_READ</a> for details.</p></dd>
 
 <dt><code>read(flags = getOption("hdf5r.h5tor_default"), drop = TRUE)</code></dt><dd><p>Reads the data of the attribute and returns it as an R-object<strong>Parameters</strong>
-<dl class='dl-horizontal'>
-<dt>flags</dt><dd><p>Conversion rules for integer values. See also <code>h5const</code></p></dd>
+<dl'>
+<dt>flags</dt><dd><p>Conversion rules for integer values. See also <code><a href='h5const.html'>h5const</a></code></p></dd>
 <dt>drop</dt><dd><p>Logical. Should dimensions of length 1 be dropped (R-default for arrays)</p></dd></dl></p></dd>
 
 <dt><code>write_low_level(buffer, mem_type)</code></dt><dd><p>Only for advanced users. See documentation for <code>write</code> instead.
@@ -166,13 +169,13 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 
 <dt><code><a href='https://rdrr.io/r/base/write.html'>write(robj, mem_type = NULL,
   flush = getOption("hdf5r.flush_on_write"))</a></code></dt><dd><p>Writes the data of <code>robj</code> to the attribute<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>robj</dt><dd><p>The object to write into the attribute</p></dd>
 <dt>mem_type</dt><dd><p>The memory data type to use when transferring from HDF5 to intermediate storage. This is an 
 advanced development feature and may be removed in the future.</p></dd></dl></p></dd>
 
 <dt><code><a href='https://rdrr.io/r/base/print.html'>print(...)</a></code></dt><dd><p>Prints information for the dataset<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>...</dt><dd><p>ignored</p></dd></dl></p></dd>
 
 <dt><code><a href='https://rdrr.io/r/base/connections.html'>flush(scope = h5const$H5F_SCOPE_GLOBAL)</a></code></dt><dd><p>This function implements the HDF5-API function H5Fflush.
@@ -186,7 +189,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='no'>fname</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".h5"</span>)
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='no'>H5File</span>$<span class='fu'>new</span>(<span class='no'>fname</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"a"</span>)
-<span class='fu'>h5attr</span>(<span class='no'>file</span>, <span class='st'>"attr_numeric"</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10</span>)
+<span class='fu'><a href='h5attributes.html'>h5attr</a></span>(<span class='no'>file</span>, <span class='st'>"attr_numeric"</span>) <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/stats/Normal.html'>rnorm</a></span>(<span class='fl'>10</span>)
 <span class='no'>a</span> <span class='kw'>&lt;-</span> <span class='no'>file</span>$<span class='fu'>attr_open</span>(<span class='st'>"attr_numeric"</span>)
 <span class='no'>a</span>$<span class='fu'>get_info</span>()</div><div class='output co'>#&gt;   corder_valid corder cset data_size
 #&gt; 1            0      0    0        80</div><div class='input'><span class='no'>a</span>$<span class='fu'>attr_name</span>()</div><div class='output co'>#&gt; [1] "attr_numeric"</div><div class='input'><span class='no'>a</span>$<span class='fu'>get_space</span>()</div><div class='output co'>#&gt; Class: H5S
@@ -202,16 +205,9 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 <span class='no'>file</span>$<span class='fu'>close_all</span>()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Holger Hoefling</p>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -222,7 +218,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

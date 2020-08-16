@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -38,7 +42,6 @@
 <meta property="og:title" content="Class for representing HDF5 groups — H5Group-class" />
 <meta property="og:description" content="HDF5-Groups are essentially equivalent to directories in a file system. Inside the groups, other groups or datasets can
 be created. For the most parts, groups behave like files, so please also look at the documentation of H5File." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -56,7 +59,7 @@ be created. For the most parts, groups behave like files, so please also look at
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -70,7 +73,7 @@ be created. For the most parts, groups behave like files, so please also look at
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hdf5r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -94,7 +97,7 @@ be created. For the most parts, groups behave like files, so please also look at
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hhoeflin/hdf5r">
+  <a href="https://github.com/hhoeflin/hdf5r/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -131,9 +134,9 @@ be created. For the most parts, groups behave like files, so please also look at
 
     
 
-<dl class='dl-horizontal'>
+<dl'>
 <dt><code><a href='https://rdrr.io/r/base/print.html'>print(..., max.attributes = 10, max.listing = 10)</a></code></dt><dd><p>Prints information for the group<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>max.attributes</dt><dd><p>Maximum number of attribute names to print</p></dd>
 <dt>max.listing</dt><dd><p>Maximum number of ls-items to print</p></dd>
 <dt>...</dt><dd><p>ignored</p></dd></dl></p></dd>
@@ -213,7 +216,7 @@ behavior, i.e. in order to get a specific datatype, a certain chunk size or data
 Also note that this function implements the HDF5-API function H5Dcreate2 and H5Dcreate_anon (if name is NULL). Please see the documentation at
 <a href='https://portal.hdfgroup.org/display/HDF5/H5D_CREATE2'>https://portal.hdfgroup.org/display/HDF5/H5D_CREATE2</a> for regular groups and
 <a href='https://portal.hdfgroup.org/display/HDF5/H5D_CREATE_ANON'>https://portal.hdfgroup.org/display/HDF5/H5D_CREATE_ANON</a> for anonymous groups for details.<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>name</dt><dd><p>The name of the new dataset. If missing, an anonymous dataset is created</p></dd>
 <dt>robj</dt><dd><p>An R-object to take as a template for creating the dataset. Either <code>robj</code> or both <code>dtype</code> and space
 have to be provided</p></dd>
@@ -223,13 +226,13 @@ have to be provided</p></dd>
 if <code>robj</code> is given.</p></dd>
 <dt>chunk_dims</dt><dd><p>Size of the chunk. Has to have the same length as the dataset dimension. If <code>"auto"</code>
 then the size of each chunk is estimated so that each chunk is roughly as large in bytes as the value in
-the <code>hdf5r.chunk_size</code> option. See also <code>guess_chunks</code> for a more detailed explanation.
+the <code>hdf5r.chunk_size</code> option. See also <code><a href='guess_chunks.html'>guess_chunks</a></code> for a more detailed explanation.
 If set to <code>NULL</code>, then no chunking is used, unless explicitly set in <code>dataset_create_pl</code>.</p></dd>
 <dt>gzip_level</dt><dd><p>Only if <code>chunk_dims</code> is not null. If given, then the <code>dataset_create_pl</code> is set to enable zipping
 at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in <code>dataset_create_pl</code></p></dd>
-<dt>link_create_pl</dt><dd><p>Link creation property list. See <code>H5P_LINK_CREATE</code></p></dd>
-<dt>dataset_create_pl</dt><dd><p>Dataset creation property list. See <code>H5P_DATASET_CREATE</code></p></dd>
-<dt>dataset_access_pl</dt><dd><p>Dataset access property list. See <code>H5P_DATASET_ACCESS</code></p></dd></dl></p></dd>
+<dt>link_create_pl</dt><dd><p>Link creation property list. See <code><a href='H5P_LINK_CREATE-class.html'>H5P_LINK_CREATE</a></code></p></dd>
+<dt>dataset_create_pl</dt><dd><p>Dataset creation property list. See <code><a href='H5P_DATASET_CREATE-class.html'>H5P_DATASET_CREATE</a></code></p></dd>
+<dt>dataset_access_pl</dt><dd><p>Dataset access property list. See <code><a href='H5P_DATASET_ACCESS-class.html'>H5P_DATASET_ACCESS</a></code></p></dd></dl></p></dd>
 
 <dt><code>commit(name, dtype, link_create_pl = h5const$H5P_DEFAULT,
   type_create_pl = h5const$H5P_DEFAULT,
@@ -392,7 +395,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5F_GET_NAME'>https://portal.hdfgroup.org/display/HDF5/H5F_GET_NAME</a> for details.</p></dd>
 
 <dt><code><a href='https://rdrr.io/r/base/names.html'>names(link_access_pl = h5const$H5P_DEFAULT)</a></code></dt><dd><p>Returns the names of the items in the group or at the root of the file<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>link_access_pl</dt><dd><p>The link-access property list. See <a href='https://portal.hdfgroup.org/display/HDF5/Link+Access+Properties'>https://portal.hdfgroup.org/display/HDF5/Link+Access+Properties</a> for more detail.</p></dd></dl></p></dd>
 
 </dl>
@@ -402,20 +405,14 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='no'>H5File</span>$<span class='fu'>new</span>(<span class='no'>fname</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"a"</span>)
 <span class='no'>group</span> <span class='kw'>&lt;-</span> <span class='no'>file</span>$<span class='fu'>create_group</span>(<span class='st'>"testgroup"</span>)
 <span class='no'>group</span>$<span class='fu'><a href='https://rdrr.io/r/base/print.html'>print</a></span>()</div><div class='output co'>#&gt; Class: H5Group
-#&gt; Filename: /tmp/Rtmpu9cLuu/file9f481599bb69.h5
+#&gt; Filename: /tmp/RtmpT54Ups/file53c9244320b.h5
 #&gt; Group: /testgroup</div><div class='input'><span class='no'>group</span>$<span class='fu'><a href='https://rdrr.io/r/base/connections.html'>close</a></span>()
 <span class='no'>file</span>$<span class='fu'>close_all</span>()</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Holger Hoefling</p>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -426,7 +423,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

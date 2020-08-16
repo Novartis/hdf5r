@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -39,7 +43,6 @@
 <meta property="og:description" content="H5File objects are are the main entry point to access HDF5 data from binary 
 files. This class represents an open HDF5 File-id. It inherits all functions 
 of the H5RefClass." />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -57,7 +60,7 @@ of the H5RefClass." />
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -71,7 +74,7 @@ of the H5RefClass." />
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hdf5r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -95,7 +98,7 @@ of the H5RefClass." />
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hhoeflin/hdf5r">
+  <a href="https://github.com/hhoeflin/hdf5r/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -121,7 +124,7 @@ of the H5RefClass." />
     <div class="ref-description">
     <p><code>H5File</code> objects are are the main entry point to access HDF5 data from binary 
 files. This class represents an open HDF5 File-id. It inherits all functions 
-of the <code>H5RefClass</code>.</p>
+of the <code><a href='H5RefClass-class.html'>H5RefClass</a></code>.</p>
     </div>
 
 
@@ -133,16 +136,16 @@ of the <code>H5RefClass</code>.</p>
 
     <p>HDF5 files can be opened or generated using the <code>H5File$new()</code> function and
 a specified file access mode. <code>H5File$new()</code> returns a <code>H5File</code> object
-which can be used to access <code>H5Group</code>s and Datasets (see <code>H5D</code>)
+which can be used to access <code><a href='H5Group-class.html'>H5Group</a></code>s and Datasets (see <code><a href='H5D-class.html'>H5D</a></code>)
 using subsetting parameters or according class methods.</p>
 <p>HDF5 files which have been created or opened through <code>H5File$new()</code> need 
 to be closed afterwards using <code>$close_all()</code>. <code>$close_all()</code> not only closes the file itself,
 but also all objects that are still open inside it (such as groups or datasets). <code>$flush()</code> can be used 
 to flush unwritten data to an HDF5 file.</p>
-<p>HDF5 Files typically contain the following objects:</p><dl class='dl-horizontal'>
-  <dt>Groups</dt><dd><p>Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also <code>H5Group</code></p></dd>
-  <dt>Datasets</dt><dd><p>Objects to store actual data, see also <code>H5D</code></p></dd>
-  <dt>Attributes</dt><dd><p>Meta data objects to store extra information about Files, Groups and Datasets, see also <code>H5A</code></p></dd>
+<p>HDF5 Files typically contain the following objects:</p><dl'>
+  <dt>Groups</dt><dd><p>Similar to a file system folder, used to organize HDF5 objects in a hierarchical way, see also <code><a href='H5Group-class.html'>H5Group</a></code></p></dd>
+  <dt>Datasets</dt><dd><p>Objects to store actual data, see also <code><a href='H5D-class.html'>H5D</a></code></p></dd>
+  <dt>Attributes</dt><dd><p>Meta data objects to store extra information about Files, Groups and Datasets, see also <code><a href='H5A-class.html'>H5A</a></code></p></dd>
 
 </dl>
 
@@ -150,11 +153,11 @@ to flush unwritten data to an HDF5 file.</p>
 
     
 
-<dl class='dl-horizontal'>
+<dl'>
 <dt><code>new(filename = NULL, mode = c("a", "r", "r+", "w", "w-", "x"),
   file_create_pl = h5const$H5P_DEFAULT,
   file_access_pl = h5const$H5P_DEFAULT, id = NULL)</code></dt><dd><p>Opens or creates a new HDF5 File<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>filename</dt><dd><p>Name of the file</p></dd>
 <dt>mode</dt><dd><p>How to open it. <code>a</code> creates a new file or opens an existing one for read/write. <code>r</code> opens an
 existing file for reading, <code>r+</code> opens an existing file for read/write. <code>w</code> creates a file, truncating any
@@ -180,7 +183,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 closing any file. If not all objects in a file are closed, the file remains open and cannot be re-opened the regular way.</p></dd>
 
 <dt><code><a href='https://rdrr.io/r/base/print.html'>print(..., max.attributes = 10, max.listing = 10)</a></code></dt><dd><p>Prints information for the file<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>max.attributes</dt><dd><p>Maximum number of attribute names to print</p></dd>
 <dt>max.listing</dt><dd><p>Maximum number of ls-items to print</p></dd>
 <dt>...</dt><dd><p>ignored</p></dd></dl></p></dd>
@@ -260,7 +263,7 @@ behavior, i.e. in order to get a specific datatype, a certain chunk size or data
 Also note that this function implements the HDF5-API function H5Dcreate2 and H5Dcreate_anon (if name is NULL). Please see the documentation at
 <a href='https://portal.hdfgroup.org/display/HDF5/H5D_CREATE2'>https://portal.hdfgroup.org/display/HDF5/H5D_CREATE2</a> for regular groups and
 <a href='https://portal.hdfgroup.org/display/HDF5/H5D_CREATE_ANON'>https://portal.hdfgroup.org/display/HDF5/H5D_CREATE_ANON</a> for anonymous groups for details.<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>name</dt><dd><p>The name of the new dataset. If missing, an anonymous dataset is created</p></dd>
 <dt>robj</dt><dd><p>An R-object to take as a template for creating the dataset. Either <code>robj</code> or both <code>dtype</code> and space
 have to be provided</p></dd>
@@ -270,13 +273,13 @@ have to be provided</p></dd>
 if <code>robj</code> is given.</p></dd>
 <dt>chunk_dims</dt><dd><p>Size of the chunk. Has to have the same length as the dataset dimension. If <code>"auto"</code>
 then the size of each chunk is estimated so that each chunk is roughly as large in bytes as the value in
-the <code>hdf5r.chunk_size</code> option. See also <code>guess_chunks</code> for a more detailed explanation.
+the <code>hdf5r.chunk_size</code> option. See also <code><a href='guess_chunks.html'>guess_chunks</a></code> for a more detailed explanation.
 If set to <code>NULL</code>, then no chunking is used, unless explicitly set in <code>dataset_create_pl</code>.</p></dd>
 <dt>gzip_level</dt><dd><p>Only if <code>chunk_dims</code> is not null. If given, then the <code>dataset_create_pl</code> is set to enable zipping
 at the level given here. If set to NULL, then gzip is not set (but could be set otherwise in <code>dataset_create_pl</code></p></dd>
-<dt>link_create_pl</dt><dd><p>Link creation property list. See <code>H5P_LINK_CREATE</code></p></dd>
-<dt>dataset_create_pl</dt><dd><p>Dataset creation property list. See <code>H5P_DATASET_CREATE</code></p></dd>
-<dt>dataset_access_pl</dt><dd><p>Dataset access property list. See <code>H5P_DATASET_ACCESS</code></p></dd></dl></p></dd>
+<dt>link_create_pl</dt><dd><p>Link creation property list. See <code><a href='H5P_LINK_CREATE-class.html'>H5P_LINK_CREATE</a></code></p></dd>
+<dt>dataset_create_pl</dt><dd><p>Dataset creation property list. See <code><a href='H5P_DATASET_CREATE-class.html'>H5P_DATASET_CREATE</a></code></p></dd>
+<dt>dataset_access_pl</dt><dd><p>Dataset access property list. See <code><a href='H5P_DATASET_ACCESS-class.html'>H5P_DATASET_ACCESS</a></code></p></dd></dl></p></dd>
 
 <dt><code>commit(name, dtype, link_create_pl = h5const$H5P_DEFAULT,
   type_create_pl = h5const$H5P_DEFAULT,
@@ -439,7 +442,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5F_GET_NAME'>https://portal.hdfgroup.org/display/HDF5/H5F_GET_NAME</a> for details.</p></dd>
 
 <dt><code><a href='https://rdrr.io/r/base/names.html'>names(link_access_pl = h5const$H5P_DEFAULT)</a></code></dt><dd><p>Returns the names of the items in the group or at the root of the file<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>link_access_pl</dt><dd><p>The link-access property list. See <a href='https://portal.hdfgroup.org/display/HDF5/Link+Access+Properties'>https://portal.hdfgroup.org/display/HDF5/Link+Access+Properties</a> for more detail.</p></dd></dl></p></dd>
 
 </dl>
@@ -447,18 +450,18 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 
     
 
-<p>The following functions are defined to extract HDF5 file contents:</p><dl class='dl-horizontal'>
-  <dt><code>list.groups</code></dt><dd><p>List HDF5 groups in file.</p></dd>
-  <dt><code>list.datasets</code></dt><dd><p>List HDF5 datasets in file.</p></dd>
-  <dt><code><a href='https://rdrr.io/r/base/names.html'>names</a></code></dt><dd><p>List all items in a file or group (applicable for <code>H5File</code> and <code>H5Group</code>)</p></dd>
-  <dt><code>list.attributes</code></dt><dd><p>List Attributes of HDF5 object (file, group or dataset).</p></dd>
-  <dt><code>h5attr_names</code></dt><dd><p>Attribute names of an HDF5 object; similar to list.attributes</p></dd>
+<p>The following functions are defined to extract HDF5 file contents:</p><dl'>
+  <dt><code><a href='list-groups-datasets.html'>list.groups</a></code></dt><dd><p>List HDF5 groups in file.</p></dd>
+  <dt><code><a href='list-groups-datasets.html'>list.datasets</a></code></dt><dd><p>List HDF5 datasets in file.</p></dd>
+  <dt><code><a href='https://rdrr.io/r/base/names.html'>names</a></code></dt><dd><p>List all items in a file or group (applicable for <code>H5File</code> and <code><a href='H5Group-class.html'>H5Group</a></code>)</p></dd>
+  <dt><code><a href='h5-wrapper.html'>list.attributes</a></code></dt><dd><p>List Attributes of HDF5 object (file, group or dataset).</p></dd>
+  <dt><code><a href='h5attributes.html'>h5attr_names</a></code></dt><dd><p>Attribute names of an HDF5 object; similar to list.attributes</p></dd>
 
 </dl>
 
     <h2 class="hasAnchor" id="see-also"><a class="anchor" href="#see-also"></a>See also</h2>
 
-    <div class='dont-index'><p><code>h5file</code></p></div>
+    <div class='dont-index'><p><code><a href='h5-wrapper.html'>h5file</a></code></p></div>
 
     <h2 class="hasAnchor" id="examples"><a class="anchor" href="#examples"></a>Examples</h2>
     <pre class="examples"><div class='input'><span class='co'># The following examples generates a HDF5 file with the different HDF5 </span>
@@ -466,13 +469,13 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 <span class='no'>fname</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='https://rdrr.io/r/base/tempfile.html'>tempfile</a></span>(<span class='kw'>fileext</span> <span class='kw'>=</span> <span class='st'>".h5"</span>)
 <span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='no'>H5File</span>$<span class='fu'>new</span>(<span class='no'>fname</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"a"</span>)
 <span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testdataset"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
-<span class='fu'>h5attr</span>(<span class='no'>file</span>, <span class='st'>"testattrib"</span>) <span class='kw'>&lt;-</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]
+<span class='fu'><a href='h5attributes.html'>h5attr</a></span>(<span class='no'>file</span>, <span class='st'>"testattrib"</span>) <span class='kw'>&lt;-</span> <span class='no'>LETTERS</span>[<span class='fl'>1</span>:<span class='fl'>10</span>]
 <span class='no'>file</span>$<span class='fu'>create_group</span>(<span class='st'>"testgroup"</span>)</div><div class='output co'>#&gt; Class: H5Group
-#&gt; Filename: /tmp/Rtmpu9cLuu/file9f482911ac8b.h5
+#&gt; Filename: /tmp/RtmpT54Ups/file53c9382882ae.h5
 #&gt; Group: /testgroup</div><div class='input'><span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testgroup/testdataset2"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
 <span class='co'># Show contents of file</span>
 <span class='no'>file</span></div><div class='output co'>#&gt; Class: H5File
-#&gt; Filename: /tmp/Rtmpu9cLuu/file9f482911ac8b.h5
+#&gt; Filename: /tmp/RtmpT54Ups/file53c9382882ae.h5
 #&gt; Access type: H5F_ACC_RDWR
 #&gt; Attributes: testattrib
 #&gt; Listing:
@@ -482,27 +485,27 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 <span class='no'>file</span>$<span class='fu'>close_all</span>()
 
 <span class='co'># The following example shows hdf5 file contents and how to use them to iterate over HDF5 elements:</span>
-<span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'>h5file</span>(<span class='no'>fname</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"a"</span>)
+<span class='no'>file</span> <span class='kw'>&lt;-</span> <span class='fu'><a href='h5-wrapper.html'>h5file</a></span>(<span class='no'>fname</span>, <span class='kw'>mode</span> <span class='kw'>=</span> <span class='st'>"a"</span>)
 <span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='fu'><a href='https://rdrr.io/r/base/c.html'>c</a></span>(<span class='st'>"testgroup1"</span>, <span class='st'>"testgroup2"</span>, <span class='st'>"testgroup3"</span>), <span class='no'>file</span>$<span class='no'>create_group</span>)</div><div class='output co'>#&gt; $testgroup1
 #&gt; Class: H5Group
-#&gt; Filename: /tmp/Rtmpu9cLuu/file9f482911ac8b.h5
+#&gt; Filename: /tmp/RtmpT54Ups/file53c9382882ae.h5
 #&gt; Group: /testgroup1
 #&gt; 
 #&gt; $testgroup2
 #&gt; Class: H5Group
-#&gt; Filename: /tmp/Rtmpu9cLuu/file9f482911ac8b.h5
+#&gt; Filename: /tmp/RtmpT54Ups/file53c9382882ae.h5
 #&gt; Group: /testgroup2
 #&gt; 
 #&gt; $testgroup3
 #&gt; Class: H5Group
-#&gt; Filename: /tmp/Rtmpu9cLuu/file9f482911ac8b.h5
+#&gt; Filename: /tmp/RtmpT54Ups/file53c9382882ae.h5
 #&gt; Group: /testgroup3
 #&gt; </div><div class='input'><span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testgroup1/testset1"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>1</span>:<span class='fl'>10</span>
 <span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testgroup2/testset2"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>11</span>:<span class='fl'>20</span>
 <span class='no'>file</span><span class='kw'>[[</span><span class='st'>"testgroup3/testset3"</span>]] <span class='kw'>&lt;-</span> <span class='fl'>21</span>:<span class='fl'>30</span>
 
 <span class='co'># Extract first 3 elements from each dataset and combine result to matrix</span>
-<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='fu'>list.datasets</span>(<span class='no'>file</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>file</span><span class='kw'>[[</span><span class='no'>x</span>]][<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt;      testdataset testgroup/testdataset2 testgroup1/testset1 testgroup2/testset2
+<span class='fu'><a href='https://rdrr.io/r/base/lapply.html'>sapply</a></span>(<span class='fu'><a href='list-groups-datasets.html'>list.datasets</a></span>(<span class='no'>file</span>, <span class='kw'>recursive</span> <span class='kw'>=</span> <span class='fl'>TRUE</span>), <span class='kw'>function</span>(<span class='no'>x</span>) <span class='no'>file</span><span class='kw'>[[</span><span class='no'>x</span>]][<span class='fl'>1</span>:<span class='fl'>3</span>])</div><div class='output co'>#&gt;      testdataset testgroup/testdataset2 testgroup1/testset1 testgroup2/testset2
 #&gt; [1,]           1                      1                   1                  11
 #&gt; [2,]           2                      2                   2                  12
 #&gt; [3,]           3                      3                   3                  13
@@ -515,18 +518,9 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 </div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
-      <li><a href="#details">Details</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#extract-list-file-contents">Extract/List File Contents</a></li>
-      <li><a href="#see-also">See also</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Holger Hoefling, Mario Annau</p>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -537,7 +531,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>

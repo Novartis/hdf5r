@@ -10,23 +10,27 @@
 
 
 <!-- jquery -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.4.1/jquery.min.js" integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
 <!-- Bootstrap -->
-<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.3.7/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootswatch/3.4.0/cerulean/bootstrap.min.css" rel="stylesheet" crossorigin="anonymous" />
 
 
-<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha256-U5ZEeKfGNOja007MMD3YBI0A3OSZOQbeG6z2f2Y0hu8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/3.4.1/js/bootstrap.min.js" integrity="sha256-nuL8/2cJ5NDSSwnKD8VqreErSWHtnEP9E7AySL+1ev4=" crossorigin="anonymous"></script>
+
+<!-- bootstrap-toc -->
+<link rel="stylesheet" href="../bootstrap-toc.css">
+<script src="../bootstrap-toc.js"></script>
 
 <!-- Font Awesome icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/all.min.css" integrity="sha256-PbSmjxuVAzJ6FPvNYsrXygfGhNJYyZ2GktDbkMBqQZg=" crossorigin="anonymous" />
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.11.1/css/v4-shims.min.css" integrity="sha256-A6jcAdwFD48VMjlI3GDxUd+eCQa7/KWy6G9oe/ovaPA=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/v4-shims.min.css" integrity="sha256-wZjR52fzng1pJHwx4aV2AO3yyTOXrcDW7jBpJtTwVxw=" crossorigin="anonymous" />
 
 <!-- clipboard.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.4/clipboard.min.js" integrity="sha256-FiZwavyI2V6+EXO1U+xzLG3IKldpiTFf3153ea9zikQ=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.6/clipboard.min.js" integrity="sha256-inc5kl9MA1hkeYUt+EC3BhlIgyp/2jDIyBLS6k3UxPI=" crossorigin="anonymous"></script>
 
 <!-- headroom.js -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/headroom.min.js" integrity="sha256-DJFC1kqIhelURkuza0AvYal5RxMtpzLjFhsnVIeuk+U=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.9.4/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/headroom.min.js" integrity="sha256-AsUX4SJE1+yuDu5+mAVzJbuYNPHj/WroHuZ8Ir/CkE0=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/headroom/0.11.0/jQuery.headroom.min.js" integrity="sha256-ZX/yNShbjqsohH1k95liqY9Gd8uOiE1S4vZc+9KQ1K4=" crossorigin="anonymous"></script>
 
 <!-- pkgdown -->
 <link href="../pkgdown.css" rel="stylesheet">
@@ -51,7 +55,6 @@ Variable LengthH5T_VLEN
 
 
 " />
-<meta name="twitter:card" content="summary" />
 
 
 
@@ -69,7 +72,7 @@ Variable LengthH5T_VLEN
 
   </head>
 
-  <body>
+  <body data-spy="scroll" data-target="#toc">
     <div class="container template-reference-topic">
       <header>
       <div class="navbar navbar-default navbar-fixed-top" role="navigation">
@@ -83,7 +86,7 @@ Variable LengthH5T_VLEN
       </button>
       <span class="navbar-brand">
         <a class="navbar-link" href="../index.html">hdf5r</a>
-        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.2</span>
+        <span class="version label label-default" data-toggle="tooltip" data-placement="bottom" title="Released version">1.3.3</span>
       </span>
     </div>
 
@@ -107,7 +110,7 @@ Variable LengthH5T_VLEN
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-  <a href="https://github.com/hhoeflin/hdf5r">
+  <a href="https://github.com/hhoeflin/hdf5r/">
     <span class="fab fa fab fa-github fa-lg"></span>
      
   </a>
@@ -133,16 +136,16 @@ Variable LengthH5T_VLEN
     <div class="ref-description">
     <p>This is the base class for all datatypes, but most have a specialised class.
 This class represents an HDF5 datatype. It inherits all functions of the
-<code>H5RefClass</code>. It is also the base class for many other classes well, specifically</p><dl class='dl-horizontal'>
-<dt>Integer</dt><dd><p><code>H5T_INTEGER</code></p></dd>
-<dt>Bitfield</dt><dd><p><code>H5T_BITFIELD</code> (currently identical to the integer class)</p></dd>
-<dt>Float</dt><dd><p><code>H5T_FLOAT</code></p></dd>
-<dt>Enum</dt><dd><p><code>H5T_ENUM</code></p></dd>
-<dt>Compound</dt><dd><p><code>H5T_COMPOUND</code></p></dd>
-<dt>String</dt><dd><p><code>H5T_STRING</code></p></dd>
-<dt>Complex</dt><dd><p><code>H5T_COMPLEX</code></p></dd>
-<dt>Array</dt><dd><p><code>H5T_ARRAY</code></p></dd>
-<dt>Variable Length</dt><dd><p><code>H5T_VLEN</code></p></dd>
+<code><a href='H5RefClass-class.html'>H5RefClass</a></code>. It is also the base class for many other classes well, specifically</p><dl'>
+<dt>Integer</dt><dd><p><code><a href='H5T_INTEGER-class.html'>H5T_INTEGER</a></code></p></dd>
+<dt>Bitfield</dt><dd><p><code><a href='H5T_INTEGER-class.html'>H5T_BITFIELD</a></code> (currently identical to the integer class)</p></dd>
+<dt>Float</dt><dd><p><code><a href='H5T_FLOAT-class.html'>H5T_FLOAT</a></code></p></dd>
+<dt>Enum</dt><dd><p><code><a href='H5T_ENUM-class.html'>H5T_ENUM</a></code></p></dd>
+<dt>Compound</dt><dd><p><code><a href='H5T_COMPOUND-class.html'>H5T_COMPOUND</a></code></p></dd>
+<dt>String</dt><dd><p><code><a href='H5T_STRING-class.html'>H5T_STRING</a></code></p></dd>
+<dt>Complex</dt><dd><p><code><a href='H5T_COMPLEX-class.html'>H5T_COMPLEX</a></code></p></dd>
+<dt>Array</dt><dd><p><code><a href='H5T_ARRAY-class.html'>H5T_ARRAY</a></code></p></dd>
+<dt>Variable Length</dt><dd><p><code><a href='H5T_VLEN-class.html'>H5T_VLEN</a></code></p></dd>
 
 </dl>
 
@@ -157,7 +160,7 @@ This class represents an HDF5 datatype. It inherits all functions of the
 
     
 
-<dl class='dl-horizontal'>
+<dl'>
 <dt><code>new(id)</code></dt><dd><p>Internal use only</p></dd>
 
 <dt><code>get_class()</code></dt><dd><p>This function implements the HDF5-API function H5Tget_class.
@@ -165,7 +168,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 
 <dt><code>get_size(...)</code></dt><dd><p>This function implements the HDF5-API function H5Tget_size.
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5T_GET_SIZE'>https://portal.hdfgroup.org/display/HDF5/H5T_GET_SIZE</a> for details.<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>...</dt><dd><p>ignored</p></dd></dl></p></dd>
 
 <dt><code>set_size(size)</code></dt><dd><p>This function implements the HDF5-API function H5Tset_size.
@@ -220,7 +223,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF5/H5LT_DTYPE_TO_TEXT'>https://portal.hdfgroup.org/display/HDF5/H5LT_DTYPE_TO_TEXT</a> for details.</p></dd>
 
 <dt><code><a href='https://rdrr.io/r/base/print.html'>print(...)</a></code></dt><dd><p>Prints information for the group<strong>Parameters</strong>
-<dl class='dl-horizontal'>
+<dl'>
 <dt>...</dt><dd><p>ignored</p></dd></dl></p></dd>
 
 <dt><code>obj_info(remove_internal_use_only = TRUE)</code></dt><dd><p>This function implements the HDF5-API function H5Oget_info.
@@ -307,23 +310,17 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 <span class='no'>my_int</span>$<span class='fu'>is_committed</span>()</div><div class='output co'>#&gt; [1] FALSE</div><div class='input'><span class='no'>file</span>$<span class='fu'>commit</span>(<span class='st'>"my_int"</span>, <span class='no'>my_int</span>)
 <span class='no'>my_int</span>$<span class='fu'>is_committed</span>()</div><div class='output co'>#&gt; [1] TRUE</div><div class='input'>
 <span class='co'># can now also add attributes</span>
-<span class='fu'>h5attr</span>(<span class='no'>my_int</span>, <span class='st'>"test"</span>) <span class='kw'>&lt;-</span> <span class='st'>"A string"</span>
-<span class='fu'>h5attributes</span>(<span class='no'>my_int</span>)</div><div class='output co'>#&gt; $test
+<span class='fu'><a href='h5attributes.html'>h5attr</a></span>(<span class='no'>my_int</span>, <span class='st'>"test"</span>) <span class='kw'>&lt;-</span> <span class='st'>"A string"</span>
+<span class='fu'><a href='h5attributes.html'>h5attributes</a></span>(<span class='no'>my_int</span>)</div><div class='output co'>#&gt; $test
 #&gt; [1] "A string"
 #&gt; </div><div class='input'>
 <span class='no'>file</span>$<span class='fu'>close_all</span>()
 <span class='fu'><a href='https://rdrr.io/r/base/files.html'>file.remove</a></span>(<span class='no'>fname</span>)</div><div class='output co'>#&gt; [1] TRUE</div></pre>
   </div>
   <div class="col-md-3 hidden-xs hidden-sm" id="pkgdown-sidebar">
-    <h2>Contents</h2>
-    <ul class="nav nav-pills nav-stacked">
-      <li><a href="#value">Value</a></li>
-      <li><a href="#methods">Methods</a></li>
-      <li><a href="#examples">Examples</a></li>
-    </ul>
-
-    <h2>Author</h2>
-    <p>Holger Hoefling</p>
+    <nav id="toc" data-toggle="toc" class="sticky-top">
+      <h2 data-toc-skip>Contents</h2>
+    </nav>
   </div>
 </div>
 
@@ -334,7 +331,7 @@ Please see the documentation at <a href='https://portal.hdfgroup.org/display/HDF
 </div>
 
 <div class="pkgdown">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.4.1.9000.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/">pkgdown</a> 1.5.1.</p>
 </div>
 
       </footer>
