@@ -1,19 +1,19 @@
 Package: hdf5r
 Type: Package
 Title: Interface to the 'HDF5' Binary Data Format
-Version: 1.3.3
+Version: 1.3.4
 Authors@R: c(
     person("Holger", "Hoefling", email = "hhoeflin@gmail.com", role = c("aut", "cre")),
     person("Mario", "Annau", email = "mario.annau@gmail.com", role = "aut"),
     person("Novartis Institute for BioMedical Research (NIBR)", role = "cph")
     )
-Description: 'HDF5' is a data model, library and file format for storing 
+Description: 'HDF5' is a data model, library and file format for storing
     and managing large amounts of data. This package provides a nearly
     feature complete, object oriented  wrapper for the 'HDF5' API
-    <https://support.hdfgroup.org/HDF5/doc/RM/RM_H5Front.html> using R6 classes. 
-    Additionally, functionality is added so that 'HDF5' objects behave very 
+    <https://support.hdfgroup.org/HDF5/doc/RM/RM_H5Front.html> using R6 classes.
+    Additionally, functionality is added so that 'HDF5' objects behave very
     similar to their corresponding R counterparts.
-URL: https://hhoeflin.github.io/hdf5r, https://github.com/hhoeflin/hdf5r
+URL: https://hhoeflin.github.io/hdf5r/, https://github.com/hhoeflin/hdf5r/
 BugReports: https://github.com/hhoeflin/hdf5r/issues
 License: Apache License 2.0 | file LICENSE
 Copyright: For the hdf5r package: Novartis Institute for BioMedical Research
@@ -37,7 +37,7 @@ SystemRequirements: HDF5 (>= 1.8.13)
 VignetteBuilder: knitr
 NeedsCompilation: yes
 RoxygenNote: 6.1.1.9000
-Collate: 
+Collate:
     'Common_functions.R'
     'Compound.R'
     'H5constants.R'

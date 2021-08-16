@@ -3,7 +3,7 @@
 | **Linux, OSX**|[Travis](https://travis-ci.org)|[![Build Status](https://travis-ci.org/hhoeflin/hdf5r.svg?branch=master)](https://travis-ci.org/hhoeflin/hdf5r)|
 |**Windows**|[AppVeyor](https://www.appveyor.com)|[![AppVeyor Build Status](https://ci.appveyor.com/api/projects/status/github/hhoeflin/hdf5r?branch=master&svg=true)](https://ci.appveyor.com/project/hhoeflin/hdf5r)|
 |**ASAN, valgrind**|[Wercker](http://www.wercker.com)|[![wercker status](https://app.wercker.com/status/6a30e9d63b5d38539e28505b2fe6c440/s/master "wercker status")](https://app.wercker.com/project/byKey/6a30e9d63b5d38539e28505b2fe6c440)|
-|**Code Coverage**|[Codecov](https://codecov.io/)|[![codecov.io](http://codecov.io/github/hhoeflin/hdf5r/coverage.svg?branch=master)](http://codecov.io/github/hhoeflin/hdf5r?branch=master)|
+|**Code Coverage**|[Codecov](https://about.codecov.io/)|[![codecov.io](https://codecov.io/github/hhoeflin/hdf5r/coverage.svg?branch=master)](https://about.codecov.io/github/hhoeflin/hdf5r?branch=master)|
 |**CRAN Version**|[CRAN](https://CRAN.R-project.org)|[![CRAN_Status_Badge](http://www.r-pkg.org/badges/version/hdf5r)](https://cran.r-project.org/package=hdf5r)|
 |**Downloads**|[CRAN.RStudio.com](https://cran.r-project.org/package=hdf5r)|[![](http://cranlogs.r-pkg.org/badges/hdf5r)](https://cran.r-project.org/package=hdf5r)|
 
@@ -11,20 +11,20 @@
 
 **Please note that the newest version of hdf5 1.12.0 is currently not supported. Use version 1.10.x until a fix is released**
 
-**hdf5r** is an R interface to the [HDF5](https://www.hdfgroup.org/HDF5/) library. It is implemented using [R6](https://CRAN.R-project.org/package=R6) classes based on the [HDF5-C-API](https://support.hdfgroup.org/HDF5/doc/RM/RM_H5Front.html). The package supports all data-types as specified by HDF5 (including references) and provides many convenience functions yet also an extensive selection of the native HDF5-C-API functions. **hdf5r** is available on [Github](https://github.com/hhoeflin/hdf5r) and has already been released on [CRAN](https://CRAN.R-project.org/package=hdf5r) for all major platforms (Windows, OS X, Linux). It is also 
+**hdf5r** is an R interface to the [HDF5](https://www.hdfgroup.org/HDF5/) library. It is implemented using [R6](https://CRAN.R-project.org/package=R6) classes based on the [HDF5-C-API](https://support.hdfgroup.org/HDF5/doc/RM/RM_H5Front.html). The package supports all data-types as specified by HDF5 (including references) and provides many convenience functions yet also an extensive selection of the native HDF5-C-API functions. **hdf5r** is available on [Github](https://github.com/hhoeflin/hdf5r) and has already been released on [CRAN](https://CRAN.R-project.org/package=hdf5r) for all major platforms (Windows, OS X, Linux). It is also
 tested using several hundred assertions.
 
-[HDF5](https://www.hdfgroup.org/HDF5/) is an excellent library and data model to 
-store huge amounts of data in a binary file format. Supporting most major 
-platforms and programming languages it can be used to exchange data files in a 
-language independent format. Compared to R's integrated *save()* and *load()* 
+[HDF5](https://www.hdfgroup.org/HDF5/) is an excellent library and data model to
+store huge amounts of data in a binary file format. Supporting most major
+platforms and programming languages it can be used to exchange data files in a
+language independent format. Compared to R's integrated *save()* and *load()*
 functions it also supports access to only parts of the binary data files and can
 therefore be used to process data not fitting into memory.
 
 # Install
 
-**hdf5r** is available for all major platforms, namely Linux, OS X and Windows. 
-The package is compatible with HDF5 version 1.8.13 or higher (also Version 1.10.0). 
+**hdf5r** is available for all major platforms, namely Linux, OS X and Windows.
+The package is compatible with HDF5 version 1.8.13 or higher (also Version 1.10.0).
 
 ## Requirements
 
@@ -33,7 +33,7 @@ For OS X and Linux the HDF5 library needs to be installed via one of the (shell)
 | System                                    | Command
 |:------------------------------------------|:---------------------------------|
 |**OS X (using Homebrew)**                  | `brew install hdf5`
-|**Debian-based systems (including Ubuntu)**| `sudo apt-get install libhdf5-dev` 
+|**Debian-based systems (including Ubuntu)**| `sudo apt-get install libhdf5-dev`
 |**Systems supporting yum and RPMs**        | `sudo yum install hdf5-devel`
 
 HDF5 1.8.14 has been pre-compiled for Windows and is available at https://github.com/mannau/h5-libwin - thus no manual installation is required.
@@ -53,9 +53,9 @@ devtools::install_github("hhoeflin/hdf5r")
 
 ## How to Get Help
 
-The package provides most of the regular HDF5-API in addition to a number of convenience functions. As such, the number of available methods is 
-quite large. As the package uses R6 classes, all applicable methods for a class are contained in that class. The easiest way to get an 
-overview of the available methods is to call the *methods* method. 
+The package provides most of the regular HDF5-API in addition to a number of convenience functions. As such, the number of available methods is
+quite large. As the package uses R6 classes, all applicable methods for a class are contained in that class. The easiest way to get an
+overview of the available methods is to call the *methods* method.
 
 ```r
 native_int_type <- h5types$H5T_NATIVE_INT
@@ -84,7 +84,7 @@ vignette("hdf5r", package="hdf5r")
 
 ## Simple Code Example
 
-If you don't have time to read the vignette, which contains more code example, here is a very brief code example to 
+If you don't have time to read the vignette, which contains more code example, here is a very brief code example to
 create a file, write some data and read it back again.
 
 ```r
@@ -105,7 +105,7 @@ file.h5$close_all()
 
 
 ```r
-## now re-open it 
+## now re-open it
 file.h5 <- H5File$new(test_file, mode="r+")
 
 ## lets look at the content
